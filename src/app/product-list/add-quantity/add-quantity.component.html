@@ -1,0 +1,15 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<div class="wrapper">
+    <div class="container">
+        <div class="back-arrow">
+            <app-back-arrow></app-back-arrow>
+        </div>
+        <h2 class="page-title">Add Quantity</h2>
+        <form [formGroup]="addQuantityForm" (ngSubmit)="onSubmit()" class="form-grid">
+            <input type="text" formControlName="name" placeholder="Name" class="grid-item">
+            <input type="text" formControlName="quantity" placeholder="Quantity" class="grid-item">
+            <input type="text" formControlName="unit" placeholder="Unit" class="grid-item">
+            <button type="submit" class="action-button">Add Quantity</button>
+        </form>
+    </div>
+</div>

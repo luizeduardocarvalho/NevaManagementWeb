@@ -1,0 +1,24 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<div class="wrapper">
+    <router-outlet></router-outlet>
+    <div class="container header-container">
+        <div class="header">
+            <app-back-arrow></app-back-arrow>
+            <div class="add-product-section">
+                <button class="add-product-button" [routerLink]="['add-product']">Add Product</button>
+            </div>
+        </div>
+        <h2 class="page-title">Product List</h2>
+        <div class="search-bar">
+            <div class="search-icon">
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+            <input class="search-input" [(ngModel)]="searchText" name="searchText" type="text"
+                placeholder="Search a product">
+        </div>
+    </div>
+    <div class="container card-container">
+        <app-small-card *ngFor="let product of products | search : searchText" title="{{ product.name }}"
+            url="/products/{{product.id}}"></app-small-card>
+    </div>
+</div>

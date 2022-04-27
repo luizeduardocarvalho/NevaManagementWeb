@@ -1,0 +1,60 @@
+.header-container {
+    width: var(--container-width);
+    height: var(--header-container-height);
+    display: grid;
+    grid-auto-rows: min-content;
+    margin-bottom: 1em;
+    align-content: space-between;
+}
+
+.header {
+    display: flex;
+    margin-bottom: 1em;
+}
+
+.add-product-button {
+    border: none;
+    background-color: var(--cl-primary);
+    color: white;
+    border-radius: 3em;
+    padding: 1em 2em 1em 2em;
+    font-size: 0.8rem;
+}
+
+.add-product-section {
+    margin-left: auto;
+}
+
+.card-container {
+    width: var(--container-width);
+    height: var(--body-container-height);
+    overflow-y: auto;
+    padding-bottom: 1em;
+}
+
+.page-title {
+    margin-bottom: 1em;
+    font-weight: bold;
+    height: min-content;
+}
+
+.search-bar {
+    width: 100%;
+    display: flex;
+    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
+    border-radius: var(--radius);
+    background-color: white;
+    height: min-content;
+}
+
+.search-icon {
+    padding: 1rem 0.3rem 1rem 1rem;
+    color: var(--cl-primary);
+}
+
+.search-input {
+    border-radius: var(--radius);
+    font-size: 0.7rem;
+    color: #b7b7b7 !important;
+    border: none;
+}

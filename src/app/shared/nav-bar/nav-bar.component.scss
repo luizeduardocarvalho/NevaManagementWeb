@@ -1,0 +1,15 @@
+.footer {
+    height: var(--nav-bar-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5em 2em 1.5em 2em;
+    background-color: white;
+    border-radius: 1em 1em 0 0;
+    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}

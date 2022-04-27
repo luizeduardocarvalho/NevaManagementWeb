@@ -1,0 +1,106 @@
+.container {
+    --radius: 0.7rem;
+
+    width: 90vw;
+    display: grid;
+    grid-auto-rows: auto;
+}
+
+.header {
+    display: flex;
+    margin-bottom: 1em;
+}
+
+.product-button {
+    border: none;
+    background-color: var(--cl-primary);
+    color: white;
+    border-radius: 3em;
+    padding: 1em 2em 1em 2em;
+    font-size: 0.8rem;
+}
+
+.product-section {
+    margin-left: auto;
+}
+
+.back-arrow {
+    height: 100%;
+    width: 2.3em;
+    border-radius: 0.4em;
+    background-color: white;
+    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-card {
+    display: flex;
+    background-color: white;
+    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
+    border-radius: 1em;
+    padding: 1em;
+    margin-bottom: 1.5em;
+
+    &__information__title {
+        font-size: 1.2em;
+        margin-bottom: 0.6em;
+    }
+
+    &__information__location {
+        color: #6B6B6B;
+        margin-bottom: 0.2em;
+    }
+
+    &__information__quantity {
+        color: #6B6B6B;
+    }
+
+    &__button {
+        font-size: 0.8em;
+        align-self: end;
+        margin-left: auto;
+        color: var(--cl-primary);
+    }
+}
+
+.sub-title {
+    margin-bottom: 0.5em;
+}
+
+.uses-card-container {
+    overflow-y: auto;
+    height: 35vh;
+}
+
+.uses-card {
+    font-size: 0.7em;
+    display: flex;
+    flex-basis: fit-content;
+    background-color: white;
+    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
+    border-radius: 1em;
+    padding: 1em;
+    margin-bottom: 0.8em;
+}
+
+.card-user {
+    font-weight: 600;
+}
+
+.uses-information {
+    margin-left: auto;
+}
+
+.card-quantity {
+    text-align: end;
+}
+
+.product-action-button {
+    position: absolute;
+    font-size: 1em;
+    width: 80vw;
+    bottom: 14vh;
+    padding: 1em 2em 1em 2em;
+}

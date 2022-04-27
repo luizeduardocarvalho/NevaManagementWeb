@@ -1,0 +1,18 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<div class="wrapper">
+    <div class="container">
+        <div class="back-arrow">
+            <app-back-arrow></app-back-arrow>
+        </div>
+        <h2 class="page-title bold">History</h2>
+        <div class="uses-card-container">
+            <div class="uses-card" *ngFor="let use of lastProductUses">
+                <h3 class="card-product">{{ use.productName }}</h3>
+                <div class="uses-information">
+                    <p class="card-date">{{ use.usageDate | date: 'fullDate' }}</p>
+                    <p class="card-quantity">{{ use.quantity }}{{ use.unit }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

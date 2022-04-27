@@ -1,0 +1,24 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<div class="wrapper">
+    <router-outlet></router-outlet>
+    <div class="container header-container">
+        <div class="header">
+            <app-back-arrow></app-back-arrow>
+            <div class="add-container-section">
+                <button class="add-container-button" [routerLink]="['add']">Add Container</button>
+            </div>
+        </div>
+        <h2 class="page-title">Container List</h2>
+        <div class="search-bar">
+            <div class="search-icon">
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+            <input class="search-input" [(ngModel)]="searchText" name="searchText" type="text"
+                placeholder="Search a location">
+        </div>
+    </div>
+    <div class="card-container container">
+        <app-small-card *ngFor="let container of containers | search : searchText" title="{{ container.name }}"
+            url="/containers"></app-small-card>
+    </div>
+</div>

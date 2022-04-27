@@ -1,0 +1,40 @@
+.container {
+    width: var(--container-width);
+}
+
+.back-arrow {
+    height: 2.3em;
+    margin-bottom: 1em;
+}
+
+.page-title {
+    margin-bottom: 1em;
+}
+
+.uses-card-container {
+    overflow-y: auto;
+    height: 70vh;
+}
+
+.uses-card {
+    font-size: 0.7em;
+    display: flex;
+    flex-basis: fit-content;
+    background-color: white;
+    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
+    border-radius: 1em;
+    padding: 1em;
+    margin-bottom: 0.8em;
+}
+
+.card-product {
+    font-weight: 600;
+}
+
+.uses-information {
+    margin-left: auto;
+}
+
+.card-quantity {
+    text-align: end;
+}

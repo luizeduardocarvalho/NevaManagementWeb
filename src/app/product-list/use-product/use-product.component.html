@@ -1,0 +1,18 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<div class="wrapper">
+    <div class="container">
+        <div class="back-arrow">
+            <app-back-arrow></app-back-arrow>
+        </div>
+        <h2 class="page-title">Use Product</h2>
+        <form [formGroup]="useProductForm" (ngSubmit)="onSubmit()" class="form-grid">
+            <input type="text" formControlName="researcherName" class="grid-item">
+            <input type="text" formControlName="date" class="grid-item">
+            <input type="text" formControlName="productName" class="grid-item">
+            <input type="text" formControlName="quantity" class="grid-item">
+            <input type="text" formControlName="unit" class="grid-item">
+            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"></textarea>
+            <button type="submit" class="action-button">Add Quantity</button>
+        </form>
+    </div>
+</div>
