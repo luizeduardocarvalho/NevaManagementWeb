@@ -8,8 +8,9 @@
     </div>
     <div class="container form-container">
         <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="form-grid">
-            <input type="text" formControlName="name" placeholder="Name" class="grid-item">
-            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"></textarea>
+            <input type="text" formControlName="name" placeholder="Name" class="grid-item" autocomplete="off">
+            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"
+                autocomplete="off"></textarea>
             <button type="submit" class="action-button">Save</button>
         </form>
     </div>

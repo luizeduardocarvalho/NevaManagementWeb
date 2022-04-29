@@ -6,7 +6,7 @@
         </div>
         <h2 class="page-title">Add Location</h2>
         <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="form-grid">
-            <input type="text" formControlName="name" placeholder="Name" class="grid-item">
+            <input type="text" formControlName="name" placeholder="Name" class="grid-item" autocomplete="off">
             <div class="select-container">
                 <select (change)="selectLocation($event)">
                     <option value="0">No Sublocation</option>
@@ -14,7 +14,8 @@
                 </select>
                 <span class="custom-arrow"></span>
             </div>
-            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"></textarea>
+            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"
+                autocomplete="off"></textarea>
             <button type="submit" class="action-button">Add Location</button>
         </form>
     </div>

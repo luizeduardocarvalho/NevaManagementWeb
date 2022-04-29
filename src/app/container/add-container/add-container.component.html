@@ -8,8 +8,9 @@
     </div>
     <div class="container form-container">
         <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="form-grid">
-            <input type="text" formControlName="name" placeholder="Name" class="grid-item">
-            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"></textarea>
+            <input type="text" formControlName="name" placeholder="Name" class="grid-item" autocomplete="off">
+            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"
+                autocomplete="off"></textarea>
             <div class="select-container">
                 <select (change)="selectResearcher($event)">
                     <option value="0">No Researcher</option>
@@ -33,9 +34,11 @@
                 </select>
                 <span class="custom-arrow"></span>
             </div>
-            <input type="text" formControlName="cultureMedia" placeholder="Culture Media" class="grid-item">
+            <input type="text" formControlName="cultureMedia" placeholder="Culture Media" class="grid-item"
+                autocomplete="off">
             <label class="semi-bold" for="creationDate">Creation Date</label>
-            <input type="datetime-local" id="creationDate" formControlName="creationDate" class="grid-item">
+            <input type="datetime-local" id="creationDate" formControlName="creationDate" class="grid-item"
+                autocomplete="off">
             <button type="submit" class="action-button">Add Container</button>
         </form>
     </div>

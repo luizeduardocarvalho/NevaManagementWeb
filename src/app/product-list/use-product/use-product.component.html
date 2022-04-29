@@ -6,12 +6,13 @@
         </div>
         <h2 class="page-title">Use Product</h2>
         <form [formGroup]="useProductForm" (ngSubmit)="onSubmit()" class="form-grid">
-            <input type="text" formControlName="researcherName" class="grid-item">
-            <input type="text" formControlName="date" class="grid-item">
-            <input type="text" formControlName="productName" class="grid-item">
-            <input type="text" formControlName="quantity" class="grid-item">
-            <input type="text" formControlName="unit" class="grid-item">
-            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"></textarea>
+            <input type="text" formControlName="researcherName" class="grid-item" autocomplete="off">
+            <input type="text" formControlName="date" class="grid-item" autocomplete="off">
+            <input type="text" formControlName="productName" class="grid-item" autocomplete="off">
+            <input type="text" formControlName="quantity" class="grid-item" autocomplete="off">
+            <input type="text" formControlName="unit" class="grid-item" autocomplete="off">
+            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"
+                autocomplete="off"></textarea>
             <button type="submit" class="action-button">Add Quantity</button>
         </form>
     </div>

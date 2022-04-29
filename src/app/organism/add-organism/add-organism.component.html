@@ -8,23 +8,26 @@
     </div>
     <div class="container form-container">
         <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="form-grid">
-            <input type="text" formControlName="name" placeholder="Name" class="grid-item">
-            <input type="text" formControlName="type" placeholder="Type" class="grid-item">
-            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"></textarea>
+            <input type="text" formControlName="name" placeholder="Name" class="grid-item" autocomplete="off">
+            <input type="text" formControlName="type" placeholder="Type" class="grid-item" autocomplete="off">
+            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"
+                autocomplete="off"></textarea>
             <label class="semi-bold" for="collectionDate">Collection Date</label>
             <input type="datetime-local" id="collectionDate" formControlName="collectionDate"
-                placeholder="Collection Date" class="grid-item">
-            <input type="text" formControlName="collectionLocation" placeholder="Collection Location" class="grid-item">
+                placeholder="Collection Date" class="grid-item" autocomplete="off">
+            <input type="text" formControlName="collectionLocation" placeholder="Collection Location" class="grid-item"
+                autocomplete="off">
             <label class="semi-bold" for="isolationDate">Isolation Date</label>
             <input type="datetime-local" id="isolationDate" formControlName="isolationDate"
-                placeholder="dd/mm/yyyy hh:mm" class="grid-item">
+                placeholder="dd/mm/yyyy hh:mm" class="grid-item" autocomplete="off">
             <div class="select-container">
                 <select (change)="selectOrigin($event)">
                     <option value="0">No Origin</option>
                     <option *ngFor="let organism of organisms" value="{{ organism.id }}">{{ organism.name }}</option>
                 </select>
                 <span class="custom-arrow"></span>
-            </div> <input type="text" formControlName="originPart" placeholder="Part" class="grid-item">
+            </div>
+            <input type="text" formControlName="originPart" placeholder="Part" class="grid-item" autocomplete="off">
             <button type="submit" class="action-button">Add Organism</button>
         </form>
     </div>

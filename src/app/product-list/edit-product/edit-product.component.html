@@ -6,7 +6,7 @@
         </div>
         <h2 class="page-title">Edit Product</h2>
         <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="form-grid">
-            <input type="text" formControlName="name" placeholder="Name" class="grid-item">
+            <input type="text" formControlName="name" placeholder="Name" class="grid-item" autocomplete="off">
             <div class="select-container">
                 <select formControlName="location">
                     <option *ngFor="let location of locations" [ngValue]="location">
@@ -15,7 +15,8 @@
                 </select>
                 <span class="custom-arrow"></span>
             </div>
-            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"></textarea>
+            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"
+                autocomplete="off"></textarea>
             <button type="submit" class="action-button">Save</button>
         </form>
     </div>
