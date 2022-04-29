@@ -70,7 +70,7 @@ export class UseProductComponent implements OnInit {
     let form = this.useProductForm.value;
     let quantity = form.quantity;
     let description = form.description;
-    let useProduct = new UseProduct(this.user!.id, this.productId, quantity, description);
+    let useProduct = new UseProduct(this.user!.id, this.productId, quantity, description, this.product!.unit);
 
     this.isLoading = true;
 
