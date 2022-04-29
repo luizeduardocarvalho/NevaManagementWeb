@@ -13,10 +13,12 @@
             <div class="search-icon">
                 <fa-icon [icon]="faSearch"></fa-icon>
             </div>
-            <input class="search-input" [(ngModel)]="searchText" name="searchText" type="text" placeholder="Search a location">
+            <input class="search-input" [(ngModel)]="searchText" name="searchText" type="text"
+                placeholder="Search a location">
         </div>
     </div>
     <div class="container card-container">
-        <app-small-card *ngFor="let location of locations | search : searchText" title="{{ location.name }}" url="/locations/{{location.id}}/edit"></app-small-card>
+        <app-small-card *ngFor="let location of locations | search : searchText" title="{{ location.name }}"
+            url="/locations/{{location.id}}/edit" [icon]="faPen"></app-small-card>
     </div>
 </div>

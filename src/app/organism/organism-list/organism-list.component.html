@@ -19,6 +19,6 @@
     </div>
     <div class="card-container container">
         <app-small-card *ngFor="let organism of organisms | search : searchText" title="{{ organism.name }}"
-            url="/organisms/{{ organism.id }}/edit"></app-small-card>
+            url="/organisms/{{ organism.id }}/edit" [icon]="faPen"></app-small-card>
     </div>
 </div>

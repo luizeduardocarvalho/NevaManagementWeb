@@ -11,8 +11,7 @@ export class SmallCardComponent implements OnInit {
 
   @Input() title?: string;
   @Input() url?: string;
-
-  faPen = faPen as IconProp;
+  @Input() icon!: IconProp;
 
   constructor() { }
 

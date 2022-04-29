@@ -19,6 +19,6 @@
     </div>
     <div class="container card-container">
         <app-small-card *ngFor="let product of products | search : searchText" title="{{ product.name }}"
-            url="/products/{{product.id}}"></app-small-card>
+            url="/products/{{product.id}}" [icon]="faReceipt"></app-small-card>
     </div>
 </div>

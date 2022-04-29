@@ -19,6 +19,6 @@
     </div>
     <div class="card-container container">
         <app-small-card *ngFor="let container of containers | search : searchText" title="{{ container.name }}"
-            url="/containers"></app-small-card>
+            url="/containers" [icon]="faPen"></app-small-card>
     </div>
 </div>

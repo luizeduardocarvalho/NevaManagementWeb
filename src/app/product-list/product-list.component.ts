@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faAngleLeft, faPen, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faReceipt, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { GetProduct } from 'src/models/product/get-product.dto';
 import { ProductService } from 'src/services/product.service';
 
@@ -12,7 +12,7 @@ export class ProductListComponent implements OnInit {
 
   faAngleLeft = faAngleLeft as IconProp;
   faSearch = faSearch as IconProp;
-  faPen = faPen as IconProp;
+  faReceipt = faReceipt as IconProp;
 
   products: GetProduct[] = [];
   searchText: string = '';
