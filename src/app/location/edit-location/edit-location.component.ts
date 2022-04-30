@@ -12,7 +12,7 @@ import { ToastService } from 'src/services/toast.service';
   styleUrls: ['./edit-location.component.scss']
 })
 export class EditLocationComponent implements OnInit {
-  
+
   editLocationForm = new FormGroup({
     name: new FormControl(null),
     subLocation: new FormControl(),
@@ -52,7 +52,7 @@ export class EditLocationComponent implements OnInit {
             let selectedLocation = this.locations[0];
 
             if (this.location.subLocationId != null) {
-              selectedLocation = this.locations[this.location.subLocationId];
+              selectedLocation = this.locations.filter(x => x.id == this.location?.subLocationId)[0];
             }
 
             this.fillForm(this.location, selectedLocation);
