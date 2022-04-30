@@ -95,6 +95,7 @@ export class EditLocationComponent implements OnInit {
           });
 
           this.toastService.show(message, 'Error', true);
+          this.isLoading = false;
         }
       },
       () => this.isLoading = false
