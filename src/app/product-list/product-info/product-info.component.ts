@@ -12,7 +12,7 @@ export class ProductInfoComponent implements OnInit {
   isLoading = false;
 
   productId = 0;
-  product!: GetDetailedProduct;
+  product?: GetDetailedProduct;
 
   constructor(
     private productService: ProductService,
