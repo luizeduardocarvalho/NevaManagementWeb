@@ -23,16 +23,16 @@ const httpOptions = {
 export class ProductService {
   [x: string]: any;
 
-  url = baseUrl + 'product/';
+  url = baseUrl + 'Product/';
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<GetProduct[]> {
-    return this.http.get<GetProduct[]>(this.url + 'getall');
+    return this.http.get<GetProduct[]>(this.url + 'GetAll');
   }
 
-  create(product: CreateProductDto): Observable<boolean> {
-    return this.http.post<boolean>(this.url + 'create', product);
+  create(product: CreateProductDto): Observable<unknown> {
+    return this.http.post<boolean>(this.url + 'Create', product, { observe: 'response' });
   }
 
   getProductById(id: number): Observable<GetProduct> {
