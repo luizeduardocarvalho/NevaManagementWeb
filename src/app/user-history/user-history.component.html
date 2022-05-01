@@ -1,17 +1,25 @@
 <app-spinner [isLoading]="isLoading"></app-spinner>
 <div class="wrapper">
-    <div class="container">
-        <div class="back-arrow">
+    <div class="container header-container">
+        <div class="header">
             <app-back-arrow></app-back-arrow>
+            <button class="add-history-button">History</button>
         </div>
         <h2 class="page-title bold">History</h2>
-        <div class="uses-card-container">
-            <div class="uses-card" *ngFor="let use of lastProductUses">
-                <h3 class="card-product">{{ use.productName }}</h3>
-                <div class="uses-information">
-                    <p class="card-date">{{ use.usageDate | date: 'fullDate' }}</p>
-                    <p class="card-quantity">{{ use.quantity }}{{ use.unit }}</p>
-                </div>
+        <div class="search-bar">
+            <div class="search-icon">
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+            <input class="search-input" [(ngModel)]="searchText" name="searchText" type="text"
+                placeholder="Search a product" autocomplete="off">
+        </div>
+    </div>
+    <div class="container card-container">
+        <div class="uses-card" *ngFor="let use of lastProductUses | search : searchText">
+            <h3 class="bold">{{ use.name }}</h3>
+            <div class="uses-information">
+                <p class="card-date">{{ use.usageDate | date: 'fullDate' }}</p>
+                <p class="card-quantity">{{ use.quantity }}{{ use.unit }}</p>
             </div>
         </div>
     </div>

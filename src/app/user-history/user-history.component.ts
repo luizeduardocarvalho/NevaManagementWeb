@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { ProductUsage } from 'src/models/product-usage/product-usage';
 import { ProductUsageService } from 'src/services/product-usage.service';
 import { UserService } from 'src/services/user.service';
@@ -9,9 +11,12 @@ import { UserService } from 'src/services/user.service';
 })
 export class UserHistoryComponent implements OnInit {
 
-  lastProductUses?: ProductUsage[];
+  faSearch = faSearch as IconProp;
+
+  lastProductUses: ProductUsage[] = [];
 
   isLoading = false;
+  searchText = '';
 
   constructor(
     private productUsageService: ProductUsageService,
@@ -26,6 +31,7 @@ export class UserHistoryComponent implements OnInit {
       .getLastUsesByResearcher(user.id)
       .subscribe((lastProductUses: ProductUsage[]) => {
         this.lastProductUses = lastProductUses;
+        console.log(lastProductUses);
         this.isLoading = false;
       });
   }

@@ -1,19 +1,18 @@
 export class ProductUsage {
-    productName: string;
+    name: string;
     usageDate: Date;
     quantity: number;
     unit: string;
 
-
     constructor(
-        productName: string,
+        name: string,
         usageDate: Date,
         quantity: number,
         unit: string
     ) {
-        this.productName = productName
-        this.usageDate = usageDate
-        this.quantity = quantity
-        this.unit = unit
+        this.name = name;
+        this.usageDate = usageDate;
+        this.quantity = quantity;
+        this.unit = unit;
     }
 }
