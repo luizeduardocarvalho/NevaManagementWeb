@@ -12,11 +12,11 @@ import { ToastService } from 'src/services/toast.service';
 export class AddProductComponent implements OnInit {
 
   createForm = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-    quantity: new FormControl(''),
-    unit: new FormControl(''),
-    locationId: new FormControl('')
+    name: new FormControl(null),
+    description: new FormControl(null),
+    quantity: new FormControl(0),
+    unit: new FormControl(null),
+    locationId: new FormControl(null)
   });
 
   isLoading = false;
@@ -49,10 +49,12 @@ export class AddProductComponent implements OnInit {
               message = errorMessage;
             })
           });
-
-          this.toastService.show(message, 'Error', true);
-          this.isLoading = false;
+        } else {
+          message = err.error;
         }
+
+        this.toastService.show(message, 'Error', true);
+        this.isLoading = false;
       },
       () => this.isLoading = false
     );
