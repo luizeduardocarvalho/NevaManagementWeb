@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { ToastComponent } from './toast/toast.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { FormulaAndNameSearchPipe } from 'src/pipes/formula-searcher.pipe';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     BackArrowComponent,
     ToastComponent,
     SearchPipe,
+    FormulaAndNameSearchPipe,
     SpinnerComponent,
   ],
   imports: [
@@ -38,6 +40,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     ToastComponent,
     SmallCardComponent,
     SearchPipe,
+    FormulaAndNameSearchPipe,
     SpinnerComponent
   ]
 })
