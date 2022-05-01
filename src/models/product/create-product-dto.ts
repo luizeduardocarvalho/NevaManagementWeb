@@ -4,4 +4,5 @@ export interface CreateProductDto {
     locationId: number | null;
     unit: string;
     quantity: number;
+    formula: string;
 }

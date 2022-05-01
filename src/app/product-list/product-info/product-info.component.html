@@ -9,7 +9,7 @@
         </div>
         <div class="product-card">
             <div class="product-card__information">
-                <h2 class="product-card__information__title">{{ product?.name }}</h2>
+                <h2 class="product-card__information__title">{{ product?.name }} {{ product?.formula }}</h2>
                 <p class="product-card__information__location">{{ product?.location?.name }}</p>
                 <p class="product-card__information__quantity">{{ product?.quantity }}{{ product?.unit | lowercase }}</p>
                 <p class="product-card__information__description">{{ product?.description }}</p>

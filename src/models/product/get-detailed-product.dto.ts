@@ -7,6 +7,7 @@ export class GetDetailedProduct {
     location: GetLocation;
     quantity: number;
     unit: string;
+    formula: string;
 
     constructor(
         id: number,
@@ -14,7 +15,8 @@ export class GetDetailedProduct {
         description: string,
         location: GetLocation,
         quantity: number,
-        unit: string) 
+        unit: string,
+        formula: string) 
         {
             this.id = id;
             this.name = name;
@@ -22,5 +24,6 @@ export class GetDetailedProduct {
             this.location = location;
             this.quantity = quantity;
             this.unit = unit;
+            this.formula = formula;
         }
 }

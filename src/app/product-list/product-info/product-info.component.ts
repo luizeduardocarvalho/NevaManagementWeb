@@ -29,6 +29,11 @@ export class ProductInfoComponent implements OnInit {
       .getDetailedProductById(this.productId)
       .subscribe((product: GetDetailedProduct) => {
         this.product = product;
+
+        if(product.formula != null) {
+          this.product.formula = '(' + product.formula + ')';
+        }
+
         this.isLoading = false;
       }
     );

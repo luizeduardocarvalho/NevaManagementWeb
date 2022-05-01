@@ -7,6 +7,7 @@
         <h2 class="page-title">Edit Product</h2>
         <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="form-grid">
             <input type="text" formControlName="name" placeholder="Name" class="grid-item" autocomplete="off">
+            <input type="text" formControlName="formula" placeholder="Formula" class="grid-item" autocomplete="off">
             <div class="select-container">
                 <select formControlName="location">
                     <option *ngFor="let location of locations" [ngValue]="location">

@@ -18,7 +18,8 @@ export class EditProductComponent implements OnInit {
   editForm = new FormGroup({
     name: new FormControl(''),
     description: new FormControl(''),
-    location: new FormControl()
+    location: new FormControl(),
+    formula: new FormControl(null)
   });
 
   productId = 0;
@@ -70,7 +71,8 @@ export class EditProductComponent implements OnInit {
     this.editForm = new FormGroup({
       name: new FormControl(product.name),
       description: new FormControl(product.description),
-      location: new FormControl(selectedLocation)
+      location: new FormControl(selectedLocation),
+      formula: new FormControl(product.formula)
     });
   }
 
