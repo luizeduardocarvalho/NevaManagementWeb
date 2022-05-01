@@ -8,6 +8,7 @@ export class GetDetailedProduct {
     quantity: number;
     unit: string;
     formula: string;
+    expirationDate: Date;
 
     constructor(
         id: number,
@@ -16,14 +17,15 @@ export class GetDetailedProduct {
         location: GetLocation,
         quantity: number,
         unit: string,
-        formula: string) 
-        {
-            this.id = id;
-            this.name = name;
-            this.description = description;
-            this.location = location;
-            this.quantity = quantity;
-            this.unit = unit;
-            this.formula = formula;
-        }
+        formula: string,
+        expirationDate: Date) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.location = location;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.formula = formula;
+        this.expirationDate = expirationDate;
+    }
 }

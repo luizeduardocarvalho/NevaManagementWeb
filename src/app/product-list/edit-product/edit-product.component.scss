@@ -1,13 +1,12 @@
-.container {
-    width: 90vw;
+.header-container {
+    width: var(--container-width);
+    height: 15vh;
+    display: grid;
+    margin-bottom: 1em;
 }
 
 .back-arrow {
     height: 2.3em;
-    margin-bottom: 1em;
-}
-
-.page-title {
     margin-bottom: 1em;
 }
 
@@ -16,18 +15,22 @@
 }
 
 .grid-item {
-    margin-bottom: 1em;
+    margin-bottom: 0.7em;
     border: none;
     border-radius: 1em;
     box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
     padding: 0.8em;
 }
 
+.form-container {
+    overflow-y: auto;
+    width: var(--container-width);
+    height: 65vh;
+    padding-bottom: 1em;
+}
+
 .action-button {
-    position: absolute;
     font-size: 1em;
-    width: 80vw;
-    bottom: 14vh;
     padding: 1em 2em 1em 2em;    
     border: none;
     background-color: var(--cl-primary);

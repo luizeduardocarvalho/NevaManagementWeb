@@ -5,4 +5,5 @@ export interface CreateProductDto {
     unit: string;
     quantity: number;
     formula: string;
+    expirationDate: Date;
 }

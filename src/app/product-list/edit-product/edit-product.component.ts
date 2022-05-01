@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
-import { CreateProductDto } from 'src/models/product/create-product-dto';
 import { EditProduct } from 'src/models/product/edit-product.dto';
 import { GetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
 import { LocationService } from 'src/services/location.service';
@@ -19,7 +18,8 @@ export class EditProductComponent implements OnInit {
     name: new FormControl(''),
     description: new FormControl(''),
     location: new FormControl(),
-    formula: new FormControl(null)
+    formula: new FormControl(null),
+    expirationDate: new FormControl()
   });
 
   productId = 0;
@@ -72,7 +72,8 @@ export class EditProductComponent implements OnInit {
       name: new FormControl(product.name),
       description: new FormControl(product.description),
       location: new FormControl(selectedLocation),
-      formula: new FormControl(product.formula)
+      formula: new FormControl(product.formula),
+      expirationDate: new FormControl(product.expirationDate)
     });
   }
 
