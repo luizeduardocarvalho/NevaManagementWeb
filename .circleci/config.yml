@@ -1,0 +1,30 @@
+version: 2.1
+orbs:
+  heroku: circleci/heroku@1.2.6
+  
+jobs:
+  build:
+    working_directory: ~/nevamanagement-web
+    docker:
+      - image: cimg/node:16.13.1-browsers
+    steps:
+      - checkout
+      - run: 
+          command: npm install
+
+  deploy:
+    docker:
+      - image: cimg/node:16.13.1-browsers
+    steps:
+      - heroku/deploy-via-git
+
+workflows:
+  heroku_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
