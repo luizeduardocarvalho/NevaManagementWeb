@@ -8,12 +8,10 @@
             </div>
         </div>
         <div class="product-card">
-            <div class="product-card__information">
-                <h2 class="product-card__information__title bold">{{ product?.name }}</h2>
-                <p class="product-card__information__location">{{ product?.location?.name }}</p>
-                <p class="product-card__information__quantity">{{ product?.quantity }} {{ product?.unit }}</p>
-            </div>
+            <h2 class="product-card__title bold">{{ product?.name }}</h2>
+            <p class="product-card__location">{{ product?.location?.name }}</p>
             <div class="product-card__button">
+                <p class="product-card__quantity">{{ product?.quantity }} {{ product?.unit }}</p>
                 <a [routerLink]="['info']">
                     <p>More Info</p>
                 </a>
@@ -22,7 +20,7 @@
         <h2 class="sub-title bold">Last Uses</h2>
         <div class="uses-card-container">
             <div class="uses-card" *ngFor="let use of lastUses">
-                <h3 class="card-user">{{ use.researcherName }}</h3>
+                <h3 class="card-user bold">{{ use.researcherName }}</h3>
                 <div class="uses-information">
                     <p class="card-date">{{ use.useDate | date: 'mediumDate' }}</p>
                     <p class="card-quantity">{{ use.quantity }} {{ use.unit }}</p>

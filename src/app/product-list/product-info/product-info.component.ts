@@ -13,6 +13,7 @@ export class ProductInfoComponent implements OnInit {
 
   productId = 0;
   product?: GetDetailedProduct;
+  isExpired = false;
 
   constructor(
     private productService: ProductService,
@@ -29,7 +30,8 @@ export class ProductInfoComponent implements OnInit {
       .getDetailedProductById(this.productId)
       .subscribe((product: GetDetailedProduct) => {
         this.product = product;
-
+        this.isExpired = new Date(product.expirationDate) <= new Date();
+        
         if(product.formula != null) {
           this.product.formula = '(' + product.formula + ')';
         }
