@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faPen, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faReceipt, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { GetSimpleContainer } from 'src/models/container/get-simple-container.dto';
 import { ContainerService } from 'src/services/container.service';
 
@@ -11,7 +11,7 @@ import { ContainerService } from 'src/services/container.service';
 export class ContainerListComponent implements OnInit {
 
   faSearch = faSearch as IconProp;
-  faPen = faPen as IconProp;
+  faReceipt = faReceipt as IconProp;
 
   containers: GetSimpleContainer[] = [];
   searchText = '';

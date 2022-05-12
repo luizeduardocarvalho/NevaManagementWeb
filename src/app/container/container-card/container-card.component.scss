@@ -1,0 +1,80 @@
+.container {
+    --radius: 0.7rem;
+  
+    width: 90vw;
+    display: grid;
+    grid-auto-rows: auto;
+  }
+  
+  .header {
+    display: flex;
+    margin-bottom: 1em;
+  }
+  
+  .container-button {
+    border: none;
+    background-color: var(--cl-primary);
+    color: white;
+    border-radius: 3em;
+    padding: 1em 2em 1em 2em;
+    font-size: 0.8rem;
+  }
+  
+  .container-section {
+    margin-left: auto;
+  }
+  
+  .container-card {
+    display: grid;
+    background-color: white;
+    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
+    border-radius: 1em;
+    padding: 1em;
+    margin-bottom: 1.5em;
+  
+    &__button {
+      display: flex;
+  
+      &>a {
+        margin-left: auto;
+      }
+    }
+  }
+  
+  .sub-title {
+    margin-bottom: 0.5em;
+  }
+  
+  .children-container {
+    overflow-y: auto;
+    height: 40vh;
+  }
+  
+  .uses-information {
+    margin-left: auto;
+  }
+  
+  .card-quantity {
+    text-align: end;
+  }
+  
+  .container-action-button {
+    position: absolute;
+    font-size: 1em;
+    width: 80vw;
+    bottom: 14vh;
+    padding: 1em 2em 1em 2em;
+  }
+  
+  @media (min-height: 670px) {
+    .children-container {
+      height: 45vh;
+    }
+  }
+  
+  @media (min-height: 800px) {
+    .children-container {
+      height: 50vh;
+    }
+  }
+  

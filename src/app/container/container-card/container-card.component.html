@@ -1,0 +1,26 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<div class="wrapper">
+    <div class="container">
+        <div class="header">
+            <app-back-arrow></app-back-arrow>
+            <div class="container-section">
+                <button class="container-button" [routerLink]="['add-quantity']">Edit Container</button>
+            </div>
+        </div>
+        <div class="container-card">
+            <h2 class="container-card__title bold">{{ container?.name }}</h2>
+            <p class="container-card__location">{{ container?.creationDate | date : 'mediumDate' }}</p>
+            <div class="container-card__button">
+                <p class="container-card__quantity">{{ container?.researcherName }}</p>
+                <a [routerLink]="['info']">
+                    <p>More Info</p>
+                </a>
+            </div>
+        </div>
+        <h2 class="sub-title bold">Last Uses</h2>
+        <div class="children-container">
+            <app-small-card *ngFor="let container of childrenContainers | search : searchText" title="{{ container.name }}"
+            url="/containers/{{ container.id }}" [icon]="faReceipt"></app-small-card>
+        </div>
+    </div>
+</div>

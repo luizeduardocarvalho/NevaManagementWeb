@@ -47,7 +47,7 @@
 
 .uses-card-container {
   overflow-y: auto;
-  height: 30vh;
+  height: 26vh;
 }
 
 .uses-card {
@@ -75,4 +75,16 @@
   width: 80vw;
   bottom: 14vh;
   padding: 1em 2em 1em 2em;
+}
+
+@media (min-height: 670px) {
+  .uses-card-container {
+    height: 30vh;
+  }
+}
+
+@media (min-height: 800px) {
+  .uses-card-container {
+    height: 36vh;
+  }
 }
