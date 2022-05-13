@@ -1,25 +1,36 @@
 version: 2.1
+
 orbs:
   heroku: circleci/heroku@1.2.6
   
 jobs:
   build:
-    working_directory: ~/nevamanagement-web
     docker:
-      - image: cimg/node:16.13.1-browsers
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
+      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip=9.0.0-r1
+            pip install \
+              docker-compose==1.12.0 \
+              awscli==1.11.76
       - run: 
-          command: npm install
+          name: Build Image
+          command: docker build --no-cache --pull --rm -f "Dockerfile" -t nevamanagementweb:latest .
   deploy:
     docker:
-      - image: cimg/node:16.13.1-browsers
+      - image: docker:17.05.0-ce-git  
     steps:
       - checkout
       - run:
-          name: Deploy Main to Heroku
+          name: Deploy Container to Heroku
           command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
+            docker tag nevamanagement-web registry.heroku.com/$HEROKU_APP_NAME/web
+            docker push registry.heroku.com/$HEROKU_APP_NAME/web
 
 workflows:
   heroku_deploy:
