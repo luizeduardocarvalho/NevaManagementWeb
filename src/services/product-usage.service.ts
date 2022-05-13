@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { baseUrl } from 'settings';
 import { GetLastProduct } from "src/models/product-usage/get-last-product.dto";
 import { GetLastUseByProduct } from "src/models/product-usage/get-last-use-by-product.dto";
-import { ProductUsage } from "src/models/product-usage/product-usage";
+import { ProductUsage } from "src/models/product-usage/product-usage.dto";
 
 @Injectable({
     providedIn: 'root'

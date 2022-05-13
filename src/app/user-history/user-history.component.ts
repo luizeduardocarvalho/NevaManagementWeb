@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { ProductUsage } from 'src/models/product-usage/product-usage';
+import { ProductUsage } from 'src/models/product-usage/product-usage.dto';
 import { ProductUsageService } from 'src/services/product-usage.service';
 import { UserService } from 'src/services/user.service';
 
