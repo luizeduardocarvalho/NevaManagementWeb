@@ -7,7 +7,7 @@ jobs:
   build:
     working_directory: ~/nevamanagement-web
     docker:
-      - image: node:16.13.0-alpine
+      - image: node:16.13.0
     steps:
       - checkout
       - run:
