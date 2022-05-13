@@ -31,7 +31,6 @@ export class UserHistoryComponent implements OnInit {
       .getLastUsesByResearcher(user.id)
       .subscribe((lastProductUses: ProductUsage[]) => {
         this.lastProductUses = lastProductUses;
-        console.log(lastProductUses);
         this.isLoading = false;
       });
   }
