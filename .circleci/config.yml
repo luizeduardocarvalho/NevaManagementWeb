@@ -20,7 +20,7 @@ jobs:
               awscli==1.11.76
       - run: 
           name: Build Image
-          command: docker build -t nevamanagement-web .
+          command: docker build --no-cache --pull --rm -f "Dockerfile" -t nevamanagementweb:latest .
   deploy:
     docker:
       - image: docker:17.05.0-ce-git  
