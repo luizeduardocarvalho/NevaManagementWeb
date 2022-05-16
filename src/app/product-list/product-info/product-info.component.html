@@ -14,7 +14,7 @@
         <p class="product-card__information__quantity">{{ product?.quantity }}{{ product?.unit | lowercase }}</p>
         <p class="product-card__information__expiration-date"
           [ngStyle]="isExpired ? {'color': 'red'} : {'color': 'black'}">
-          {{ product?.expirationDate | date :'shortDate'}}
+          {{ product?.expirationDate | date :'fullDate' }}
         </p>
         <p class="product-card__information__description">{{ product?.description }}</p>
       </div>
