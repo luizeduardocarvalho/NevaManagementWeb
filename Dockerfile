@@ -8,9 +8,11 @@ RUN npm install
 
 COPY . .
 
+RUN npm run build
+
 FROM nginx:1.21-alpine
 
-COPY --from=node /usr/src/app/dist/nevamanagement-web /usr/share/nginx/html
+COPY --from=node /usr/src/app/dist /usr/share/nginx/html
 
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
