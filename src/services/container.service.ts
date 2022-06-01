@@ -23,12 +23,15 @@ export class ContainerService {
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   getContainers(): Observable<GetSimpleContainer[]> {
-    return this.http.get<GetSimpleContainer[]>(this.url + 'GetContainers');
+    return this.http.get<GetSimpleContainer[]>(this.url + 'GetContainers', {
+      headers: this.httpOptions.headers,
+    });
   }
 
   addContainer(addContainer: AddContainer): Observable<any> {
     return this.http.post<any>(this.url + 'AddContainer', addContainer, {
       observe: 'response',
+      headers: this.httpOptions.headers,
     });
   }
 
