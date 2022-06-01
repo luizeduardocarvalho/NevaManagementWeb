@@ -1,0 +1,13 @@
+<div class="wrapper">
+    <div class="form-section">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" class="text-center border border-light p-5">
+        <p class="h4 mb-4">Sign in</p>
+        <input type="email" formControlName="email" id="defaultLoginFormEmail" class="form-control mb-4"
+          placeholder="E-mail" autocomplete="off">
+        <input type="password" formControlName="password" id="defaultLoginFormPassword" class="form-control mb-4"
+          placeholder="Password" autocomplete="off">
+        <button color="info" class="my-4 action-button" type="submit">Sign in</button>
+        <!-- <p>Don't have an account? <a [routerLink]="['/register']">Register</a></p> -->
+      </form>
+    </div>
+  </div>

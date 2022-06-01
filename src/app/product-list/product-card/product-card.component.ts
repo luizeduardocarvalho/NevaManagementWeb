@@ -4,7 +4,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { GetLastUseByProduct } from 'src/models/product-usage/get-last-use-by-product.dto';
 import { GetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
-import { User } from 'src/models/user';
+import { User } from 'src/models/user/user';
 import { ProductUsageService } from 'src/services/product-usage.service';
 import { ProductService } from 'src/services/product.service';
 import { UserService } from 'src/services/user.service';

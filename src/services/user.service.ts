@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
-import { User } from "src/models/user";
+import { User } from "src/models/user/user";
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
+    constructor() {}
+    
     getUser(): User {
-        localStorage.setItem('user', '{"id": 1, "name": "Maria Victoria"}');
         return JSON.parse(localStorage.getItem('user') as string);
     }
 }

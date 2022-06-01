@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
-import { User } from 'src/models/user';
+import { User } from 'src/models/user/user';
 import { ProductService } from 'src/services/product.service';
 import { UserService } from 'src/services/user.service';
 import { DatePipe } from '@angular/common';

@@ -1,28 +1,27 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { baseUrl } from 'settings';
-import { GetSimpleResearcher } from 'src/models/researcher/get-simple-researcher.dto';
+import { LoginUserDto } from 'src/models/user/login-user.dto';
+
+import { User } from 'src/models/user/user';
 import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ResearcherService {
+export class AuthService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
       Authorization: `${this.tokenService.getToken()}`,
     }),
   };
 
-  url = baseUrl + 'Researcher/';
-
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
-  getResearchers(): Observable<GetSimpleResearcher[]> {
-    return this.http.get<GetSimpleResearcher[]>(this.url + 'GetResearchers', {
-      headers: this.httpOptions.headers,
-    });
+  login(user: LoginUserDto): Observable<User> {
+    return this.http.post<User>(baseUrl + 'auth/login', user, this.httpOptions);
   }
 }

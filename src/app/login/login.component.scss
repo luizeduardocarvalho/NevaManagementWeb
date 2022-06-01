@@ -1,0 +1,15 @@
+.wrapper {
+    display: grid;
+    height: 100vh;
+    align-items: center;
+    padding: 1em 1em 1.5em 1em;
+}
+
+.action-button {
+    font-size: 1em;
+    padding: 0.8em 2em 0.8em 2em;    
+    border: none;
+    background-color: var(--cl-primary);
+    color: white;
+    border-radius: 3em;
+}

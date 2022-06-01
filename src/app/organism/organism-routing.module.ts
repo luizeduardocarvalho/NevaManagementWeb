@@ -6,18 +6,19 @@ import { OrganismListComponent } from './organism-list/organism-list.component';
 import { OrganismComponent } from './organism.component';
 
 const routes: Routes = [
-  { 
-    path: '', 
-    component: OrganismComponent, 
+  {
+    path: '',
+    component: OrganismComponent,
     children: [
       { path: '', component: OrganismListComponent },
       { path: ':id/edit', component: EditOrganismComponent },
-      { path: 'add', component: AddOrganismComponent }
-    ] },
+      { path: 'add', component: AddOrganismComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class OrganismRoutingModule { }
+export class OrganismRoutingModule {}
