@@ -71,12 +71,10 @@ export class AddProductComponent implements OnInit {
               message = errorMessage;
             })
           });
-        } else {
-          message = err.error;
-        }
 
-        this.toastService.show(message, 'Error', true);
-        this.isLoading = false;
+          this.toastService.show(message, 'Error', true);
+          this.isLoading = false;
+        }
       },
       () => this.isLoading = false
     );
