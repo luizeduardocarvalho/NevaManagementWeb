@@ -16,7 +16,7 @@ export class AddProductComponent implements OnInit {
   createForm = new FormGroup({
     name: new FormControl(null),
     description: new FormControl(null),
-    quantity: new FormControl(0),
+    quantity: new FormControl(null),
     unit: new FormControl(null),
     locationId: new FormControl(null),
     formula: new FormControl(null),
