@@ -1,0 +1,123 @@
+.header-container {
+    width: var(--container-width);
+    height: var(--header-container-height);
+    display: grid;
+    grid-auto-rows: min-content;
+    margin-bottom: 1em;
+    align-content: space-between;
+}
+
+.header {
+    display: flex;
+    margin-bottom: 1em;
+}
+
+.add-equipment-button {
+    border: none;
+    background-color: var(--cl-primary);
+    color: white;
+    border-radius: 3em;
+    padding: 1em 2em 1em 2em;
+    font-size: 0.8rem;
+}
+
+.add-equipment-section {
+    margin-left: auto;
+}
+
+.equipment-card {
+    background-color: white;
+    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
+    border-radius: 1em;
+    padding: 1em 1em 0 1em;
+    margin-bottom: 1em;
+    
+    &__information {
+        font-size: 1.2em;
+        margin-bottom: 0.8em;
+        display: grid;
+        align-items: center;
+
+        &__description {
+            color: #6B6B6B;
+        }
+
+        &__info {
+            margin-left: auto;
+            align-self: end;
+        }
+    }
+}
+
+
+.calendar {
+    width: var(--container-width);
+    height: 28vh;
+    overflow-y: auto;
+    padding-bottom: 1em;
+
+    &__title {
+        margin-bottom: 0.5em;
+    }
+
+    &__month {
+        background-color: var(--cl-primary);
+        border-radius: 3em;
+        padding-left: 1em;
+        color: white;
+        margin-bottom: 0.4em;
+    }
+
+    &__day {
+        background-color: #989ad6;
+        border-radius: 3em;
+        padding-left: 2em;
+        color: white;
+        margin-bottom: 0.4em;
+    }
+
+    &__time {
+        padding-left: 3em;
+        margin-bottom: 0.2em;
+    }
+}
+
+.button-container {
+    display: flex;
+    height: 5vh;
+    width: var(--container-width);
+    position: absolute;
+    justify-content: space-between;
+    bottom: 14vh;
+}
+
+.action-button {
+    height: 2.5em;
+    width: 45%;
+    border: none;
+    padding: 0.5em;
+    background-color: var(--cl-primary);
+    color: white;
+    border-radius: 3em;
+}
+
+@media (min-height: 670px) {
+    .calendar {
+        margin-top: 1em;
+        height: 36vh;
+    }
+}
+
+@media (min-height: 890px) {
+    .calendar {
+        margin-top: 1em;
+        height: 38vh;
+    }
+}
+
+@media (max-width: 360px) {
+    .calendar {
+        margin-top: 1em;
+        height: 28vh;
+    }
+}

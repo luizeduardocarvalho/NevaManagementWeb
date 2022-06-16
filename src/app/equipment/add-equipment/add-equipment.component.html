@@ -1,0 +1,28 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<div class="wrapper">
+  <div class="container header-container">
+    <div class="back-arrow">
+      <app-back-arrow></app-back-arrow>
+    </div>
+    <h2 class="page-title bold">Add Equipment</h2>
+  </div>
+  <div class="container form-container">
+    <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="form-grid">
+      <input
+        type="text"
+        formControlName="name"
+        placeholder="Name"
+        class="grid-item"
+        autocomplete="off"
+      />
+      <textarea
+        type="text"
+        formControlName="description"
+        placeholder="Description"
+        class="grid-item"
+        autocomplete="off"
+      ></textarea>
+      <button type="submit" class="action-button">Add Equipment</button>
+    </form>
+  </div>
+</div>

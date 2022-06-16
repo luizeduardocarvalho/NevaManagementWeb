@@ -1,1 +1,24 @@
-<p>equipment-list works!</p>
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<div class="wrapper">
+    <router-outlet></router-outlet>
+    <div class="container header-equipment">
+        <div class="header">
+            <app-back-arrow></app-back-arrow>
+            <div class="add-equipment-section">
+                <button class="add-equipment-button" [routerLink]="['add']">Add Equipment</button>
+            </div>
+        </div>
+        <h2 class="page-title">Equipment List</h2>
+        <div class="search-bar">
+            <div class="search-icon">
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+            <input class="search-input" [(ngModel)]="searchText" name="searchText" type="text"
+                placeholder="Search a location" autocomplete="off">
+        </div>
+    </div>
+    <div class="card-equipment container">
+        <app-small-card *ngFor="let equipment of equipments | search : searchText" title="{{ equipment.name }}"
+            url="/equipment/{{ equipment.id }}" [icon]="faReceipt"></app-small-card>
+    </div>
+</div>

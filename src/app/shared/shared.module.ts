@@ -9,8 +9,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { ToastComponent } from './toast/toast.component';
 import { SpinnerComponent } from './spinner/spinner.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormulaAndNameSearchPipe } from 'src/pipes/formula-searcher.pipe';
+import { NumberToMonthNamePipe } from 'src/pipes/number-to-month-name.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FormulaAndNameSearchPipe } from 'src/pipes/formula-searcher.pipe';
     SearchPipe,
     FormulaAndNameSearchPipe,
     SpinnerComponent,
+    NumberToMonthNamePipe,
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,7 @@ import { FormulaAndNameSearchPipe } from 'src/pipes/formula-searcher.pipe';
     ReactiveFormsModule,
     FontAwesomeModule,
     RouterModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   exports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { FormulaAndNameSearchPipe } from 'src/pipes/formula-searcher.pipe';
     SmallCardComponent,
     SearchPipe,
     FormulaAndNameSearchPipe,
-    SpinnerComponent
-  ]
+    SpinnerComponent,
+    NumberToMonthNamePipe,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

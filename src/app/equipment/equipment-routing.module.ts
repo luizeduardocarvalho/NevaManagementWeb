@@ -1,20 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
+import { EditEquipmentComponent } from './edit-equipment/edit-equipment.component';
+import { EquipmentCardComponent } from './equipment-card/equipment-card.component';
+import { EquipmentInfoComponent } from './equipment-info/equipment-info.component';
 import { EquipmentListComponent } from './equipment-list/equipment-list.component';
 import { EquipmentComponent } from './equipment/equipment.component';
 
 const routes: Routes = [
-  { 
+  {
     path: '',
     component: EquipmentComponent,
     children: [
-      { path: '', component: EquipmentListComponent }
-    ]
-  }
+      { path: '', component: EquipmentListComponent },
+      { path: 'add', component: AddEquipmentComponent },
+      { path: ':id', component: EquipmentCardComponent },
+      { path: ':id/info', component: EquipmentInfoComponent },
+      { path: ':id/edit', component: EditEquipmentComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class EquipmentRoutingModule { }
+export class EquipmentRoutingModule {}

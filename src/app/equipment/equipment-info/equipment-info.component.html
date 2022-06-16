@@ -1,0 +1,21 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<div class="wrapper">
+  <div class="container header-container">
+    <div class="back-arrow">
+      <app-back-arrow></app-back-arrow>
+    </div>
+    <h2 class="page-title bold">Equipment Info</h2>
+  </div>
+  <div class="container card-container">
+    <div class="equipment-card">
+        <div class="equipment-card__information">
+          <h2 class="semi-bold equipment-card__information__title">
+            {{ equipment?.name }}
+          </h2>
+          <p class="equipment-card__information__description">
+            {{ equipment?.description }}
+          </p>
+        </div>
+      </div>
+  </div>
+</div>

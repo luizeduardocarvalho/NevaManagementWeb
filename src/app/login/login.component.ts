@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       (data: User) => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       },
       (err: any) => {
         this.toastService.show(err.error, 'Error', true);
