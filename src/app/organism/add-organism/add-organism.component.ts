@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AddOrganism } from 'src/models/organism/add-organism.dto';
-import { GetDetailedOrganism } from 'src/models/organism/get-detailed-organism.dto';
 import { GetSimpleOrganism } from 'src/models/organism/get-simple-organism.dto';
 import { OrganismService } from 'src/services/organism.service';
 import { ToastService } from 'src/services/toast.service';
 
 @Component({
   templateUrl: './add-organism.component.html',
-  styleUrls: ['./add-organism.component.scss']
+  styleUrls: ['./add-organism.component.scss'],
 })
 export class AddOrganismComponent implements OnInit {
-
   createForm = new FormGroup({
     name: new FormControl(''),
     type: new FormControl(''),
@@ -20,7 +18,7 @@ export class AddOrganismComponent implements OnInit {
     collectionDate: new FormControl(''),
     collectionLocation: new FormControl(''),
     isolationDate: new FormControl(''),
-    originPart: new FormControl('')
+    originPart: new FormControl(''),
   });
 
   organismId = 0;
@@ -32,7 +30,8 @@ export class AddOrganismComponent implements OnInit {
   constructor(
     private organismService: OrganismService,
     private router: Router,
-    private toastService: ToastService) { }
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -41,8 +40,7 @@ export class AddOrganismComponent implements OnInit {
       .subscribe((organisms: GetSimpleOrganism[]) => {
         this.organisms = organisms;
         this.isLoading = false;
-      }
-    );
+      });
   }
 
   onSubmit() {
@@ -70,14 +68,14 @@ export class AddOrganismComponent implements OnInit {
           keys.forEach((key: any) => {
             errors[key].forEach((errorMessage: string) => {
               message = errorMessage;
-            })
+            });
           });
 
           this.toastService.show(message, 'Error', true);
           this.isLoading = false;
         }
       },
-      () => this.isLoading = false
+      () => (this.isLoading = false)
     );
   }
 
