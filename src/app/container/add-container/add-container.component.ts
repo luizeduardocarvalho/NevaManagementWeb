@@ -20,6 +20,7 @@ export class AddContainerComponent implements OnInit {
     name: new FormControl(''),
     description: new FormControl(''),
     creationDate: new FormControl(''),
+    transferDate: new FormControl(''),
     cultureMedia: new FormControl('')
   });
 

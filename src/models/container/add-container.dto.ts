@@ -6,6 +6,7 @@ export class AddContainer {
     subContainerId: number | null;
     researcherId: number | null;
     creationDate: Date;
+    transferDate: Date;
 
     constructor(
         name: string,
@@ -14,7 +15,8 @@ export class AddContainer {
         organismId: number,
         subContainerId: number,
         researcherId: number | null,
-        creationDate: Date
+        creationDate: Date,
+        transferDate: Date
     ) {
         this.name = name;
         this.description = description;
@@ -23,5 +25,6 @@ export class AddContainer {
         this.subContainerId = subContainerId;
         this.researcherId = researcherId;
         this.creationDate = creationDate;
+        this.transferDate = transferDate;
     }
 }

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { baseUrl } from 'settings';
+import { CalendarDto } from 'src/models/equipment-usage/calendar.dto';
 import { TokenService } from './token.service';
 
 @Injectable({
@@ -19,8 +20,8 @@ export class EquipmentUsageService {
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
-  getEquipmentUsageCalendar(id: number): Observable<any> {
-    return this.http.get<any>(this.url + 'GetEquipmentUsageCalendar', {
+  getEquipmentUsageCalendar(id: number): Observable<CalendarDto[]> {
+    return this.http.get<CalendarDto[]>(this.url + 'GetEquipmentUsageCalendar', {
       params: { id: id },
       headers: this.httpOptions.headers,
     });

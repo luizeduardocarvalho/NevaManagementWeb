@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CalendarDto } from 'src/models/equipment-usage/calendar.dto';
 import { GetDetailedEquipmentDto } from 'src/models/equipment/get-detailed-equipment.dto';
 import { EquipmentUsageService } from 'src/services/equipment-usage.service';
 import { EquipmentService } from 'src/services/equipment.service';
@@ -13,7 +14,7 @@ export class EquipmentCardComponent implements OnInit {
   equipmentId = 0;
 
   equipment?: GetDetailedEquipmentDto;
-  calendar: any[] = [];
+  calendar: CalendarDto[] = [];
 
   constructor(
     private equipmentUsageService: EquipmentUsageService,
@@ -40,7 +41,7 @@ export class EquipmentCardComponent implements OnInit {
 
     this.equipmentUsageService
       .getEquipmentUsageCalendar(this.equipmentId)
-      .subscribe((data: any) => {
+      .subscribe((data: CalendarDto[]) => {
         this.calendar = data;
       });
   }

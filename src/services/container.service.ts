@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { baseUrl } from 'settings';
 import { AddContainer } from 'src/models/container/add-container.dto';
+import { GetContainersOrderedByTransferDateDto } from 'src/models/container/get-containers-ordered-by-transfer-date.dto';
 import { GetDetailedContainer } from 'src/models/container/get-detailed-container.dto';
 import { GetSimpleContainer } from 'src/models/container/get-simple-container.dto';
 import { TokenService } from './token.service';
@@ -50,6 +51,15 @@ export class ContainerService {
       this.url + 'GetDetailedContainer',
       {
         params: { containerId: id },
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getContainersOrderedByTransferDate(): Observable<GetContainersOrderedByTransferDateDto[]> {
+    return this.http.get<GetContainersOrderedByTransferDateDto[]>(
+      this.url + 'GetContainersOrderedByTransferDate',
+      {
         headers: this.httpOptions.headers,
       }
     );

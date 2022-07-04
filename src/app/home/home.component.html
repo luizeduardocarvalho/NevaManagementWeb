@@ -1,13 +1,6 @@
 <app-spinner [isLoading]="isLoading"></app-spinner>
 <div class="wrapper">
     <div class="container">
-        <div class="search-bar">
-            <div class="search-icon">
-                <fa-icon [icon]="faSearch"></fa-icon>
-            </div>
-            <input class="search-input" type="text" placeholder="Search a product" autocomplete="off">
-        </div>
-
         <div class="card-header-info">
             <h2 class="card-header-info__title bold">Frequently Used</h2>
             <h2 class="card-header-info__button"><a href="">See All</a></h2>
@@ -28,5 +21,10 @@
         <h2 class="stock-title bold">Low in Stock</h2>
         <app-small-card class="small-product-card" title="Product Name" [icon]="faPen"></app-small-card>
         <app-small-card class="small-product-card" title="Product Name" [icon]="faPen"></app-small-card>
+
+        <h2 class="stock-title bold">Next Transfers</h2>
+        <div class="transfers-container">
+            <app-small-card *ngFor="let container of containers" class="small-product-card" title="{{ container.name }}" [icon]="faPen"></app-small-card>
+        </div>
     </div>
 </div>
