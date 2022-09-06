@@ -3,27 +3,26 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
 import { EditProduct } from 'src/models/product/edit-product.dto';
-import { GetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
+import { IGetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
 import { LocationService } from 'src/services/location.service';
 import { ProductService } from 'src/services/product.service';
 import { ToastService } from 'src/services/toast.service';
 
 @Component({
   templateUrl: './edit-product.component.html',
-  styleUrls: ['./edit-product.component.scss']
+  styleUrls: ['./edit-product.component.scss'],
 })
 export class EditProductComponent implements OnInit {
-  
   editForm = new FormGroup({
     name: new FormControl(''),
     description: new FormControl(''),
     location: new FormControl(),
     formula: new FormControl(null),
-    expirationDate: new FormControl()
+    expirationDate: new FormControl(),
   });
 
   productId = 0;
-  product!: GetDetailedProduct;
+  product!: IGetDetailedProduct;
 
   locations: GetSimpleLocation[] = [];
 
@@ -35,12 +34,12 @@ export class EditProductComponent implements OnInit {
     private toastService: ToastService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.productId = params['id'];
     });
     this.locationService
@@ -51,7 +50,7 @@ export class EditProductComponent implements OnInit {
 
         this.productService
           .getDetailedProductById(this.productId)
-          .subscribe((product: GetDetailedProduct) => {
+          .subscribe((product: IGetDetailedProduct) => {
             this.product = product;
             let selectedLocation = this.locations[0];
 
@@ -61,19 +60,17 @@ export class EditProductComponent implements OnInit {
 
             this.fillForm(this.product, selectedLocation);
             this.isLoading = false;
-          }
-        );
-      }
-    );
+          });
+      });
   }
 
-  fillForm(product: GetDetailedProduct, selectedLocation: GetSimpleLocation) {
+  fillForm(product: IGetDetailedProduct, selectedLocation: GetSimpleLocation) {
     this.editForm = new FormGroup({
       name: new FormControl(product.name),
       description: new FormControl(product.description),
       location: new FormControl(selectedLocation),
       formula: new FormControl(product.formula),
-      expirationDate: new FormControl(product.expirationDate)
+      expirationDate: new FormControl(product.expirationDate),
     });
   }
 
@@ -99,14 +96,14 @@ export class EditProductComponent implements OnInit {
           keys.forEach((key: any) => {
             errors[key].forEach((errorMessage: string) => {
               message = errorMessage;
-            })
+            });
           });
 
           this.toastService.show(message, 'Error', true);
           this.isLoading = false;
         }
       },
-      () => this.isLoading = false
+      () => (this.isLoading = false)
     );
   }
 }

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { GetProduct } from 'src/models/product/get-product.dto';
 import { baseUrl } from 'settings';
 import { CreateProductDto } from 'src/models/product/create-product-dto';
-import { GetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
+import { IGetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
 import { AddQuantity } from 'src/models/product/add-quantity.dto';
 import { UseProduct } from 'src/models/product/use-product.dto';
 import { EditProduct } from 'src/models/product/edit-product.dto';
@@ -46,9 +46,9 @@ export class ProductService {
     });
   }
 
-  getDetailedProductById(id: number): Observable<GetDetailedProduct> {
-    return this.http.get<GetDetailedProduct>(
-      this.url + 'GetDetailedProductById',
+  getDetailedProductById(id: number): Observable<IGetDetailedProduct> {
+    return this.http.get<IGetDetailedProduct>(
+      this.url + 'IGetDetailedProductById',
       {
         params: { id: id },
         headers: this.httpOptions.headers,
@@ -75,5 +75,11 @@ export class ProductService {
       observe: 'response',
       headers: this.httpOptions.headers,
     });
+  }
+
+  getLowInStockProduct(): Observable<IGetDetailedProduct[]> {
+    return this.http.get<IGetDetailedProduct[]>(
+      this.url + 'GetLowInStockProducts'
+    );
   }
 }

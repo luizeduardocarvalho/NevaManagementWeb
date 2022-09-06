@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ILoggedUser } from 'src/models/user/logged-user.dto';
 import { LoginUserDto } from 'src/models/user/login-user.dto';
-import { User } from 'src/models/user/user';
 import { AuthService } from 'src/services/auth.service';
 import { ToastService } from 'src/services/toast.service';
 
@@ -32,9 +32,10 @@ export class LoginComponent implements OnInit {
     } as LoginUserDto;
 
     this.authService.login(user).subscribe(
-      (data: User) => {
+      (data: ILoggedUser) => {
+        console.log(data);
         localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('user', JSON.stringify(data.researcher));
         this.router.navigate(['/home']);
       },
       (err: any) => {

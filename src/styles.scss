@@ -35,6 +35,15 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1.5;
+	font-family: 'Poppins', sans-serif;
+	font-size: 1.2rem;
+	background-color: var(--bg-color);
+}
+html, body {
+	height: 100vh;
+	height: -webkit-fill-available;
+	width: 100vw;
+	overflow: hidden;
 }
 ol, ul {
 	list-style: none;
@@ -70,18 +79,16 @@ input:focus, textarea:focus, select:focus {
 	--container-width:95vw;
 }
 
-/* General */
-body {
-    font-family: 'Poppins', sans-serif;
-	font-size: 1.2rem;
-	background-color: var(--bg-color);
-}
-
 button, input {
 	font-size: inherit;
     font-family: inherit;
 }
 
+/* CSS */
+.spaced-columns {
+	display: flex;
+	justify-content: space-between;
+}
 
 .bold {
 	font-weight: 600;
@@ -91,6 +98,8 @@ button, input {
     font-weight: 500;
 }
 
-.wrapper {
-    padding-top: 10vh;
+.default-card {
+	background-color: var(--cl-primary);
+    color: whitesmoke;
+    border-radius: 0.5em;
 }

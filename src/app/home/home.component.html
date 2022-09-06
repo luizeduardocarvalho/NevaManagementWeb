@@ -1,30 +1,70 @@
-<app-spinner [isLoading]="isLoading"></app-spinner>
-<div class="wrapper">
-    <div class="container">
-        <div class="card-header-info">
-            <h2 class="card-header-info__title bold">Frequently Used</h2>
-            <h2 class="card-header-info__button"><a href="">See All</a></h2>
-        </div>
-        <div class="product-card">
-            <div class="product-card__info">
-                <h3>{{ product?.productName }}</h3>
-                <p class="product-card__location">{{ product?.locationName }}</p>
-                <p class="product-card__quantity">{{ product?.quantity }}{{ product?.unit }}</p>
-            </div>
-            <div class="product-card__button">
-                <a [routerLink]="['/products', product?.productId]">
-                    <fa-icon class="product-card__icon" [icon]="faAngleRight"></fa-icon>
-                </a>
-            </div>
-        </div>
-
-        <h2 class="stock-title bold">Low in Stock</h2>
-        <app-small-card class="small-product-card" title="Product Name" [icon]="faPen"></app-small-card>
-        <app-small-card class="small-product-card" title="Product Name" [icon]="faPen"></app-small-card>
-
-        <h2 class="stock-title bold">Next Transfers</h2>
-        <div class="transfers-container">
-            <app-small-card *ngFor="let container of containers" class="small-product-card" title="{{ container.name }}" [icon]="faPen"></app-small-card>
-        </div>
+<section>
+  <div class="spaced-columns">
+    <h1 class="last-used-header__title bold">Last Used</h1>
+    <span><a href="">See All</a></span>
+  </div>
+  <div class="last-used-card default-card">
+    <div class="last-used-card__text-section">
+      <p class="last-used-card__product bold">{{ product?.productName }}</p>
+      <p class="last-used-card__location">{{ product?.locationName }}</p>
+      <p class="last-used-card__quantity">
+        Last used quantity: {{ product?.quantity }}{{ product?.unit }}
+      </p>
     </div>
-</div>
+    <div class="last-used-card__button-section">
+      <a
+        class="last-used-card__button"
+        [routerLink]="['/products', product?.productId]"
+      >
+        <fa-icon class="last-used-card__icon" [icon]="faAngleRight"></fa-icon>
+      </a>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="spaced-columns">
+    <h1 class="bold">Next Transfers</h1>
+    <span><a href="">See All</a></span>
+  </div>
+  <div class="cards-container">
+    <div
+      *ngFor="let container of containers"
+      class="cards-container__card default-card"
+    >
+      <div class="cards-container__header">
+        <p class="semi-bold">{{ container.name }}</p>
+        <p class="cards-container__info">
+          {{ container.transferDate | date: "mediumDate" }}
+        </p>
+      </div>
+      <a class="cards-container__icon">
+        <fa-icon [icon]="faPen"></fa-icon>
+      </a>
+    </div>
+  </div>
+</section>
+<section>
+  <h1 class="bold">Low in Stock</h1>
+  <div class="container-scroll">
+    <div class="cards-container">
+      <div
+        *ngFor="let product of lowInStockProducts"
+        class="cards-container__card default-card"
+      >
+        <div class="cards-container__header">
+          <p class="semi-bold">{{ product.name }}</p>
+          <p class="cards-container__info">
+            Quantity available: {{ product.quantity }}{{ product.unit }}
+          </p>
+          <p class="cards-container__info">
+            Total used in the last three months:
+            {{ product.quantityUsedInTheLastThreeMonths }}{{ product.unit }}
+          </p>
+        </div>
+        <a class="cards-container__icon">
+          <fa-icon [icon]="faPen"></fa-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

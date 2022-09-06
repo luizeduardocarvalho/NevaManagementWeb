@@ -2,9 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { baseUrl } from 'settings';
+import { ILoggedUser } from 'src/models/user/logged-user.dto';
 import { LoginUserDto } from 'src/models/user/login-user.dto';
 
-import { User } from 'src/models/user/user';
 import { TokenService } from './token.service';
 
 @Injectable({
@@ -21,7 +21,11 @@ export class AuthService {
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
-  login(user: LoginUserDto): Observable<User> {
-    return this.http.post<User>(baseUrl + 'auth/login', user, this.httpOptions);
+  login(user: LoginUserDto): Observable<ILoggedUser> {
+    return this.http.post<ILoggedUser>(
+      baseUrl + 'auth/login',
+      user,
+      this.httpOptions
+    );
   }
 }
