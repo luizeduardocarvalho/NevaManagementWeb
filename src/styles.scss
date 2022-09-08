@@ -84,6 +84,35 @@ button, input {
     font-family: inherit;
 }
 
+/* Loader */
+.loader {
+	border: 0.4em solid #f3f3f3;
+	border-top: 0.4em solid var(--cl-primary);
+	border-radius: 50%;
+	width: 3em;
+	height: 3em;
+	animation: spin 0.8s linear infinite;
+}
+
+.loader-section {
+	display: flex;
+	justify-content: center;
+}
+
+.loader-section>.loader {
+	margin-block: 1em;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
 /* CSS */
 .spaced-columns {
 	display: flex;
