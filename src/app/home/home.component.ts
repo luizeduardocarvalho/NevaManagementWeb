@@ -22,7 +22,9 @@ export class HomeComponent implements OnInit {
   faAngleRight = faAngleRight as IconProp;
   faPen = faPen as IconProp;
 
-  isLoading = false;
+  isLoadingNextTransfers = false;
+  isLoadingProductCard = false;
+  isLoadingLowInStock = false;
 
   product?: GetLastProduct;
   lowInStockProducts: IGetDetailedProduct[] = [];
@@ -36,26 +38,30 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = true;
     let userId = this.userService.getUser().id;
-    console.log(userId);
+
+    this.isLoadingProductCard = true;
     this.productUsageService
       .getLastUsedProductByResearcher(userId)
       .subscribe((product: GetLastProduct) => {
         this.product = product;
-        this.isLoading = false;
+        this.isLoadingProductCard = false;
       });
 
+    this.isLoadingNextTransfers = true;
     this.containerService
       .getContainersOrderedByTransferDate()
       .subscribe((containers: GetContainersOrderedByTransferDateDto[]) => {
         this.containers = containers;
+        this.isLoadingNextTransfers = false;
       });
 
+    this.isLoadingLowInStock = true;
     this.productService
       .getLowInStockProduct()
       .subscribe((products: IGetDetailedProduct[]) => {
         this.lowInStockProducts = products;
+        this.isLoadingLowInStock = false;
       });
   }
 }
