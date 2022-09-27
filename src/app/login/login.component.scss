@@ -1,13 +1,22 @@
-.wrapper {
+.form-section {
     display: grid;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     align-items: center;
-    padding: 1em 1em 1.5em 1em;
+}
+
+input {
+    padding-left: 0.3em;
+    margin-bottom: 0.6em;
+    border-radius: 0.4em;
+    border: 2px solid gray;
 }
 
 .action-button {
+    margin-top: 0.6em;
     font-size: 1em;
-    padding: 0.8em 2em 0.8em 2em;    
+    width: 100%;
+    padding: 0.5em 1.5em 0.5em 1.5em;
     border: none;
     background-color: var(--cl-primary);
     color: white;
