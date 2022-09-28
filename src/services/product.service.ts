@@ -48,7 +48,7 @@ export class ProductService {
 
   getDetailedProductById(id: number): Observable<IGetDetailedProduct> {
     return this.http.get<IGetDetailedProduct>(
-      this.url + 'IGetDetailedProductById',
+      this.url + 'GetDetailedProductById',
       {
         params: { id: id },
         headers: this.httpOptions.headers,

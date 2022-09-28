@@ -1,24 +1,36 @@
-<app-spinner [isLoading]="isLoading"></app-spinner>
-<div class="wrapper">
-    <router-outlet></router-outlet>
-    <div class="container header-container">
-        <div class="header">
-            <app-back-arrow></app-back-arrow>
-            <div class="add-product-section">
-                <button class="add-product-button" [routerLink]="['add-product']">Add Product</button>
-            </div>
-        </div>
-        <h2 class="page-title">Product List</h2>
-        <div class="search-bar">
-            <div class="search-icon">
-                <fa-icon [icon]="faSearch"></fa-icon>
-            </div>
-            <input class="search-input" [(ngModel)]="searchText" name="searchText" type="text"
-                placeholder="Search a product" autocomplete="off">
-        </div>
+<section class="header-section">
+  <app-back-arrow></app-back-arrow>
+  <button class="header-section__button button" [routerLink]="['add-product']">
+    Add Product
+  </button>
+</section>
+<h1 class="bold">Product List</h1>
+<section class="search-bar-section">
+  <div class="search-bar-section__icon">
+    <fa-icon [icon]="faSearch"></fa-icon>
+  </div>
+  <input
+    class="search-bar-section__input"
+    [(ngModel)]="searchText"
+    name="searchText"
+    type="text"
+    placeholder="Search a product"
+    autocomplete="off"
+  />
+</section>
+<section class="card-section">
+  <div
+    *ngFor="let product of products | formulaAndNameSearch: searchText"
+    class="card-container"
+  >
+    <div class="card-container__card default-card">
+      <p>{{ product.name }}</p>
+      <a
+        class="card-container__card-icon"
+        [routerLink]="['/products', product.id]"
+      >
+        <fa-icon [icon]="faReceipt"></fa-icon>
+      </a>
     </div>
-    <div class="container card-container">
-        <app-small-card *ngFor="let product of products | formulaAndNameSearch : searchText"
-            title="{{ product.name }}" url="/products/{{product.id}}" [icon]="faReceipt"></app-small-card>
-    </div>
-</div>
+  </div>
+</section>
