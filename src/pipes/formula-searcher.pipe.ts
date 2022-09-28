@@ -1,27 +1,42 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'formulaAndNameSearch'
+  name: 'formulaAndNameSearch',
 })
 export class FormulaAndNameSearchPipe implements PipeTransform {
+  transform(items: any[], searchText: string): any[] {
+    if (!items) {
+      return [];
+    }
 
-    transform(items: any[], searchText: string): any[] {
-        if (!items) {
-            return [];
-        }
+    if (!searchText) {
+      return items;
+    }
 
-        if (!searchText) {
-            return items;
-        }
+    searchText = searchText
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
 
-        searchText = searchText.toLowerCase();
+    return items.filter((item) => {
+      let normalizedItemName = item.name
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
 
-        return items.filter(item => {
-            if(item.formula != null) {
-                return (item.formula.toLowerCase().includes(searchText) || item.name.toLowerCase().includes(searchText));
-            }
+      if (item.formula != null) {
+        let normalizedFormula = item.formula
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
 
-            return false;
-        })
-    };
+        return (
+          normalizedFormula.includes(searchText) ||
+          normalizedItemName.includes(searchText)
+        );
+      } else {
+        return normalizedItemName.includes(searchText);
+      }
+    });
+  }
 }
