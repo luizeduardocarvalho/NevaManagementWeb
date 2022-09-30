@@ -1,60 +1,79 @@
-.header-container {
-    width: var(--container-width);
-    height: var(--header-container-height);
-    display: grid;
-    grid-auto-rows: min-content;
-    margin-bottom: 1em;
-    align-content: space-between;
-}
+.header-section {
+    margin-bottom: 0.5em;
 
-.header {
     display: flex;
-    margin-bottom: 1em;
+    justify-content: space-between;
+    
+    &__button {
+        border: none;
+        border-radius: 1em;
+        padding: 0.2em 0.8em 0.2em 0.8em;
+
+        background-color: var(--cl-primary);
+        color: whitesmoke;
+    }
 }
 
-.add-location-button {
-    border: none;
-    background-color: var(--cl-primary);
-    color: white;
-    border-radius: 3em;
-    padding: 1em 2em 1em 2em;
-    font-size: 0.8rem;
+.search-bar-section {
+    display: flex;
+    align-items: center;
+
+    margin-block: 1em;
+
+    &__icon {
+        color: var(--cl-primary);
+    }
+
+    &__input {
+        margin-left: 0.5em;
+        padding-left: 0.8em;
+
+        width: 100%;
+
+        border: 2px solid var(--cl-primary);
+        border-radius: 1em;
+    }
 }
 
-.add-location-section {
-    margin-left: auto;
+.card-section {
+    overflow-y: scroll;
+    height: 58vh;
 }
 
 .card-container {
-    width: var(--container-width);
-    height: var(--body-container-height);
-    overflow-y: auto;
-    padding-bottom: 1em;
+    &__card {
+        padding: 0.5em 1em 0.5em 1em;
+        margin-bottom: 0.5em;
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__card-icon {
+        color: whitesmoke;
+    }
 }
 
-.page-title {
-    margin-bottom: 1em;
-    font-weight: bold;
-    height: min-content;
+@media(min-height: 740px) {
+    .card-section {
+        height: 60vh;
+    }
 }
 
-.search-bar {
-    width: 100%;
-    display: flex;
-    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
-    border-radius: var(--radius);
-    background-color: white;
-    height: min-content;
+@media(min-height: 844px) {
+    .card-section {
+        height: 62vh;
+    }
 }
 
-.search-icon {
-    padding: 1rem 0.3rem 1rem 1rem;
-    color: var(--cl-primary);
+@media(min-height: 896px) {
+    .card-section {
+        height: 65vh;
+    }
 }
 
-.search-input {
-    border-radius: var(--radius);
-    font-size: 0.7rem;
-    color: #b7b7b7 !important;
-    border: none;
+@media(min-height: 900px) {
+    .card-section {
+        height: 66vh;
+    }
 }

@@ -6,7 +6,7 @@ import { LocationService } from 'src/services/location.service';
 
 @Component({
   templateUrl: './location-list.component.html',
-  styleUrls: ['./location-list.component.scss']
+  styleUrls: ['./location-list.component.scss'],
 })
 export class LocationListComponent implements OnInit {
   faSearch = faSearch as IconProp;
@@ -17,23 +17,15 @@ export class LocationListComponent implements OnInit {
 
   isLoading = false;
 
-  constructor(private locationService: LocationService) { }
+  constructor(private locationService: LocationService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
     this.locationService
       .getLocations()
-      .subscribe(
-        (locations: GetSimpleLocation[]) => {
-          this.locations = locations;
-        },
-        err => {
-          console.log('console.log');
-        },
-        () => {
-          console.log('complete');
-          this.isLoading = false;
-        }
-      );
+      .subscribe((locations: GetSimpleLocation[]) => {
+        this.locations = locations;
+        this.isLoading = false;
+      });
   }
 }
