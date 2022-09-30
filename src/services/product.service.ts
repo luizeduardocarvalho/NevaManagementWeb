@@ -26,8 +26,9 @@ export class ProductService {
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
-  getAll(): Observable<GetProduct[]> {
+  getAll(page: number): Observable<GetProduct[]> {
     return this.http.get<GetProduct[]>(this.url + 'GetAll', {
+      params: { page },
       headers: this.httpOptions.headers,
     });
   }

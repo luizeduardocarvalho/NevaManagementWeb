@@ -1,27 +1,25 @@
 <app-spinner [isLoading]="isLoading"></app-spinner>
-<div class="wrapper">
-  <router-outlet></router-outlet>
-  <div class="container">
-    <div class="header">
-      <app-back-arrow></app-back-arrow>
-      <div class="add-equipment-section">
-        <button class="add-equipment-button" [routerLink]="['edit']">
-          Edit Equipment
-        </button>
-      </div>
+<router-outlet></router-outlet>
+<div class="container">
+  <div class="header">
+    <app-back-arrow></app-back-arrow>
+    <div class="add-equipment-section">
+      <button class="add-equipment-button" [routerLink]="['edit']">
+        Edit Equipment
+      </button>
     </div>
-    <div class="equipment-card">
-      <div class="equipment-card__information">
-        <h2 class="semi-bold equipment-card__information__title">
-          {{ equipment?.name }}
-        </h2>
-        <p class="equipment-card__information__description">
-          {{ equipment?.description }}
-        </p>
-        <a class="equipment-card__information__info" [routerLink]="['info']">
-          <p>More Info</p>
-        </a>
-      </div>
+  </div>
+  <div class="equipment-card">
+    <div class="equipment-card__information">
+      <h2 class="semi-bold equipment-card__information__title">
+        {{ equipment?.name }}
+      </h2>
+      <p class="equipment-card__information__description">
+        {{ equipment?.description }}
+      </p>
+      <a class="equipment-card__information__info" [routerLink]="['info']">
+        <p>More Info</p>
+      </a>
     </div>
   </div>
   <div *ngIf="calendar.length != 0" class="calendar container">
@@ -29,8 +27,8 @@
     <div *ngFor="let month of calendar">
       <p class="calendar__month">{{ month.month | toMonthName }}</p>
       <div *ngFor="let day of month.days">
-        <p class="calendar__day">{{ day.day }}</p>
-        <div *ngFor="let appointment of day.times">
+        <p class="calendar__day">{{ day.dayNumber }}</p>
+        <div *ngFor="let appointment of day.appointments">
           <p class="calendar__time">
             {{ appointment.startDate | date: "hh:mm" }} to
             {{ appointment.endDate | date: "hh:mm" }}
@@ -39,8 +37,8 @@
       </div>
     </div>
   </div>
-  <div class="button-container container">
-    <button type="submit" class="action-button">Use</button>
-    <button type="submit" class="action-button">History</button>
-  </div>
+</div>
+<div class="button-container container">
+  <button type="submit" class="action-button">Use</button>
+  <button type="submit" class="action-button">History</button>
 </div>

@@ -18,19 +18,31 @@
     autocomplete="off"
   />
 </section>
-<section class="card-section">
+<section>
   <div
-    *ngFor="let product of products | formulaAndNameSearch: searchText"
-    class="card-container"
+    class="card-section"
+    infinite-scroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="1000"
+    [scrollWindow]="false"
+    (scrolled)="onScroll()"
   >
-    <div class="card-container__card default-card">
-      <p>{{ product.name }}</p>
-      <a
-        class="card-container__card-icon"
-        [routerLink]="['/products', product.id]"
-      >
-        <fa-icon [icon]="faReceipt"></fa-icon>
-      </a>
+    <div
+      *ngFor="let product of products | formulaAndNameSearch: searchText"
+      class="card-container"
+    >
+      <div class="card-container__card default-card">
+        <p>{{ product.name }}</p>
+        <a
+          class="card-container__card-icon"
+          [routerLink]="['/products', product.id]"
+        >
+          <fa-icon [icon]="faReceipt"></fa-icon>
+        </a>
+      </div>
+    </div>
+    <div *ngIf="isLoading" class="loader-section">
+      <div class="loader"></div>
     </div>
   </div>
 </section>

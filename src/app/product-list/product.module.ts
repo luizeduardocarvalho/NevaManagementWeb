@@ -9,6 +9,7 @@ import { ProductRoutingModule } from './product-routing.module';
 import { AddQuantityComponent } from './add-quantity/add-quantity.component';
 import { UseProductComponent } from './use-product/use-product.component';
 import { ProductComponent } from './product.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ProductComponent } from './product.component';
   ],
   imports: [
     ProductRoutingModule,
-    SharedModule
+    SharedModule,
+    InfiniteScrollModule
   ]
 })
 export class ProductModule { }
