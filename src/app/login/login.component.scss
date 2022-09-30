@@ -1,3 +1,18 @@
+.loader-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: rgba(#000, 0.2);
+}
+
 .form-section {
     display: grid;
     height: 100%;
