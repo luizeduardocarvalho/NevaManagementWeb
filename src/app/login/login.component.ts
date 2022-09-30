@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
     password: new FormControl(''),
   });
 
+  isLoading = false;
+
   constructor(
     private authService: AuthService,
     private toastService: ToastService,
@@ -26,6 +28,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(data: any) {
+    this.isLoading = true;
+
     let user = {
       email: data.controls.email.value,
       password: data.controls.password.value,
@@ -37,8 +41,10 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.researcher));
         this.router.navigate(['/home']);
+        this.isLoading = true;
       },
       (err: any) => {
+        this.isLoading = true;
         this.toastService.show(err.error, 'Error', true);
       }
     );
