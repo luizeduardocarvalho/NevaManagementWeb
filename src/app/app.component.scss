@@ -1,11 +1,33 @@
 .wrapper {
-    height: 87%;
+    height: 85%;
     padding: 1em 1.5em 1em 1.5em;
 }
 
 .header {
-    height: 5vh;
+    height: 8vh;
+    padding-inline: 1.5em;
+
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+}
+
+.header>img {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 80%;
+}
+
+a {
+    color: black !important;
+    text-decoration: none;
+}
+
+a:hover {
+    color: black !important;
+}
+
+a:active {
+    color: black !important;
 }
