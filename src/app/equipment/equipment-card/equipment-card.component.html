@@ -29,8 +29,8 @@
     <div *ngFor="let month of calendar">
       <p class="calendar__month">{{ month.month | toMonthName }}</p>
       <div *ngFor="let day of month.days">
-        <p class="calendar__day">{{ day.day }}</p>
-        <div *ngFor="let appointment of day.times">
+        <p class="calendar__day">{{ day.dayNumber }}</p>
+        <div *ngFor="let appointment of day.appointments">
           <p class="calendar__time">
             {{ appointment.startDate | date: "hh:mm" }} to
             {{ appointment.endDate | date: "hh:mm" }}
