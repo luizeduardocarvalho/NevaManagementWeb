@@ -6,7 +6,7 @@
     "heroku-postbuild": "ng build",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test --no-watch"
   },
   "private": true,
   "dependencies": {
@@ -32,6 +32,7 @@
     "@ng-bootstrap/ng-bootstrap": "^12.0.0",
     "bootstrap": "^4.5.0",
     "express": "^4.17.3",
+    "ngx-infinite-scroll": "^13.0.0",
     "path": "^0.12.7",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",

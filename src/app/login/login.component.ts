@@ -41,10 +41,10 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.researcher));
         this.router.navigate(['/home']);
-        this.isLoading = true;
+        this.isLoading = false;
       },
       (err: any) => {
-        this.isLoading = true;
+        this.isLoading = false;
         this.toastService.show(err.error, 'Error', true);
       }
     );
