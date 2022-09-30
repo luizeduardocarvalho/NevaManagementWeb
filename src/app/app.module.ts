@@ -25,6 +25,7 @@ import { UserHistoryComponent } from './user-history/user-history.component';
     HttpClientModule,
     ReactiveFormsModule,
     SharedModule,
+    InfiniteScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent],
