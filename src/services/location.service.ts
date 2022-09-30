@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { baseUrl } from 'settings';
+import { environment } from 'src/environments/environment';
 import { AddLocation } from 'src/models/location/add-location.dto';
 import { EditLocation } from 'src/models/location/edit-location.dto';
 import { GetDetailedLocation } from 'src/models/location/get-detailed-location.dto';
@@ -19,7 +19,7 @@ export class LocationService {
     }),
   };
 
-  url = baseUrl + 'Location/';
+  url = environment.baseUrl + 'Location/';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 

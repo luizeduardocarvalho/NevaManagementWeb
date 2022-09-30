@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { baseUrl } from 'settings';
+import { environment } from 'src/environments/environment';
 import { AddContainer } from 'src/models/container/add-container.dto';
 import { GetContainersOrderedByTransferDateDto } from 'src/models/container/get-containers-ordered-by-transfer-date.dto';
 import { GetDetailedContainer } from 'src/models/container/get-detailed-container.dto';
@@ -19,7 +19,7 @@ export class ContainerService {
     }),
   };
 
-  url = baseUrl + 'Container/';
+  url = environment.baseUrl + 'Container/';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 

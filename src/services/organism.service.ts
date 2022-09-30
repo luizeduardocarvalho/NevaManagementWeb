@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { baseUrl } from 'settings';
+import { environment } from 'src/environments/environment';
 import { AddOrganism } from 'src/models/organism/add-organism.dto';
 import { EditOrganism } from 'src/models/organism/edit-organism.dto';
 import { GetDetailedOrganism } from 'src/models/organism/get-detailed-organism.dto';
@@ -19,7 +19,7 @@ export class OrganismService {
     }),
   };
 
-  url = baseUrl + 'Organism/';
+  url = environment.baseUrl + 'Organism/';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 

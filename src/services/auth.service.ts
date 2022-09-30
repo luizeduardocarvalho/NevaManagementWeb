@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { baseUrl } from 'settings';
+import { environment } from 'src/environments/environment';
 import { ILoggedUser } from 'src/models/user/logged-user.dto';
 import { LoginUserDto } from 'src/models/user/login-user.dto';
 
@@ -23,7 +23,7 @@ export class AuthService {
 
   login(user: LoginUserDto): Observable<ILoggedUser> {
     return this.http.post<ILoggedUser>(
-      baseUrl + 'auth/login',
+      environment.baseUrl + 'auth/login',
       user,
       this.httpOptions
     );

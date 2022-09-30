@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { baseUrl } from 'settings';
+import { environment } from 'src/environments/environment';
 import { GetLastProduct } from 'src/models/product-usage/get-last-product.dto';
 import { GetLastUseByProduct } from 'src/models/product-usage/get-last-use-by-product.dto';
 import { ProductUsage } from 'src/models/product-usage/product-usage.dto';
@@ -18,7 +18,7 @@ export class ProductUsageService {
     }),
   };
 
-  url = baseUrl + 'ProductUsage/';
+  url = environment.baseUrl + 'ProductUsage/';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 

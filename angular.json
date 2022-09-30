@@ -69,6 +69,26 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "staging": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -78,6 +98,9 @@
           "configurations": {
             "production": {
               "browserTarget": "NevaManagementWeb:build:production"
+            },
+            "staging": {
+              "browserTarget": "NevaManagementWeb:build:staging"
             },
             "development": {
               "browserTarget": "NevaManagementWeb:build:development"

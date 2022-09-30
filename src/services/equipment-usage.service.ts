@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { baseUrl } from 'settings';
+import { environment } from 'src/environments/environment';
 import { CalendarDto } from 'src/models/equipment-usage/calendar.dto';
 import { TokenService } from './token.service';
 
@@ -16,7 +16,7 @@ export class EquipmentUsageService {
     }),
   };
 
-  url = baseUrl + 'EquipmentUsage/';
+  url = environment.baseUrl + 'EquipmentUsage/';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 

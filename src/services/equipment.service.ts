@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { baseUrl } from 'settings';
+import { environment } from 'src/environments/environment';
 import { AddEquipmentDto } from 'src/models/equipment/add-equipment.dto';
 import { EditEquipmentDto } from 'src/models/equipment/edit-equipment.dto';
 import { GetDetailedEquipmentDto } from 'src/models/equipment/get-detailed-equipment.dto';
@@ -19,7 +19,7 @@ export class EquipmentService {
     }),
   };
 
-  url = baseUrl + 'Equipment/';
+  url = environment.baseUrl + 'Equipment/';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 

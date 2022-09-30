@@ -1,14 +1,13 @@
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GetProduct } from 'src/models/product/get-product.dto';
-import { baseUrl } from 'settings';
-import { CreateProductDto } from 'src/models/product/create-product-dto';
-import { IGetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
+import { environment } from 'src/environments/environment';
 import { AddQuantity } from 'src/models/product/add-quantity.dto';
-import { UseProduct } from 'src/models/product/use-product.dto';
+import { CreateProductDto } from 'src/models/product/create-product-dto';
 import { EditProduct } from 'src/models/product/edit-product.dto';
+import { IGetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
+import { GetProduct } from 'src/models/product/get-product.dto';
+import { UseProduct } from 'src/models/product/use-product.dto';
 import { TokenService } from './token.service';
 
 @Injectable({
@@ -22,7 +21,7 @@ export class ProductService {
     }),
   };
 
-  url = baseUrl + 'Product/';
+  url = environment.baseUrl + 'Product/';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { baseUrl } from 'settings';
+import { environment } from 'src/environments/environment';
 import { GetSimpleResearcher } from 'src/models/researcher/get-simple-researcher.dto';
 import { TokenService } from './token.service';
 
@@ -16,7 +16,7 @@ export class ResearcherService {
     }),
   };
 
-  url = baseUrl + 'Researcher/';
+  url = environment.baseUrl + 'Researcher/';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
