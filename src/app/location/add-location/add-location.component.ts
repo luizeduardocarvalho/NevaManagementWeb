@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ICreateForm } from 'src/models/form/create-form';
 import { QuestionBase } from 'src/models/form/question-base';
 import { IAddLocation } from 'src/models/location/add-location.dto';
 import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
@@ -12,7 +12,6 @@ import { ToastService } from 'src/services/toast.service';
 @Component({
   templateUrl: './add-location.component.html',
   styleUrls: ['./add-location.component.scss'],
-  providers: [QuestionService],
 })
 export class AddLocationComponent implements OnInit {
   questions: Observable<QuestionBase<any>[]>;
@@ -28,28 +27,17 @@ export class AddLocationComponent implements OnInit {
       key: 'description',
       label: 'Description',
       type: 'textarea',
-      options: [],
       order: 2,
     },
     {
       key: 'sublocationId',
       label: 'Sub Location',
       type: 'dropdown',
-      options: [
-        {
-          key: 'Option 1',
-          value: '0',
-        },
-        {
-          key: 'Option 2',
-          value: '1',
-        },
-      ],
+      options: [],
       order: 3,
-    },
+    } as ICreateForm,
   ];
 
-  selectedLocation: number = 0;
   locations: GetSimpleLocation[] = [];
 
   isLoading = false;
@@ -103,7 +91,8 @@ export class AddLocationComponent implements OnInit {
           this.toastService.show(message, 'Error', true);
           this.isLoading = false;
         }
-      }
+      },
+      () => (this.isLoading = false)
     );
   }
 }

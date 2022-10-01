@@ -1,10 +1,5 @@
-.back-arrow {
-    height: 2.3em;
-    margin-bottom: 1em;
-}
-
-.form-container {
-    width: 100%;
-    overflow: scroll;
-    height: 60vh;
+.header-section {
+    display: flex;
+    gap: 1em;
+    align-items: center;
 }
