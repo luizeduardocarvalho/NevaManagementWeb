@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddQuantity } from 'src/models/product/add-quantity.dto';
-import { CreateProductDto } from 'src/models/product/create-product-dto';
+import { IAddProduct } from 'src/models/product/add-product';
 import { EditProduct } from 'src/models/product/edit-product.dto';
 import { IGetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
 import { GetProduct } from 'src/models/product/get-product.dto';
@@ -32,7 +32,7 @@ export class ProductService {
     });
   }
 
-  create(product: CreateProductDto): Observable<unknown> {
+  create(product: IAddProduct): Observable<unknown> {
     return this.http.post<boolean>(this.url + 'Create', product, {
       observe: 'response',
       headers: this.httpOptions.headers,
