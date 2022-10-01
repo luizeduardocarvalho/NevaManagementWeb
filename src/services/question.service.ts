@@ -8,7 +8,9 @@ import { QuestionBase } from 'src/models/form/question-base';
 import { TextQuestion } from 'src/models/form/text-question';
 import { TextareaQuestion } from 'src/models/form/textarea-question';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class QuestionService {
   getQuestions(createQuestions: ICreateForm[]) {
     let questions: QuestionBase<string>[] = [];
