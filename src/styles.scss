@@ -132,3 +132,44 @@ button, input {
     color: whitesmoke;
     border-radius: 0.5em;
 }
+
+.f-s-2 {
+	font-size: 1.1em;
+}
+
+/* MARGINS */
+.m-b-1 {
+	margin-bottom: 1em;
+}
+
+/* FORMS */
+.form-container {
+    width: 100%;
+    margin-top: 1em;
+    overflow: scroll;
+    height: 49vh;
+}
+
+@media(min-height: 740px) {
+    .form-container {
+        height: 55vh;
+    }
+}
+
+@media(min-height: 844px) {
+    .form-container {
+        height: 58vh;
+    }
+}
+
+@media(min-height: 896px) {
+    .form-container {
+        height: 55vh;
+    }
+}
+
+@media(min-height: 900px) {
+    .form-container {
+        height: 56vh;
+    }
+}
