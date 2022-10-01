@@ -14,6 +14,8 @@ import { FormulaAndNameSearchPipe } from 'src/pipes/formula-searcher.pipe';
 import { NumberToMonthNamePipe } from 'src/pipes/number-to-month-name.pipe';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { DynamicFormQuestionComponent } from './dynamic-form-question/dynamic-form-question.component';
+import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     SpinnerComponent,
     NumberToMonthNamePipe,
     NavBarComponent,
+    DynamicFormQuestionComponent,
+    DynamicFormComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +55,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     NumberToMonthNamePipe,
     NavBarComponent,
     InfiniteScrollModule,
+    DynamicFormQuestionComponent,
+    DynamicFormComponent,
   ],
 })
 export class SharedModule {}

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AddLocation } from 'src/models/location/add-location.dto';
+import { IAddLocation } from 'src/models/location/add-location.dto';
 import { EditLocation } from 'src/models/location/edit-location.dto';
 import { GetDetailedLocation } from 'src/models/location/get-detailed-location.dto';
 import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
@@ -36,7 +36,7 @@ export class LocationService {
     });
   }
 
-  addLocation(addLocation: AddLocation): Observable<any> {
+  addLocation(addLocation: IAddLocation): Observable<any> {
     return this.http.post<any>(this.url + 'AddLocation', addLocation, {
       observe: 'response',
       headers: this.httpOptions.headers,

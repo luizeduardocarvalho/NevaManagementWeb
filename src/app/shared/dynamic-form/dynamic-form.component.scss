@@ -1,0 +1,16 @@
+form {
+    width: 100%;
+}
+
+button {
+    position: fixed;
+    font-size: 0.9em;
+    width: 90%;
+    bottom: 10%;
+    left: 5%;
+    padding: 1em 2em 1em 2em;
+    border: none;
+    background-color: var(--cl-primary);
+    color: white;
+    border-radius: 3em;
+}

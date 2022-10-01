@@ -1,30 +1,60 @@
-<app-spinner [isLoading]="isLoading"></app-spinner>
-<div class="wrapper">
-    <div class="container header-container">
-        <div class="back-arrow">
-            <app-back-arrow></app-back-arrow>
-        </div>
-        <h2 class="page-title bold">Add Product</h2>
-    </div>
-    <div class="container form-container">
-        <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="form-grid">
-            <input type="text" formControlName="name" placeholder="Name" class="grid-item" autocomplete="off">
-            <input type="text" formControlName="quantity" placeholder="Quantity" class="grid-item" autocomplete="off">
-            <input type="text" formControlName="unit" placeholder="Unit" class="grid-item" autocomplete="off">
-            <input type="text" formControlName="formula" placeholder="Formula" class="grid-item" autocomplete="off">
-            <div class="select-container">
-                <select (change)="selectLocation($event)">
-                    <option value="0">No Sublocation</option>
-                    <option *ngFor="let location of locations" value="{{ location.id }}">{{ location.name }}</option>
-                </select>
-                <span class="custom-arrow"></span>
-            </div>
-            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"
-                autocomplete="off"></textarea>
-            <label class="semi-bold" for="creationDate">Expiration Date</label>
-            <input type="date" formControlName="expirationDate" class="grid-item"
-                autocomplete="off">
-            <button type="submit" class="action-button">Create Product</button>
-        </form>
-    </div>
+<div class="back-arrow">
+  <app-back-arrow></app-back-arrow>
 </div>
+<h1 class="bold">Add Product</h1>
+<form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="form-container">
+  <label for="nameInput">Name</label>
+  <input
+    id="nameInput"
+    type="text"
+    formControlName="name"
+    placeholder="Name"
+    class="grid-item"
+    autocomplete="off"
+  />
+  <input
+    type="text"
+    formControlName="quantity"
+    placeholder="Quantity"
+    class="grid-item"
+    autocomplete="off"
+  />
+  <input
+    type="text"
+    formControlName="unit"
+    placeholder="Unit"
+    class="grid-item"
+    autocomplete="off"
+  />
+  <input
+    type="text"
+    formControlName="formula"
+    placeholder="Formula"
+    class="grid-item"
+    autocomplete="off"
+  />
+  <div class="select-container">
+    <select (change)="selectLocation($event)">
+      <option value="0">No Sublocation</option>
+      <option *ngFor="let location of locations" value="{{ location.id }}">
+        {{ location.name }}
+      </option>
+    </select>
+    <span class="custom-arrow"></span>
+  </div>
+  <textarea
+    type="text"
+    formControlName="description"
+    placeholder="Description"
+    class="grid-item"
+    autocomplete="off"
+  ></textarea>
+  <label class="semi-bold" for="creationDate">Expiration Date</label>
+  <input
+    type="date"
+    formControlName="expirationDate"
+    class="grid-item"
+    autocomplete="off"
+  />
+  <button type="submit" class="action-button">Create Product</button>
+</form>

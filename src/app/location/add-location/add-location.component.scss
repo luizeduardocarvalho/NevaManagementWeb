@@ -3,72 +3,8 @@
     margin-bottom: 1em;
 }
 
-.grid-item {
+.form-container {
     width: 100%;
-    margin-bottom: 1em;
-    border: 1px solid var(--cl-primary);
-    border-radius: 1em;
-    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
-    padding: 0.8em;
-}
-
-form {
-    padding-top: 1em;
-}
-
-select {
-    padding: 0.8em 4.5em 0.8em 0.8em;
-    width: 100%;
-    border-radius: 1em;
-    border: 1px solid var(--cl-primary);
-}
-
-select::after {
-    content: "";
-    display: block;
-}
-
-.select-container {
-    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
-    margin-bottom: 1em;
-    position: relative;
-}
-
-.custom-arrow {
-    border-radius: 10em;
-    position: absolute;
-    top: 7%;
-    right: 1%;
-    display: block;
-    background: #FAF9F6;
-    height: 90%;
-    width: 4em;
-    pointer-events: none;
-}
-
-.custom-arrow::before {
-    --size: 0.3em;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-left: var(--size) solid transparent;
-    border-right: var(--size) solid transparent;
-    border-top: var(--size) solid black;
-}
-
-.action-button {
-    position: fixed;
-    font-size: 0.9em;
-    width: 90%;
-    bottom: 10%;
-    left: 5%;
-    padding: 1em 2em 1em 2em;    
-    border: none;
-    background-color: var(--cl-primary);
-    color: white;
-    border-radius: 3em;
+    overflow: scroll;
+    height: 60vh;
 }
