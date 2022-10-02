@@ -8,7 +8,7 @@ import { TextQuestion } from 'src/models/form/text-question';
 import { TextareaQuestion } from 'src/models/form/textarea-question';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QuestionService {
   getQuestions(createQuestions: ICreateForm[]) {
@@ -28,6 +28,7 @@ export class QuestionService {
           key: question.key,
           label: question.label,
           options: [],
+          required: question.required === undefined ? true : question.required,
           order: question.order,
           value: question.value,
         });
@@ -35,7 +36,7 @@ export class QuestionService {
         return new TextareaQuestion({
           key: question.key,
           label: question.label,
-          required: true,
+          required: question.required === undefined ? true : question.required,
           order: question.order,
           value: question.value,
         });
@@ -43,7 +44,7 @@ export class QuestionService {
         return new DropdownQuestion({
           key: question.key,
           label: question.label,
-          required: true,
+          required: question.required === undefined ? true : question.required,
           order: question.order,
           options: question.options,
           value: question.value,
@@ -52,7 +53,7 @@ export class QuestionService {
         return new DateQuestion({
           key: question.key,
           label: question.label,
-          required: true,
+          required: question.required === undefined ? true : question.required,
           order: question.order,
           value: question.value,
         });
@@ -61,6 +62,7 @@ export class QuestionService {
           key: question.key,
           label: question.label,
           options: [],
+          required: question.required === undefined ? true : question.required,
           order: question.order,
           value: question.value,
         });

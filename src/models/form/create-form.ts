@@ -5,4 +5,5 @@ export interface ICreateForm {
     order: number;
     key: string;
     value?: string;
+    required?: boolean;
 }
