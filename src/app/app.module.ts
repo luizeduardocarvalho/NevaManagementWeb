@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
 import { SharedModule } from './shared/shared.module';
+import { ToastrModule } from 'ngx-toastr';
 import { UserHistoryComponent } from './user-history/user-history.component';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { UserHistoryComponent } from './user-history/user-history.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
