@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AddQuantity } from 'src/models/product/add-quantity.dto';
 import { IAddProduct } from 'src/models/product/add-product';
+import { IAddQuantity } from 'src/models/product/add-quantity';
 import { EditProduct } from 'src/models/product/edit-product.dto';
 import { IGetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
 import { GetProduct } from 'src/models/product/get-product.dto';
@@ -56,7 +56,7 @@ export class ProductService {
     );
   }
 
-  addProductQuantity(addQuantityDto: AddQuantity): Observable<any> {
+  addProductQuantity(addQuantityDto: IAddQuantity): Observable<any> {
     return this.http.patch<any>(this.url + 'AddQuantity', addQuantityDto, {
       observe: 'response',
       headers: this.httpOptions.headers,

@@ -51,7 +51,6 @@ export class ProductListComponent implements OnInit {
   }
 
   onScroll() {
-    console.log("scrolled page: ", this.page);
     this.isLoading = true;
     this.productService.getAll(++this.page).subscribe(
       (products: GetProduct[]) => {

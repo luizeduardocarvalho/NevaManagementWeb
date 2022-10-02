@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { ICreateForm } from 'src/models/form/create-form';
 
+import { ICreateForm } from 'src/models/form/create-form';
 import { DateQuestion } from 'src/models/form/date-question';
 import { DropdownQuestion } from 'src/models/form/dropdown-question';
 import { QuestionBase } from 'src/models/form/question-base';
@@ -9,7 +8,7 @@ import { TextQuestion } from 'src/models/form/text-question';
 import { TextareaQuestion } from 'src/models/form/textarea-question';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class QuestionService {
   getQuestions(createQuestions: ICreateForm[]) {
@@ -19,7 +18,7 @@ export class QuestionService {
       questions.push(this.createQuestion(question))
     );
 
-    return of(questions.sort((a, b) => a.order - b.order));
+    return questions.sort((a, b) => a.order - b.order);
   }
 
   createQuestion(question: ICreateForm) {
@@ -30,6 +29,7 @@ export class QuestionService {
           label: question.label,
           options: [],
           order: question.order,
+          value: question.value,
         });
       case 'textarea':
         return new TextareaQuestion({
@@ -37,6 +37,7 @@ export class QuestionService {
           label: question.label,
           required: true,
           order: question.order,
+          value: question.value,
         });
       case 'dropdown':
         return new DropdownQuestion({
@@ -45,6 +46,7 @@ export class QuestionService {
           required: true,
           order: question.order,
           options: question.options,
+          value: question.value,
         });
       case 'date':
         return new DateQuestion({
@@ -52,6 +54,7 @@ export class QuestionService {
           label: question.label,
           required: true,
           order: question.order,
+          value: question.value,
         });
       default:
         return new TextQuestion({
@@ -59,6 +62,7 @@ export class QuestionService {
           label: question.label,
           options: [],
           order: question.order,
+          value: question.value,
         });
     }
   }

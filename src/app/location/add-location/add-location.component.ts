@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { ICreateForm } from 'src/models/form/create-form';
 import { QuestionBase } from 'src/models/form/question-base';
 import { IAddLocation } from 'src/models/location/add-location.dto';
@@ -14,7 +13,7 @@ import { ToastService } from 'src/services/toast.service';
   styleUrls: ['./add-location.component.scss'],
 })
 export class AddLocationComponent implements OnInit {
-  questions: Observable<QuestionBase<any>[]>;
+  questions: QuestionBase<any>[];
 
   questionsTypes = [
     {
@@ -37,8 +36,6 @@ export class AddLocationComponent implements OnInit {
       order: 3,
     } as ICreateForm,
   ];
-
-  locations: GetSimpleLocation[] = [];
 
   isLoading = false;
 
@@ -63,7 +60,6 @@ export class AddLocationComponent implements OnInit {
         this.questionsTypes[2].options = options;
         this.questions = this.questionService.getQuestions(this.questionsTypes);
 
-        this.locations = locations;
         this.isLoading = false;
       });
   }

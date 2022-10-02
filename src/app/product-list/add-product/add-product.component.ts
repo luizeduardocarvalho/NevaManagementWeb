@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { ICreateForm } from 'src/models/form/create-form';
 import { QuestionBase } from 'src/models/form/question-base';
 import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
@@ -15,7 +14,7 @@ import { ToastService } from 'src/services/toast.service';
   styleUrls: ['./add-product.component.scss'],
 })
 export class AddProductComponent implements OnInit {
-  questions: Observable<QuestionBase<any>[]>;
+  questions: QuestionBase<any>[];
 
   questionsTypes = [
     {
@@ -85,6 +84,7 @@ export class AddProductComponent implements OnInit {
         }));
 
         this.questionsTypes[4].options = options;
+        this.questions = this.questionService.getQuestions(this.questionsTypes);
       });
   }
 

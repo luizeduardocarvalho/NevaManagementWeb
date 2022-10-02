@@ -4,4 +4,5 @@ export interface ICreateForm {
     options?: { key: string; value: string }[];
     order: number;
     key: string;
+    value?: string;
 }
