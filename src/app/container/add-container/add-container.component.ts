@@ -1,36 +1,83 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AddContainer } from 'src/models/container/add-container.dto';
+import { ToastrService } from 'ngx-toastr';
+import {
+  IAddContainer
+} from 'src/models/container/add-container';
 import { GetSimpleContainer } from 'src/models/container/get-simple-container.dto';
+import { ICreateForm } from 'src/models/form/create-form';
+import { QuestionBase } from 'src/models/form/question-base';
 import { GetSimpleOrganism } from 'src/models/organism/get-simple-organism.dto';
 import { GetSimpleResearcher } from 'src/models/researcher/get-simple-researcher.dto';
 import { ContainerService } from 'src/services/container.service';
 import { OrganismService } from 'src/services/organism.service';
+import { QuestionService } from 'src/services/question.service';
 import { ResearcherService } from 'src/services/researcher.service';
-import { ToastService } from 'src/services/toast.service';
 
 @Component({
   templateUrl: './add-container.component.html',
-  styleUrls: ['./add-container.component.scss']
+  styleUrls: ['./add-container.component.scss'],
 })
 export class AddContainerComponent implements OnInit {
+  questions: QuestionBase<any>[];
 
-  createForm = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-    creationDate: new FormControl(''),
-    transferDate: new FormControl(''),
-    cultureMedia: new FormControl('')
-  });
-
-  organisms: GetSimpleOrganism[] = [];
-  containers: GetSimpleContainer[] = [];
-  researchers: GetSimpleResearcher[] = [];
-
-  selectedOrganismId = 0;
-  selectedContainerId = 0;
-  selectedResearcherId = 0;
+  questionsTypes = [
+    {
+      key: 'name',
+      label: 'Name',
+      type: 'text',
+      order: 1,
+    },
+    {
+      key: 'description',
+      label: 'Description',
+      type: 'textarea',
+      order: 2,
+      required: false,
+    },
+    {
+      key: 'creationDate',
+      label: 'Create Date',
+      type: 'date',
+      order: 3,
+    },
+    {
+      key: 'transferDate',
+      label: 'Transfer Date',
+      type: 'date',
+      order: 4,
+    },
+    {
+      key: 'cultureMedia',
+      label: 'Culture Media',
+      type: 'text',
+      order: 5,
+    },
+    {
+      key: 'researcherId',
+      label: 'Researcher',
+      type: 'dropdown',
+      required: false,
+      options: [],
+      order: 6,
+    } as ICreateForm,
+    {
+      key: 'subContainerId',
+      label: 'Sub Container',
+      type: 'dropdown',
+      required: false,
+      options: [],
+      order: 7,
+    } as ICreateForm,
+    {
+      key: 'organismId',
+      label: 'Organism',
+      type: 'dropdown',
+      required: false,
+      options: [],
+      order: 8,
+    } as ICreateForm,
+  ];
 
   isLoading = false;
 
@@ -39,59 +86,53 @@ export class AddContainerComponent implements OnInit {
     private researcherService: ResearcherService,
     private containerService: ContainerService,
     private router: Router,
-    private toastService: ToastService) { }
+    private questionService: QuestionService,
+    private toastr: ToastrService
+  ) {
+    this.questions = this.questionService.getQuestions(this.questionsTypes);
+  }
 
   ngOnInit(): void {
     this.isLoading = true;
-    
+
     this.organismService
       .getOrganisms()
       .subscribe((organisms: GetSimpleOrganism[]) => {
-        this.organisms = organisms;
-        
+        this.questionsTypes[7].options = organisms.map((organism) => ({
+          key: organism.id!.toString(),
+          value: organism.name,
+        }));
+
         this.researcherService
           .getResearchers()
           .subscribe((researchers: GetSimpleResearcher[]) => {
-            this.researchers = researchers;
-            
+            this.questionsTypes[5].options = researchers.map((researcher) => ({
+              key: researcher.id!.toString(),
+              value: researcher.name,
+            }));
+
             this.containerService
               .getContainers()
               .subscribe((containers: GetSimpleContainer[]) => {
-                this.containers = containers;
+                this.questionsTypes[6].options = containers.map(
+                  (container) => ({
+                    key: container.id!.toString(),
+                    value: container.name,
+                  })
+                );
                 this.isLoading = false;
-              }
-            );
-          }
-        );
-      }
-    );
+              });
+          });
+      });
   }
 
-  onSubmit() {
-    let container = this.createForm.value as AddContainer;
-
-    container.organismId = null;
-    container.researcherId = null;
-    container.subContainerId = null;
-
-    if (this.selectedOrganismId != 0) {
-      container.organismId = this.selectedOrganismId;
-    }
-
-    if (this.selectedResearcherId != 0) {
-      container.researcherId = this.selectedResearcherId;
-    }
-
-    if (this.selectedContainerId != 0) {
-      container.subContainerId = this.selectedContainerId;
-    }
-
+  onSubmit(payload: any) {
     this.isLoading = true;
 
-    this.containerService.addContainer(container).subscribe(
+    this.containerService.addContainer(payload as IAddContainer).subscribe(
       (res: any) => {
         this.router.navigate(['/containers']).then(() => {
-          this.toastService.show(res.body, 'Success', false);
+          this.toastr.error(res.body, 'Success');
         });
       },
       (err: any) => {
@@ -102,27 +143,15 @@ export class AddContainerComponent implements OnInit {
           keys.forEach((key: any) => {
             errors[key].forEach((errorMessage: string) => {
               message = errorMessage;
-            })
+            });
           });
 
-          this.toastService.show(message, 'Error', true);
+          this.toastr.error(message, 'Error');
         }
 
         this.isLoading = false;
       },
-      () => this.isLoading = false
+      () => (this.isLoading = false)
     );
-  }
-
-  selectOrganism(e: any) {
-    this.selectedOrganismId = e.target.value;
-  }
-
-  selectResearcher(e: any) {
-    this.selectedResearcherId = e.target.value;
-  }
-
-  selectContainer(e: any) {
-    this.selectedContainerId = e.target.value;
   }
 }

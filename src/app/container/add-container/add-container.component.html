@@ -1,48 +1,14 @@
-<app-spinner [isLoading]="isLoading"></app-spinner>
-<div class="wrapper">
-    <div class="container header-container">
-        <div class="back-arrow">
-            <app-back-arrow></app-back-arrow>
-        </div>
-        <h2 class="page-title bold">Add Container</h2>
-    </div>
-    <div class="container form-container">
-        <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="form-grid">
-            <input type="text" formControlName="name" placeholder="Name" class="grid-item" autocomplete="off">
-            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"
-                autocomplete="off"></textarea>
-            <div class="select-container">
-                <select (change)="selectResearcher($event)">
-                    <option value="0">No Researcher</option>
-                    <option *ngFor="let researcher of researchers" value="{{ researcher.id }}">{{ researcher.name }}
-                    </option>
-                </select>
-                <span class="custom-arrow"></span>
-            </div>
-            <div class="select-container">
-                <select (change)="selectContainer($event)">
-                    <option value="0">No Container</option>
-                    <option *ngFor="let container of containers" value="{{ container.id }}">{{ container.name }}
-                    </option>
-                </select>
-                <span class="custom-arrow"></span>
-            </div>
-            <div class="select-container">
-                <select (change)="selectOrganism($event)">
-                    <option value="0">No Organism</option>
-                    <option *ngFor="let organism of organisms" value="{{ organism.id }}">{{ organism.name }}</option>
-                </select>
-                <span class="custom-arrow"></span>
-            </div>
-            <input type="text" formControlName="cultureMedia" placeholder="Culture Media" class="grid-item"
-                autocomplete="off">
-            <label class="semi-bold" for="creationDate">Creation Date</label>
-            <input type="datetime-local" id="creationDate" formControlName="creationDate" class="grid-item"
-                autocomplete="off">
-            <label class="semi-bold" for="transferDate">Transfer Date</label>
-            <input type="datetime-local" id="transferDate" formControlName="transferDate" class="grid-item"
-                autocomplete="off">
-            <button type="submit" class="action-button">Add Container</button>
-        </form>
-    </div>
-</div>
+<div *ngIf="isLoading" class="page-loader">
+    <div class="loader"></div>
+  </div>
+  <div class="header-section">
+    <app-back-arrow></app-back-arrow>
+    <h1 class="bold f-s-2">Add Container</h1>
+  </div>
+  <div class="form-container">
+    <app-dynamic-form
+      (formEvent)="onSubmit($event)"
+      [questions]="questions"
+    ></app-dynamic-form>
+  </div>
+  

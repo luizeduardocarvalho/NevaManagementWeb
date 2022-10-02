@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IAddLocation } from 'src/models/location/add-location.dto';
-import { EditLocation } from 'src/models/location/edit-location.dto';
+import { IEditLocation } from 'src/models/location/edit-location.dto';
 import { GetDetailedLocation } from 'src/models/location/get-detailed-location.dto';
 import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
 import { TokenService } from './token.service';
@@ -43,7 +43,7 @@ export class LocationService {
     });
   }
 
-  editLocation(editLocation: EditLocation): Observable<any> {
+  editLocation(editLocation: IEditLocation): Observable<any> {
     return this.http.patch(this.url + 'EditLocation', editLocation, {
       observe: 'response',
       headers: this.httpOptions.headers,

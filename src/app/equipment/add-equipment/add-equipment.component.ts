@@ -1,39 +1,52 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AddEquipmentDto } from 'src/models/equipment/add-equipment.dto';
+import { ToastrService } from 'ngx-toastr';
+import { IAddEquipment } from 'src/models/equipment/add-equipment';
+import { QuestionBase } from 'src/models/form/question-base';
 import { EquipmentService } from 'src/services/equipment.service';
-import { ToastService } from 'src/services/toast.service';
+import { QuestionService } from 'src/services/question.service';
 
 @Component({
   templateUrl: './add-equipment.component.html',
   styleUrls: ['./add-equipment.component.scss'],
 })
-export class AddEquipmentComponent implements OnInit {
-  createForm = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-  });
+export class AddEquipmentComponent {
+  questions: QuestionBase<any>[];
+
+  questionsTypes = [
+    {
+      key: 'name',
+      label: 'Name',
+      type: 'text',
+      order: 1,
+    },
+    {
+      key: 'description',
+      label: 'Description',
+      type: 'textarea',
+      order: 2,
+      required: false,
+    },
+  ];
 
   isLoading = false;
 
   constructor(
     private equipmentService: EquipmentService,
     private router: Router,
-    private toastService: ToastService
-  ) {}
+    private questionService: QuestionService,
+    private toastr: ToastrService
+  ) {
+    this.questions = this.questionService.getQuestions(this.questionsTypes);
+  }
 
-  ngOnInit(): void {}
-
-  onSubmit() {
-    let equipment = this.createForm.value as AddEquipmentDto;
-
+  onSubmit(payload: any) {
     this.isLoading = true;
 
-    this.equipmentService.addEquipment(equipment).subscribe(
+    this.equipmentService.addEquipment(payload as IAddEquipment).subscribe(
       (res: any) => {
         this.router.navigate(['/equipment']).then(() => {
-          this.toastService.show(res.body, 'Success', false);
+          this.toastr.success(res.body, 'Success');
         });
       },
       (err: any) => {
@@ -47,7 +60,7 @@ export class AddEquipmentComponent implements OnInit {
             });
           });
 
-          this.toastService.show(message, 'Error', true);
+          this.toastr.error(message, 'Error');
           this.isLoading = false;
         }
       },

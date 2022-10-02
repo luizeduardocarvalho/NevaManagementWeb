@@ -1,85 +1,107 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EditLocation } from 'src/models/location/edit-location.dto';
+import { ToastrService } from 'ngx-toastr';
+import { ICreateForm } from 'src/models/form/create-form';
+import { QuestionBase } from 'src/models/form/question-base';
 import { GetDetailedLocation } from 'src/models/location/get-detailed-location.dto';
 import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
 import { LocationService } from 'src/services/location.service';
-import { ToastService } from 'src/services/toast.service';
+import { QuestionService } from 'src/services/question.service';
 
 @Component({
   templateUrl: './edit-location.component.html',
-  styleUrls: ['./edit-location.component.scss']
+  styleUrls: ['./edit-location.component.scss'],
 })
 export class EditLocationComponent implements OnInit {
+  questions: QuestionBase<any>[];
 
-  editLocationForm = new FormGroup({
-    name: new FormControl(null),
-    subLocation: new FormControl(),
-    description: new FormControl(null)
-  });
+  questionsTypes: ICreateForm[] = [
+    {
+      key: 'name',
+      label: 'Name',
+      type: 'text',
+      value: '',
+      order: 1,
+    },
+    {
+      key: 'subLocationId',
+      label: 'Location',
+      type: 'dropdown',
+      options: [],
+      value: '',
+      order: 2,
+    } as ICreateForm,
+    {
+      key: 'description',
+      label: 'Description',
+      type: 'textarea',
+      order: 3,
+      value: '',
+      required: false,
+    },
+  ];
 
   locationId: number = 0;
-  locations: GetSimpleLocation[] = [];
-  location?: GetDetailedLocation;
-
   isLoading = false;
+  isLoadingLocations = false;
+  isLoadingLocationById = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private locationService: LocationService,
-    private toastService: ToastService) { }
+    private questionService: QuestionService,
+    private toastr: ToastrService
+  ) {
+    this.questions = this.questionService.getQuestions(this.questionsTypes);
+  }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.locationId = params['id'];
     });
 
-    this.isLoading = true;
+    this.isLoadingLocations = true;
+    this.isLoadingLocationById = true;
 
     this.locationService
       .getLocations()
       .subscribe((locations: GetSimpleLocation[]) => {
-        this.locations = locations;
-        this.locations.unshift(new GetSimpleLocation(null, 'No SubLocation'));
+        this.questionsTypes[1].options = locations.map((location) => ({
+          key: location.id!.toString(),
+          value: location.name,
+        }));
+        this.questions = this.questionService.getQuestions(this.questionsTypes);
+        this.isLoadingLocations = false;
+      });
 
-        this.locationService
-          .getLocationById(this.locationId)
-          .subscribe((location: GetDetailedLocation) => {
-            this.location = location;
-
-            let selectedLocation = this.locations[0];
-
-            if (this.location.subLocationId != null) {
-              selectedLocation = this.locations.filter(x => x.id == this.location?.subLocationId)[0];
-            }
-
-            this.fillForm(this.location, selectedLocation);
-            this.isLoading = false;
-          });
+    this.locationService
+      .getLocationById(this.locationId)
+      .subscribe((location: GetDetailedLocation) => {
+        this.questionsTypes[0].value = location.name;
+        this.questionsTypes[1].value = location.subLocationId.toString();
+        this.questionsTypes[2].value = location.description;
+        this.questions = this.questionService.getQuestions(this.questionsTypes);
+        this.isLoadingLocationById = false;
       });
   }
 
-  fillForm(location: GetDetailedLocation, selectedLocation: GetSimpleLocation) {
-    this.editLocationForm = new FormGroup({
-      name: new FormControl(location.name),
-      subLocation: new FormControl(selectedLocation),
-      description: new FormControl(location.description)
-    });
-  }
-
-  onSubmit() {
-    let editLocation = this.editLocationForm.value as EditLocation;
-    editLocation.id = this.locationId;
-    editLocation.subLocationId = this.editLocationForm.value.subLocation.id;
-
+  onSubmit(payload: any) {
     this.isLoading = true;
+
+    let serializedPayload = JSON.parse(payload);
+
+    let editLocation = {
+      id: this.locationId,
+      name: serializedPayload.name,
+      description: serializedPayload.description,
+      subLocationId: serializedPayload.subLocationId,
+    };
 
     this.locationService.editLocation(editLocation).subscribe(
       (res: any) => {
         this.router.navigate(['/locations']).then(() => {
-          this.toastService.show(res.body, 'Success', false);
+          this.toastr.success(res.body, 'Success');
         });
       },
       (err: any) => {
@@ -91,14 +113,14 @@ export class EditLocationComponent implements OnInit {
           keys.forEach((key: any) => {
             errors[key].forEach((errorMessage: string) => {
               message = errorMessage;
-            })
+            });
           });
 
-          this.toastService.show(message, 'Error', true);
+          this.toastr.error(message, 'Error');
           this.isLoading = false;
         }
       },
-      () => this.isLoading = false
+      () => (this.isLoading = false)
     );
   }
 }

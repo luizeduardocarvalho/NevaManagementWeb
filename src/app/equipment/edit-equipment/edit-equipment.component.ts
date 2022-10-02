@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EditEquipmentDto } from 'src/models/equipment/edit-equipment.dto';
+import { ToastrService } from 'ngx-toastr';
+import { IEditEquipment } from 'src/models/equipment/edit-equipment';
 import { GetDetailedEquipmentDto } from 'src/models/equipment/get-detailed-equipment.dto';
+import { QuestionBase } from 'src/models/form/question-base';
 import { EquipmentService } from 'src/services/equipment.service';
+import { QuestionService } from 'src/services/question.service';
 import { ToastService } from 'src/services/toast.service';
 
 @Component({
@@ -11,10 +14,25 @@ import { ToastService } from 'src/services/toast.service';
   styleUrls: ['./edit-equipment.component.scss'],
 })
 export class EditEquipmentComponent implements OnInit {
-  editForm = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-  });
+  questions: QuestionBase<any>[];
+
+  questionsTypes = [
+    {
+      key: 'name',
+      label: 'Name',
+      type: 'text',
+      value: '',
+      order: 1,
+    },
+    {
+      key: 'description',
+      label: 'Description',
+      type: 'textarea',
+      value: '',
+      order: 2,
+      required: false,
+    },
+  ];
 
   equipmentId = 0;
   isLoading = false;
@@ -23,8 +41,11 @@ export class EditEquipmentComponent implements OnInit {
     private equipmentService: EquipmentService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastService: ToastService
-  ) {}
+    private questionService: QuestionService,
+    private toastr: ToastrService
+  ) {
+    this.questions = this.questionService.getQuestions(this.questionsTypes);
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -36,24 +57,28 @@ export class EditEquipmentComponent implements OnInit {
     this.equipmentService
       .getDetailedEquipment(this.equipmentId)
       .subscribe((equipment: GetDetailedEquipmentDto) => {
-        this.editForm = new FormGroup({
-          name: new FormControl(equipment.name),
-          description: new FormControl(equipment.description),
-        });
+        this.questionsTypes[0].value = equipment.name;
+        this.questionsTypes[1].value = equipment.description;
+        this.questions = this.questionService.getQuestions(this.questionsTypes);
         this.isLoading = false;
       });
   }
 
-  onSubmit() {
-    let equipment = this.editForm.value as EditEquipmentDto;
-    equipment.id = this.equipmentId;
-
+  onSubmit(payload: any) {
     this.isLoading = true;
+
+    let serializedPayload = JSON.parse(payload);
+
+    let equipment = {
+      id: this.equipmentId,
+      name: serializedPayload.name,
+      description: serializedPayload.description,
+    } as IEditEquipment;
 
     this.equipmentService.editEquipment(equipment).subscribe(
       (res: any) => {
         this.router.navigate(['/equipment']).then(() => {
-          this.toastService.show(res.body, 'Success', false);
+          this.toastr.success(res.body, 'Success');
         });
       },
       (err: any) => {
@@ -67,7 +92,7 @@ export class EditEquipmentComponent implements OnInit {
             });
           });
 
-          this.toastService.show(message, 'Error', true);
+          this.toastr.success(message, 'Error');
           this.isLoading = false;
         }
       },

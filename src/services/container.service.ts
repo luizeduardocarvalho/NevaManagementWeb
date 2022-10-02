@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AddContainer } from 'src/models/container/add-container.dto';
+import { IAddContainer } from 'src/models/container/add-container';
 import { GetContainersOrderedByTransferDateDto } from 'src/models/container/get-containers-ordered-by-transfer-date.dto';
 import { GetDetailedContainer } from 'src/models/container/get-detailed-container.dto';
 import { GetSimpleContainer } from 'src/models/container/get-simple-container.dto';
@@ -29,7 +29,7 @@ export class ContainerService {
     });
   }
 
-  addContainer(addContainer: AddContainer): Observable<any> {
+  addContainer(addContainer: IAddContainer): Observable<any> {
     return this.http.post<any>(this.url + 'AddContainer', addContainer, {
       observe: 'response',
       headers: this.httpOptions.headers,
@@ -56,7 +56,9 @@ export class ContainerService {
     );
   }
 
-  getContainersOrderedByTransferDate(): Observable<GetContainersOrderedByTransferDateDto[]> {
+  getContainersOrderedByTransferDate(): Observable<
+    GetContainersOrderedByTransferDateDto[]
+  > {
     return this.http.get<GetContainersOrderedByTransferDateDto[]>(
       this.url + 'GetContainersOrderedByTransferDate',
       {
