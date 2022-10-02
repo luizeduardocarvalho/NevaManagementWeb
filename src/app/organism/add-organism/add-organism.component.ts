@@ -74,9 +74,8 @@ export class AddOrganismComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.organismService
-      .getOrganisms()
-      .subscribe((organisms: GetSimpleOrganism[]) => {
+    this.organismService.getOrganisms().subscribe(
+      (organisms: GetSimpleOrganism[]) => {
         this.isLoading = false;
         this.questionsTypes[5].options = organisms.map((organism) => ({
           key: organism.id!.toString(),
@@ -87,7 +86,8 @@ export class AddOrganismComponent implements OnInit {
       (err) => {
         this.toastr.show(err.errorMessage, 'Error');
         this.isLoading = false;
-      });
+      }
+    );
   }
 
   onSubmit(payload: any) {

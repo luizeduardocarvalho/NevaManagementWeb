@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IAddOrganism } from 'src/models/organism/add-organism.dto';
-import { EditOrganism } from 'src/models/organism/edit-organism.dto';
+import { IEditOrganism } from 'src/models/organism/edit-organism.dto';
 import { GetDetailedOrganism } from 'src/models/organism/get-detailed-organism.dto';
 import { GetSimpleOrganism } from 'src/models/organism/get-simple-organism.dto';
 import { TokenService } from './token.service';
@@ -43,7 +43,7 @@ export class OrganismService {
     });
   }
 
-  editOrganism(editOrganism: EditOrganism): Observable<any> {
+  editOrganism(editOrganism: IEditOrganism): Observable<any> {
     return this.http.patch(this.url + 'EditOrganism', editOrganism, {
       observe: 'response',
       headers: this.httpOptions.headers,
