@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AddOrganism } from 'src/models/organism/add-organism.dto';
+import { IAddOrganism } from 'src/models/organism/add-organism.dto';
 import { EditOrganism } from 'src/models/organism/edit-organism.dto';
 import { GetDetailedOrganism } from 'src/models/organism/get-detailed-organism.dto';
 import { GetSimpleOrganism } from 'src/models/organism/get-simple-organism.dto';
@@ -36,7 +36,7 @@ export class OrganismService {
     });
   }
 
-  addOrganism(addOrganism: AddOrganism): Observable<any> {
+  addOrganism(addOrganism: IAddOrganism): Observable<any> {
     return this.http.post<any>(this.url + 'AddOrganism', addOrganism, {
       observe: 'response',
       headers: this.httpOptions.headers,

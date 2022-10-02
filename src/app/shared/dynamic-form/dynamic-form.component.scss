@@ -14,3 +14,7 @@ button {
     color: white;
     border-radius: 3em;
 }
+
+button:disabled {
+    background-color: rgba(#595DE5, 0.2);
+}

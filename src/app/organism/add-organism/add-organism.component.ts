@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AddOrganism } from 'src/models/organism/add-organism.dto';
+import { ToastrService } from 'ngx-toastr';
+import { ICreateForm } from 'src/models/form/create-form';
+import { QuestionBase } from 'src/models/form/question-base';
+import { IAddOrganism } from 'src/models/organism/add-organism.dto';
 import { GetSimpleOrganism } from 'src/models/organism/get-simple-organism.dto';
 import { OrganismService } from 'src/services/organism.service';
+import { QuestionService } from 'src/services/question.service';
 import { ToastService } from 'src/services/toast.service';
 
 @Component({
@@ -11,26 +14,62 @@ import { ToastService } from 'src/services/toast.service';
   styleUrls: ['./add-organism.component.scss'],
 })
 export class AddOrganismComponent implements OnInit {
-  createForm = new FormGroup({
-    name: new FormControl(''),
-    type: new FormControl(''),
-    description: new FormControl(''),
-    collectionDate: new FormControl(''),
-    collectionLocation: new FormControl(''),
-    isolationDate: new FormControl(''),
-    originPart: new FormControl(''),
-  });
+  questions: QuestionBase<any>[] = [];
 
-  organismId = 0;
-  organisms: GetSimpleOrganism[] = [];
-  selectedOrganismId = 0;
+  questionsTypes = [
+    {
+      key: 'name',
+      label: 'Name',
+      type: 'text',
+      order: 1,
+    },
+    {
+      key: 'type',
+      label: 'Type',
+      type: 'text',
+      order: 2,
+    },
+    {
+      key: 'description',
+      label: 'Description',
+      type: 'textarea',
+      required: false,
+      order: 3,
+    },
+    {
+      key: 'collectionDate',
+      label: 'Collection Date',
+      type: 'date',
+      order: 4,
+    },
+    {
+      key: 'isolationDate',
+      label: 'Isolation Date',
+      type: 'date',
+      order: 5,
+    },
+    {
+      key: 'originOrganismId',
+      label: 'Origin',
+      type: 'dropdown',
+      order: 6,
+      options: [],
+    } as ICreateForm,
+    {
+      key: 'originPart',
+      label: 'Origin Part',
+      type: 'text',
+      order: 7,
+    },
+  ];
 
   isLoading = false;
 
   constructor(
     private organismService: OrganismService,
     private router: Router,
-    private toastService: ToastService
+    private toastr: ToastrService,
+    private questionService: QuestionService
   ) {}
 
   ngOnInit(): void {
@@ -38,48 +77,46 @@ export class AddOrganismComponent implements OnInit {
     this.organismService
       .getOrganisms()
       .subscribe((organisms: GetSimpleOrganism[]) => {
-        this.organisms = organisms;
+        this.isLoading = false;
+        this.questionsTypes[5].options = organisms.map((organism) => ({
+          key: organism.id!.toString(),
+          value: organism.name,
+        }));
+        this.questions = this.questionService.getQuestions(this.questionsTypes);
+      },
+      (err) => {
+        this.toastr.show(err.errorMessage, 'Error');
         this.isLoading = false;
       });
   }
 
-  onSubmit() {
-    let organism = this.createForm.value as AddOrganism;
-
-    organism.originOrganismId = null;
-
-    if (this.selectedOrganismId != 0) {
-      organism.originOrganismId = this.selectedOrganismId;
-    }
-
+  onSubmit(payload: any) {
     this.isLoading = true;
 
-    this.organismService.addOrganism(organism).subscribe(
+    this.organismService.addOrganism(payload as IAddOrganism).subscribe(
       (res: any) => {
         this.router.navigate(['/organisms']).then(() => {
-          this.toastService.show(res.body, 'Success', false);
+          // this.toastService.show(res.body, 'Success', false);
         });
       },
       (err: any) => {
+        console.log(err);
         let message = '';
         let errors = err.error.errors;
         if (errors != null) {
           let keys = Object.keys(errors);
           keys.forEach((key: any) => {
             errors[key].forEach((errorMessage: string) => {
+              console.log(errorMessage);
               message = errorMessage;
             });
           });
 
-          this.toastService.show(message, 'Error', true);
+          // this.toastService.show(message, 'Error', true);
           this.isLoading = false;
         }
       },
       () => (this.isLoading = false)
     );
-  }
-
-  selectOrigin(e: any) {
-    this.selectedOrganismId = e.target.value;
   }
 }

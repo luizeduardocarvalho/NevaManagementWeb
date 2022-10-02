@@ -133,13 +133,26 @@ button, input {
     border-radius: 0.5em;
 }
 
-.f-s-2 {
-	font-size: 1.1em;
+.page-loader {
+    z-index: 999;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(#000, 0.5);
 }
 
-/* MARGINS */
+/* SIZES */
 .m-b-1 {
 	margin-bottom: 1em;
+}
+
+.f-s-2 {
+	font-size: 1.1em;
 }
 
 /* FORMS */

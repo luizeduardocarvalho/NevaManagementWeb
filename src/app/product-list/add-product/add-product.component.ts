@@ -39,11 +39,12 @@ export class AddProductComponent implements OnInit {
       key: 'formula',
       label: 'Formula',
       type: 'text',
+      required: false,
       order: 4,
     },
     {
-      key: 'sublocationId',
-      label: 'Sub Location',
+      key: 'locationId',
+      label: 'Location',
       type: 'dropdown',
       options: [],
       order: 5,
@@ -52,12 +53,14 @@ export class AddProductComponent implements OnInit {
       key: 'description',
       label: 'Description',
       type: 'textarea',
+      required: false,
       order: 6,
     },
     {
       key: 'expirationDate',
       label: 'Expiration Date',
       type: 'date',
+      required: false,
       order: 7,
     },
   ];
@@ -100,7 +103,7 @@ export class AddProductComponent implements OnInit {
       (err: any) => {
         let message = '';
         let errors = err.error.errors;
-
+        console.log(err);
         if (errors != null) {
           let keys = Object.keys(errors);
           keys.forEach((key: any) => {
