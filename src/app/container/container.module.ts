@@ -7,17 +7,13 @@ import { AddContainerComponent } from './add-container/add-container.component';
 import { ContainerComponent } from './container.component';
 import { ContainerCardComponent } from './container-card/container-card.component';
 
-
 @NgModule({
   declarations: [
     ContainerComponent,
     ContainerListComponent,
     AddContainerComponent,
-    ContainerCardComponent
+    ContainerCardComponent,
   ],
-  imports: [
-    ContainerRoutingModule,
-    SharedModule
-  ]
+  imports: [ContainerRoutingModule, SharedModule],
 })
-export class ContainerModule { }
+export class ContainerModule {}

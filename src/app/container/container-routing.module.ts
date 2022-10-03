@@ -6,19 +6,19 @@ import { ContainerListComponent } from './container-list/container-list.componen
 import { ContainerComponent } from './container.component';
 
 const routes: Routes = [
-  { 
-    path: '', 
+  {
+    path: '',
     component: ContainerComponent,
     children: [
       { path: '', component: ContainerListComponent },
       { path: 'add', component: AddContainerComponent },
-      { path: ':id', component: ContainerCardComponent }
-    ]
+      { path: ':id', component: ContainerCardComponent },
+    ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ContainerRoutingModule { }
+export class ContainerRoutingModule {}
