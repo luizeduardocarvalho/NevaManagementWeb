@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -6,53 +6,36 @@ import { IAddContainer } from 'src/models/container/add-container';
 import { GetContainersOrderedByTransferDateDto } from 'src/models/container/get-containers-ordered-by-transfer-date.dto';
 import { GetDetailedContainer } from 'src/models/container/get-detailed-container.dto';
 import { GetSimpleContainer } from 'src/models/container/get-simple-container.dto';
-import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContainerService {
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `${this.tokenService.getToken()}`,
-    }),
-  };
-
   url = environment.baseUrl + 'Container/';
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {}
+  constructor(private http: HttpClient) {}
 
   getContainers(): Observable<GetSimpleContainer[]> {
-    return this.http.get<GetSimpleContainer[]>(this.url + 'GetContainers', {
-      headers: this.httpOptions.headers,
-    });
+    return this.http.get<GetSimpleContainer[]>(this.url + 'GetContainers');
   }
 
   addContainer(addContainer: IAddContainer): Observable<any> {
     return this.http.post<any>(this.url + 'AddContainer', addContainer, {
       observe: 'response',
-      headers: this.httpOptions.headers,
     });
   }
 
-  getChildrenContainers(id: number): Observable<GetSimpleContainer[]> {
+  getChildrenContainers(containerId: number): Observable<GetSimpleContainer[]> {
     return this.http.get<GetSimpleContainer[]>(
       this.url + 'GetChildrenContainers',
-      {
-        params: { containerId: id },
-        headers: this.httpOptions.headers,
-      }
+      { params: { containerId } }
     );
   }
 
-  getDetailedContainer(id: number): Observable<GetDetailedContainer> {
+  getDetailedContainer(containerId: number): Observable<GetDetailedContainer> {
     return this.http.get<GetDetailedContainer>(
       this.url + 'GetDetailedContainer',
-      {
-        params: { containerId: id },
-        headers: this.httpOptions.headers,
-      }
+      { params: { containerId } }
     );
   }
 
@@ -60,10 +43,7 @@ export class ContainerService {
     GetContainersOrderedByTransferDateDto[]
   > {
     return this.http.get<GetContainersOrderedByTransferDateDto[]>(
-      this.url + 'GetContainersOrderedByTransferDate',
-      {
-        headers: this.httpOptions.headers,
-      }
+      this.url + 'GetContainersOrderedByTransferDate'
     );
   }
 }

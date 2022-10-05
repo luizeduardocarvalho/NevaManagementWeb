@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { ILoggedUser } from 'src/models/user/logged-user.dto';
 import { LoginUserDto } from 'src/models/user/login-user.dto';
 
-import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +14,10 @@ export class AuthService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      Authorization: `${this.tokenService.getToken()}`,
     }),
   };
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {}
+  constructor(private http: HttpClient) {}
 
   login(user: LoginUserDto): Observable<ILoggedUser> {
     return this.http.post<ILoggedUser>(
@@ -27,5 +25,9 @@ export class AuthService {
       user,
       this.httpOptions
     );
+  }
+
+  getToken() {
+    return localStorage.getItem('token') as string;
   }
 }

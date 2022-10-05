@@ -15,6 +15,7 @@ export class QuestionControlService {
         ? new FormControl(question.value || '', Validators.required)
         : new FormControl(question.value || '');
     });
+    
     return new FormGroup(group);
   }
 }
