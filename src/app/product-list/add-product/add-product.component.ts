@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ICreateForm } from 'src/models/form/create-form';
 import { QuestionBase } from 'src/models/form/question-base';
 import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
-import { IAddProduct } from 'src/models/product/add-product';
 import { LocationService } from 'src/services/location.service';
 import { ProductService } from 'src/services/product.service';
 import { QuestionService } from 'src/services/question.service';
-import { ToastService } from 'src/services/toast.service';
 
 @Component({
   templateUrl: './add-product.component.html',
@@ -71,7 +70,7 @@ export class AddProductComponent implements OnInit {
     private productService: ProductService,
     private locationService: LocationService,
     private questionService: QuestionService,
-    private toastService: ToastService,
+    private toastr: ToastrService,
     private router: Router
   ) {
     this.questions = this.questionService.getQuestions(this.questionsTypes);
@@ -94,29 +93,14 @@ export class AddProductComponent implements OnInit {
   onSubmit(payload: any) {
     this.isLoading = true;
 
-    this.productService.create(payload as IAddProduct).subscribe(
+    this.productService.create(JSON.parse(payload)).subscribe(
       (res: any) => {
+        this.isLoading = false;
         this.router.navigate(['/products']).then(() => {
-          this.toastService.show(res.body, 'Success', false);
+          this.toastr.success(res, 'Success');
         });
       },
-      (err: any) => {
-        let message = '';
-        let errors = err.error.errors;
-        console.log(err);
-        if (errors != null) {
-          let keys = Object.keys(errors);
-          keys.forEach((key: any) => {
-            errors[key].forEach((errorMessage: string) => {
-              message = errorMessage;
-            });
-          });
-
-          this.toastService.show(message, 'Error', true);
-          this.isLoading = false;
-        }
-      },
-      () => (this.isLoading = false)
+      (err: any) => (this.isLoading = false)
     );
   }
 }
