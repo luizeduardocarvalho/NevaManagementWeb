@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,6 +11,8 @@ import { MenuComponent } from './menu/menu.component';
 import { SharedModule } from './shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { UserHistoryComponent } from './user-history/user-history.component';
+import { AuthorizationInterceptor } from 'src/interceptors/authorization.interceptor';
+import { HttpErrorInterceptor } from 'src/interceptors/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -27,9 +29,20 @@ import { UserHistoryComponent } from './user-history/user-history.component';
     HttpClientModule,
     ReactiveFormsModule,
     SharedModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
