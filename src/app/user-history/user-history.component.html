@@ -1,26 +1,30 @@
-<app-spinner [isLoading]="isLoading"></app-spinner>
-<div class="wrapper">
-    <div class="container header-container">
-        <div class="header">
-            <app-back-arrow></app-back-arrow>
-            <button class="add-history-button">History</button>
-        </div>
-        <h2 class="page-title bold">History</h2>
-        <div class="search-bar">
-            <div class="search-icon">
-                <fa-icon [icon]="faSearch"></fa-icon>
-            </div>
-            <input class="search-input" [(ngModel)]="searchText" name="searchText" type="text"
-                placeholder="Search a product" autocomplete="off">
-        </div>
+<app-back-arrow></app-back-arrow>
+<h1 class="bold">History</h1>
+<section class="search-bar-section">
+  <div class="search-bar-section__icon">
+    <fa-icon [icon]="faSearch"></fa-icon>
+  </div>
+  <input
+    class="search-bar-section__input"
+    [(ngModel)]="searchText"
+    name="searchText"
+    type="text"
+    placeholder="Search a product"
+    autocomplete="off"
+  />
+</section>
+<section class="card-section">
+  <div *ngIf="isLoading" class="loader-section">
+    <div class="loader"></div>
+  </div>
+  <div
+    class="card-container"
+    *ngFor="let use of lastProductUses | search: searchText"
+  >
+    <div class="card-container__card default-card">
+      <p class="bold">{{ use.name }}</p>
+      <p class="card-date">{{ use.usageDate | date: "fullDate" }}</p>
+      <p class="card-quantity">{{ use.quantity }}{{ use.unit }}</p>
     </div>
-    <div class="container card-container">
-        <div class="uses-card" *ngFor="let use of lastProductUses | search : searchText">
-            <h3 class="bold">{{ use.name }}</h3>
-            <div class="uses-information">
-                <p class="card-date">{{ use.usageDate | date: 'fullDate' }}</p>
-                <p class="card-quantity">{{ use.quantity }}{{ use.unit }}</p>
-            </div>
-        </div>
-    </div>
-</div>
+  </div>
+</section>
