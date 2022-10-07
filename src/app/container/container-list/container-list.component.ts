@@ -6,10 +6,9 @@ import { ContainerService } from 'src/services/container.service';
 
 @Component({
   templateUrl: './container-list.component.html',
-  styleUrls: ['./container-list.component.scss']
+  styleUrls: ['./container-list.component.scss'],
 })
 export class ContainerListComponent implements OnInit {
-
   faSearch = faSearch as IconProp;
   faReceipt = faReceipt as IconProp;
 
@@ -18,7 +17,7 @@ export class ContainerListComponent implements OnInit {
 
   isLoading = false;
 
-  constructor(private containerService: ContainerService) { }
+  constructor(private containerService: ContainerService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -27,7 +26,6 @@ export class ContainerListComponent implements OnInit {
       .subscribe((containers: GetSimpleContainer[]) => {
         this.containers = containers;
         this.isLoading = false;
-      }
-    );
+      });
   }
 }

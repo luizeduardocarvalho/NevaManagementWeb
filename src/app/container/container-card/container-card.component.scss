@@ -1,79 +1,64 @@
-.container {
-  --radius: 0.7rem;
-
-  width: 90vw;
-  display: grid;
-  grid-auto-rows: auto;
-}
-
-.header {
-  display: flex;
+.header-section {
   margin-bottom: 1em;
+
+  display: flex;
+  justify-content: space-between;
+
+  &__button {
+    border: none;
+    border-radius: 1em;
+    padding: 0.2em 0.8em 0.2em 0.8em;
+
+    background-color: var(--cl-primary);
+    color: whitesmoke;
+  }
 }
 
-.container-button {
-  border: none;
-  background-color: var(--cl-primary);
-  color: white;
-  border-radius: 3em;
-  padding: 1em 2em 1em 2em;
-  font-size: 0.8rem;
-}
+.location-info-card {
+  padding: 0.5em 1em 0.5em 1em;
 
-.container-section {
-  margin-left: auto;
-}
-
-.container-card {
-  display: grid;
-  background-color: white;
-  box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
-  border-radius: 1em;
-  padding: 1em;
-  margin-bottom: 1.5em;
+  &__button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5em;
+  }
 
   &__button {
     display: flex;
+    align-self: center;
+    align-items: center;
+    height: min-content;
+    padding: 0.2em 0.8em 0.2em 0.8em;
+    
+    font-size: 0.8em;
+    white-space: nowrap;
 
-    &>a {
-      margin-left: auto;
-    }
+    background-color: whitesmoke;
+    border-radius: 1em;
   }
 }
 
-.sub-title {
-  margin-bottom: 0.5em;
+.info-card-section {
+  margin-bottom: 1em;
 }
 
-.children-container {
-  overflow-y: auto;
-  height: 40vh;
-}
+.card-container {
+  &__card {
+      padding: 0.5em 1em 0.5em 1em;
+      margin-bottom: 0.5em;
 
-.uses-information {
-  margin-left: auto;
-}
+      display: flex;
+      justify-content: space-between;
+  }
 
-.card-quantity {
-  text-align: end;
-}
-
-.container-action-button {
-  position: absolute;
-  font-size: 1em;
-  width: 80vw;
-  bottom: 14vh;
-  padding: 1em 2em 1em 2em;
-}
-
-@media (min-height: 670px) {
-  .children-container {
-    height: 45vh;
+  &__card-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: whitesmoke;
   }
 }
 
-@media (min-height: 800px) {
-  .children-container {
-    height: 50vh;
-  }
+.card-section {
+  margin-top: 0.5em;
 }

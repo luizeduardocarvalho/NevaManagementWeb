@@ -50,6 +50,9 @@
     }
 
     &__card-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: whitesmoke;
     }
 }

@@ -1,26 +1,38 @@
-<app-spinner [isLoading]="isLoading"></app-spinner>
-<div class="wrapper">
-    <div class="container">
-        <div class="header">
-            <app-back-arrow></app-back-arrow>
-            <div class="container-section">
-                <button class="container-button" [routerLink]="['add-quantity']">Edit Container</button>
-            </div>
-        </div>
-        <div class="container-card">
-            <h2 class="container-card__title bold">{{ container?.name }}</h2>
-            <p class="container-card__location">{{ container?.creationDate | date : 'mediumDate' }}</p>
-            <div class="container-card__button">
-                <p class="container-card__quantity">{{ container?.researcherName }}</p>
-                <a [routerLink]="['info']">
-                    <p>More Info</p>
-                </a>
-            </div>
-        </div>
-        <h2 class="sub-title bold">Last Uses</h2>
-        <div class="children-container">
-            <app-small-card *ngFor="let container of childrenContainers | search : searchText" title="{{ container.name }}"
-            url="/containers/{{ container.id }}" [icon]="faReceipt"></app-small-card>
-        </div>
+<section class="header-section">
+  <app-back-arrow></app-back-arrow>
+  <button class="header-section__button button" [routerLink]="['add']">
+    Add Container
+  </button>
+</section>
+<section class="info-card-section">
+  <div class="location-info-card default-card">
+    <p class="bold">{{ container?.name }}</p>
+    <p>{{ container?.creationDate | date: "mediumDate" }}</p>
+    <div class="location-info-card__button-row">
+      <p>{{ container?.researcherName }} fasdif jdsoifjasoifj</p>
+      <div class="location-info-card__button">
+        <a [routerLink]="['info']">More Info </a>
+      </div>
     </div>
-</div>
+  </div>
+</section>
+<h2 class="bold">Last Uses</h2>
+<section class="card-section">
+  <div
+    *ngFor="let container of childrenContainers | search: searchText"
+    class="card-container"
+  >
+    <div class="card-container__card default-card">
+      <p>{{ container.name }}</p>
+      <a
+        class="card-container__card-icon"
+        [routerLink]="['/containers', container.id]"
+      >
+        <fa-icon [icon]="faReceipt"></fa-icon>
+      </a>
+    </div>
+  </div>
+  <div *ngIf="isLoading" class="loader-section">
+    <div class="loader"></div>
+  </div>
+</section>

@@ -1,24 +1,39 @@
-<app-spinner [isLoading]="isLoading"></app-spinner>
-<div class="wrapper">
-    <router-outlet></router-outlet>
-    <div class="container header-equipment">
-        <div class="header">
-            <app-back-arrow></app-back-arrow>
-            <div class="add-equipment-section">
-                <button class="add-equipment-button" [routerLink]="['add']">Add Equipment</button>
-            </div>
-        </div>
-        <h2 class="page-title">Equipment List</h2>
-        <div class="search-bar">
-            <div class="search-icon">
-                <fa-icon [icon]="faSearch"></fa-icon>
-            </div>
-            <input class="search-input" [(ngModel)]="searchText" name="searchText" type="text"
-                placeholder="Search a location" autocomplete="off">
-        </div>
+<section class="header-section">
+  <app-back-arrow></app-back-arrow>
+  <button class="header-section__button button" [routerLink]="['add']">
+    Add Equipment
+  </button>
+</section>
+<h1 class="bold">Location List</h1>
+<section class="search-bar-section">
+  <div class="search-bar-section__icon">
+    <fa-icon [icon]="faSearch"></fa-icon>
+  </div>
+  <input
+    class="search-bar-section__input"
+    [(ngModel)]="searchText"
+    name="searchText"
+    type="text"
+    placeholder="Search a location"
+    autocomplete="off"
+  />
+</section>
+<section class="card-section">
+  <div
+    *ngFor="let equipment of equipments | search: searchText"
+    class="card-container"
+  >
+    <div class="card-container__card default-card">
+      <p>{{ equipment.name }}</p>
+      <a
+        class="card-container__card-icon"
+        [routerLink]="['/equipment', equipment.id]"
+      >
+        <fa-icon [icon]="faReceipt"></fa-icon>
+      </a>
     </div>
-    <div class="card-equipment container">
-        <app-small-card *ngFor="let equipment of equipments | search : searchText" title="{{ equipment.name }}"
-            url="/equipment/{{ equipment.id }}" [icon]="faReceipt"></app-small-card>
-    </div>
-</div>
+  </div>
+  <div *ngIf="isLoading" class="loader-section">
+    <div class="loader"></div>
+  </div>
+</section>
