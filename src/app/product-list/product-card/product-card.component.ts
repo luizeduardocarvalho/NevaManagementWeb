@@ -21,6 +21,7 @@ export class ProductCardComponent implements OnInit {
   user?: IUser;
 
   isLoading = false;
+  isCardLoading = false;
 
   constructor(
     private productService: ProductService,

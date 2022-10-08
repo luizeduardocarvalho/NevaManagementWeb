@@ -1,34 +1,37 @@
-<app-spinner [isLoading]="isLoading"></app-spinner>
-<div class="wrapper">
-    <div class="container">
-        <div class="header">
-            <app-back-arrow></app-back-arrow>
-            <div class="product-section">
-                <button class="product-button" [routerLink]="['add-quantity']">Add Quantity</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <h2 class="product-card__title bold">{{ product?.name }}</h2>
-            <p class="product-card__location">{{ product?.location?.name }}</p>
-            <div class="product-card__button">
-                <p class="product-card__quantity">{{ product?.quantity }} {{ product?.unit }}</p>
-                <a [routerLink]="['info']">
-                    <p>More Info</p>
-                </a>
-            </div>
-        </div>
-        <h2 class="sub-title bold">Last Uses</h2>
-        <div class="uses-card-container">
-            <div class="uses-card" *ngFor="let use of lastUses">
-                <h3 class="card-user bold">{{ use.researcherName }}</h3>
-                <div class="uses-information">
-                    <p class="card-date">{{ use.useDate | date: 'mediumDate' }}</p>
-                    <p class="card-quantity">{{ use.quantity }} {{ use.unit }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="action-button">
-            <button class="product-action-button product-button" [routerLink]="['use-product']">Use Product</button>
-        </div>
+<section class="header-section">
+  <app-back-arrow></app-back-arrow>
+  <button class="header-section__button button" [routerLink]="['add']">
+    Add Quantity
+  </button>
+</section>
+<section class="info-card-section">
+  <div *ngIf="isCardLoading" class="loader-section">
+    <div class="loader"></div>
+  </div>
+  <div *ngIf="!isCardLoading" class="product-info-card default-card">
+    <p class="bold">{{ product?.name }}</p>
+    <p>{{ product?.location?.name }}</p>
+    <div class="product-info-card__button-row">
+      <p>{{ product?.quantity }} {{ product?.unit }}</p>
+      <div class="product-info-card__button">
+        <a [routerLink]="['info']">More Info </a>
+      </div>
     </div>
-</div>
+  </div>
+</section>
+<section class="card-section">
+  <h1 class="card-section__title bold">Last Uses</h1>
+  <div *ngFor="let use of lastUses" class="card-container">
+    <div *ngIf="!isLoading" class="card-container__card default-card">
+      <p>{{ use.researcherName }}</p>
+      <p>{{ use.useDate | date: "mediumDate" }}</p>
+      <p>{{ use.quantity }} {{ use.unit }}</p>
+    </div>
+  </div>
+  <div *ngIf="isLoading" class="loader-section">
+    <div class="loader"></div>
+  </div>
+  <button class="action-button" [routerLink]="['use-product']">
+    Use Product
+  </button>
+</section>
