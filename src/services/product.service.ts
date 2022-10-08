@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IAddProduct } from 'src/models/product/add-product';
 import { IAddQuantity } from 'src/models/product/add-quantity';
-import { EditProduct } from 'src/models/product/edit-product.dto';
+import { IEditProduct } from 'src/models/product/edit-product.dto';
 import { IGetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
 import { GetProduct } from 'src/models/product/get-product.dto';
 import { UseProduct } from 'src/models/product/use-product.dto';
@@ -54,7 +54,7 @@ export class ProductService {
     });
   }
 
-  editProduct(editProduct: EditProduct): Observable<any> {
+  editProduct(editProduct: IEditProduct): Observable<any> {
     return this.http.patch(this.url + 'EditProduct', editProduct, {
       observe: 'response',
     });
