@@ -147,6 +147,10 @@ button, input {
 }
 
 /* SIZES */
+.m-b-05 {
+	margin-bottom: 0.5em;
+}
+
 .m-b-1 {
 	margin-bottom: 1em;
 }
@@ -160,7 +164,7 @@ button, input {
     width: 100%;
     margin-top: 1em;
     overflow: scroll;
-    height: 49vh;
+    height: 53vh;
 }
 
 @media(min-height: 740px) {
@@ -177,12 +181,12 @@ button, input {
 
 @media(min-height: 896px) {
     .form-container {
-        height: 55vh;
+        height: 62vh;
     }
 }
 
 @media(min-height: 900px) {
     .form-container {
-        height: 56vh;
+        height: 61vh;
     }
 }
