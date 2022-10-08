@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { IEditEquipment } from 'src/models/equipment/edit-equipment';
@@ -7,7 +6,6 @@ import { GetDetailedEquipmentDto } from 'src/models/equipment/get-detailed-equip
 import { QuestionBase } from 'src/models/form/question-base';
 import { EquipmentService } from 'src/services/equipment.service';
 import { QuestionService } from 'src/services/question.service';
-import { ToastService } from 'src/services/toast.service';
 
 @Component({
   templateUrl: './edit-equipment.component.html',
@@ -77,26 +75,12 @@ export class EditEquipmentComponent implements OnInit {
 
     this.equipmentService.editEquipment(equipment).subscribe(
       (res: any) => {
+        this.isLoading = false;
         this.router.navigate(['/equipment']).then(() => {
           this.toastr.success(res.body, 'Success');
         });
       },
-      (err: any) => {
-        let message = '';
-        let errors = err.error.errors;
-        if (errors != null) {
-          let keys = Object.keys(errors);
-          keys.forEach((key: any) => {
-            errors[key].forEach((errorMessage: string) => {
-              message = errorMessage;
-            });
-          });
-
-          this.toastr.success(message, 'Error');
-          this.isLoading = false;
-        }
-      },
-      () => (this.isLoading = false)
+      (err: any) => (this.isLoading = false)
     );
   }
 }

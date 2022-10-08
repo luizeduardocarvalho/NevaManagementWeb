@@ -12,7 +12,7 @@
     <p class="bold">{{ container?.name }}</p>
     <p>{{ container?.creationDate | date: "mediumDate" }}</p>
     <div class="location-info-card__button-row">
-      <p>{{ container?.researcherName }} fasdif jdsoifjasoifj</p>
+      <p>{{ container?.researcherName }}</p>
       <!-- <div class="location-info-card__button">
         <a [routerLink]="['info']">More Info </a>
       </div> -->
@@ -21,10 +21,18 @@
 </section>
 <section class="card-section">
   <h1 class="card-section__title bold">Children</h1>
-  <div
-    *ngFor="let container of childrenContainers | search: searchText"
-    class="card-container"
-  >
+  <div *ngFor="let container of childrenContainers" class="card-container">
+    <div *ngIf="!isLoading" class="card-container__card default-card">
+      <p>{{ container.name }}</p>
+      <a
+        class="card-container__card-icon"
+        [routerLink]="['/containers', container.id]"
+      >
+        <fa-icon [icon]="faReceipt"></fa-icon>
+      </a>
+    </div>
+  </div>
+  <div *ngFor="let container of childrenContainers" class="card-container">
     <div *ngIf="!isLoading" class="card-container__card default-card">
       <p>{{ container.name }}</p>
       <a

@@ -60,9 +60,35 @@
 }
 
 .card-section {
+  height: 47vh;
+  overflow: scroll;
   margin-top: 0.5em;
 
   &__title {
     margin-bottom: 0.5em;
+  }
+}
+
+@media(min-height: 740px) {
+  .card-section {
+      height: 54vh;
+  }
+}
+
+@media(min-height: 844px) {
+  .card-section {
+      height: 56vh;
+  }
+}
+
+@media(min-height: 896px) {
+  .card-section {
+      height: 57vh;
+  }
+}
+
+@media(min-height: 900px) {
+  .card-section {
+      height: 59vh;
   }
 }
