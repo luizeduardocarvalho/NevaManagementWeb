@@ -25,17 +25,11 @@ export class ProductInfoComponent implements OnInit {
     });
 
     this.isLoading = true;
-
     this.productService
       .getDetailedProductById(this.productId)
       .subscribe((product: IGetDetailedProduct) => {
         this.product = product;
         this.isExpired = new Date(product.expirationDate) <= new Date();
-
-        if (product.formula != null) {
-          this.product.formula = '(' + product.formula + ')';
-        }
-
         this.isLoading = false;
       });
   }
