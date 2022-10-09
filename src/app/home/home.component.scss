@@ -46,12 +46,13 @@
     }
 
     &__icon {
-        color: var(--cl-primary);
+        color: var(--cl-tx-secondary);
     }
 }
 
 a {
     color: var(--cl-primary);
+    text-decoration: none;
 }
 
 .cards-container {

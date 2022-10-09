@@ -1,12 +1,12 @@
 <section>
   <div class="spaced-columns">
     <h1 class="last-used-header__title bold">Last Used</h1>
-    <span><a class="semi-bold">See All</a></span>
+    <span><a [routerLink]="['/user-history']" class="semi-bold">See All</a></span>
   </div>
   <div *ngIf="isLoadingProductCard" class="loader-section">
     <div class="loader"></div>
   </div>
-  <div class="last-used-card default-card">
+  <div *ngIf="!isLoadingProductCard" class="last-used-card default-card">
     <div class="last-used-card__text-section">
       <p class="last-used-card__product bold">{{ product?.productName }}</p>
       <p class="last-used-card__location">{{ product?.locationName }}</p>
@@ -27,12 +27,12 @@
 <section>
   <div class="spaced-columns">
     <h1 class="bold">Next Transfers</h1>
-    <span><a class="semi-bold">See All</a></span>
+    <span><a [routerLink]="['/containers/next-transfers']" class="semi-bold">See All</a></span>
   </div>
   <div *ngIf="isLoadingNextTransfers" class="loader-section">
     <div class="loader"></div>
   </div>
-  <div class="cards-container">
+  <div *ngIf="!isLoadingNextTransfers" class="cards-container">
     <div
       *ngFor="let container of containers"
       class="cards-container__card default-card"
@@ -55,7 +55,7 @@
     <div *ngIf="isLoadingLowInStock" class="loader-section">
       <div class="loader"></div>
     </div>
-    <div class="cards-container">
+    <div *ngIf="!isLoadingLowInStock" class="cards-container">
       <div
         *ngFor="let product of lowInStockProducts"
         class="cards-container__card default-card"
