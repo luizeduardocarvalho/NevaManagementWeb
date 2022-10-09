@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IAddContainer } from 'src/models/container/add-container';
-import { GetContainersOrderedByTransferDateDto } from 'src/models/container/get-containers-ordered-by-transfer-date.dto';
+import { IGetContainersOrderedByTransferDate } from 'src/models/container/get-containers-ordered-by-transfer-date';
 import { GetDetailedContainer } from 'src/models/container/get-detailed-container.dto';
 import { GetSimpleContainer } from 'src/models/container/get-simple-container.dto';
 
@@ -39,11 +39,14 @@ export class ContainerService {
     );
   }
 
-  getContainersOrderedByTransferDate(): Observable<
-    GetContainersOrderedByTransferDateDto[]
-  > {
-    return this.http.get<GetContainersOrderedByTransferDateDto[]>(
-      this.url + 'GetContainersOrderedByTransferDate'
+  getContainersOrderedByTransferDate(
+    page: number = 1
+  ): Observable<IGetContainersOrderedByTransferDate[]> {
+    return this.http.get<IGetContainersOrderedByTransferDate[]>(
+      this.url + 'GetContainersOrderedByTransferDate',
+      {
+        params: { page },
+      }
     );
   }
 }

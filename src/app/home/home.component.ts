@@ -5,7 +5,7 @@ import {
   faPen,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
-import { GetContainersOrderedByTransferDateDto } from 'src/models/container/get-containers-ordered-by-transfer-date.dto';
+import { IGetContainersOrderedByTransferDate } from 'src/models/container/get-containers-ordered-by-transfer-date';
 import { GetLastProduct } from 'src/models/product-usage/get-last-product.dto';
 import { IGetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
 import { ContainerService } from 'src/services/container.service';
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   product?: GetLastProduct;
   lowInStockProducts: IGetDetailedProduct[] = [];
-  containers: GetContainersOrderedByTransferDateDto[] = [];
+  containers: IGetContainersOrderedByTransferDate[] = [];
 
   constructor(
     private productUsageService: ProductUsageService,
@@ -51,8 +51,8 @@ export class HomeComponent implements OnInit {
     this.isLoadingNextTransfers = true;
     this.containerService
       .getContainersOrderedByTransferDate()
-      .subscribe((containers: GetContainersOrderedByTransferDateDto[]) => {
-        this.containers = containers;
+      .subscribe((containers: IGetContainersOrderedByTransferDate[]) => {
+        this.containers = containers.slice(0, 2);
         this.isLoadingNextTransfers = false;
       });
 

@@ -4,6 +4,7 @@ import { AddContainerComponent } from './add-container/add-container.component';
 import { ContainerCardComponent } from './container-card/container-card.component';
 import { ContainerListComponent } from './container-list/container-list.component';
 import { ContainerComponent } from './container.component';
+import { NextTransfersComponent } from './next-transfers/next-transfers.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
     children: [
       { path: '', component: ContainerListComponent },
       { path: 'add', component: AddContainerComponent },
+      { path: 'next-transfers', component: NextTransfersComponent },
       { path: ':id', component: ContainerCardComponent },
     ],
   },
