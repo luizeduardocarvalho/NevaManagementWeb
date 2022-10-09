@@ -37,7 +37,7 @@
 
 .card-section {
     overflow-y: scroll;
-    height: 58vh;
+    height: 55vh;
 }
 
 .card-container {
@@ -59,24 +59,24 @@
 
 @media(min-height: 740px) {
     .card-section {
-        height: 60vh;
+        height: 57vh;
     }
 }
 
 @media(min-height: 844px) {
     .card-section {
-        height: 62vh;
+        height: 59vh;
     }
 }
 
 @media(min-height: 896px) {
     .card-section {
-        height: 65vh;
+        height: 62vh;
     }
 }
 
 @media(min-height: 900px) {
     .card-section {
-        height: 66vh;
+        height: 63vh;
     }
 }
