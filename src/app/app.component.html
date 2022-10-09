@@ -1,12 +1,14 @@
 <div class="header">
-  <img src="../assets/logo.png" alt="" />
-  <div class="dropdown">
+  <img src="../assets/logo.jpeg" alt="" />
+  <div *ngIf="isLoggedIn" class="dropdown">
     <a id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
       <fa-icon icon="user"></fa-icon>
     </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
       <li><a class="dropdown-item semi-bold" href="#">Profile</a></li>
-      <li><a class="dropdown-item semi-bold" href="#">Logout</a></li>
+      <li>
+        <a class="dropdown-item semi-bold" (click)="onLogout()">Logout</a>
+      </li>
     </ul>
   </div>
 </div>

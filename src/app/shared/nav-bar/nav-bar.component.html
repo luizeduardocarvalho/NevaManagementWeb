@@ -1,4 +1,4 @@
-<div class="footer">
+<div *ngIf="isLoggedIn" class="footer">
   <fa-icon [routerLink]="['home']" [icon]="faHome"></fa-icon>
   <fa-icon [routerLink]="['products']" [icon]="faList"></fa-icon>
   <fa-icon [routerLink]="['user-history']" [icon]="faReceipt"></fa-icon>
