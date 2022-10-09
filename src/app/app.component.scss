@@ -20,14 +20,14 @@
 }
 
 a {
-    color: black !important;
+    color: var(--cl-tx-primary) !important;
     text-decoration: none;
 }
 
 a:hover {
-    color: black !important;
+    color: var(--cl-tx-primary) !important;
 }
 
 a:active {
-    color: black !important;
+    color: var(--cl-tx-primary) !important;
 }

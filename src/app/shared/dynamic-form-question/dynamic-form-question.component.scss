@@ -49,5 +49,5 @@ select::after {
     height: 0;
     border-left: var(--size) solid transparent;
     border-right: var(--size) solid transparent;
-    border-top: var(--size) solid black;
+    border-top: var(--size) solid var(--cl-tx-primary);
 }

@@ -16,5 +16,5 @@ button {
 }
 
 button:disabled {
-    background-color: rgba(#595DE5, 0.2);
+    background-color: hsl(var(--cl-primary-hsl), 0.2);
 }

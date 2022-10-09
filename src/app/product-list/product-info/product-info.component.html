@@ -12,7 +12,7 @@
     <p>{{ product?.quantity }}{{ product?.unit | lowercase }}</p>
     <p
       class="m-b-05"
-      [ngStyle]="isExpired ? { color: 'red' } : { color: 'black' }"
+      [ngStyle]="isExpired ? { color: 'red' } : { color: 'var(--cl-tx-primary)' }"
     >
       {{ product?.expirationDate | date: "fullDate" }}
     </p>

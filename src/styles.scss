@@ -37,7 +37,7 @@ body {
 	line-height: 1.5;
 	font-family: 'Poppins', sans-serif;
 	font-size: 1.2rem;
-	background-color: var(--bg-color);
+	background-color: var(--cl-bg);
 }
 html, body {
 	height: 100vh;
@@ -67,8 +67,11 @@ input:focus, textarea:focus, select:focus {
 
 /* Vars */
 :root {
-	--bg-color: #FBFAFF;
-	--cl-primary: #595DE5;
+	--cl-bg: #FBFAFF;
+	--cl-tx-primary: #2F2F2F;
+	--cl-tx-secondary: #FBFAFF;
+	--cl-primary-hsl: 188, 100%, 38%;
+	--cl-primary: hsl(var(--cl-primary-hsl));
 	--cl-secundary: #AAACF3;
 
     --radius: 0.7rem;
@@ -129,7 +132,7 @@ button, input {
 
 .default-card {
 	background-color: var(--cl-primary);
-    color: whitesmoke;
+    color: var(--text-color);
     border-radius: 0.5em;
 }
 

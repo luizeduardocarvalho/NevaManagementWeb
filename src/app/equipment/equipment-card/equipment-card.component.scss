@@ -1,28 +1,21 @@
-.header-container {
-    width: var(--container-width);
-    height: var(--header-container-height);
-    display: grid;
-    grid-auto-rows: min-content;
+.header-section {
     margin-bottom: 1em;
-    align-content: space-between;
-}
 
-.header {
     display: flex;
-    margin-bottom: 1em;
+    justify-content: space-between;
+
+    &__button {
+        border: none;
+        border-radius: 1em;
+        padding: 0.2em 0.8em 0.2em 0.8em;
+
+        background-color: var(--cl-primary);
+        color: var(--cl-tx-primary);
+    }
 }
 
-.add-equipment-button {
-    border: none;
-    background-color: var(--cl-primary);
-    color: white;
-    border-radius: 3em;
-    padding: 1em 2em 1em 2em;
-    font-size: 0.8rem;
-}
-
-.add-equipment-section {
-    margin-left: auto;
+.equipment-info-card {
+    padding: 0.5em 1em 0.5em 1em;
 }
 
 .equipment-card {
@@ -31,7 +24,7 @@
     border-radius: 1em;
     padding: 1em 1em 0 1em;
     margin-bottom: 1em;
-    
+
     &__information {
         font-size: 1.2em;
         margin-bottom: 0.8em;
@@ -51,9 +44,8 @@
 
 
 .calendar {
-    width: var(--container-width);
     height: 28vh;
-    overflow-y: auto;
+    overflow: scroll;
     padding-bottom: 1em;
 
     &__title {
@@ -83,19 +75,15 @@
 }
 
 .button-container {
-    display: flex;
-    height: 5vh;
-    width: 100%;
-    position: absolute;
-    justify-content: space-between;
-    bottom: 14vh;
+    position: fixed;
+    font-size: 0.9em;
+    bottom: 10%;
+    left: 5%;
 }
 
 .action-button {
-    height: 2.5em;
-    width: 45%;
+    padding: 1em 2em 1em 2em;
     border: none;
-    padding: 0.5em;
     background-color: var(--cl-primary);
     color: white;
     border-radius: 3em;

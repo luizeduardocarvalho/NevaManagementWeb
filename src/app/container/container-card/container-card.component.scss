@@ -10,7 +10,7 @@
     padding: 0.2em 0.8em 0.2em 0.8em;
 
     background-color: var(--cl-primary);
-    color: whitesmoke;
+    color: var(--cl-tx-primary);
   }
 }
 
@@ -33,7 +33,7 @@
     font-size: 0.8em;
     white-space: nowrap;
 
-    background-color: whitesmoke;
+    background-color: var(--cl-tx-primary);
     border-radius: 1em;
   }
 }
@@ -55,7 +55,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: whitesmoke;
+    color: var(--cl-tx-primary);
   }
 }
 

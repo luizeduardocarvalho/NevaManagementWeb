@@ -11,6 +11,7 @@ import { EquipmentService } from 'src/services/equipment.service';
 })
 export class EquipmentCardComponent implements OnInit {
   isLoading = false;
+  isCardLoading = false;
   equipmentId = 0;
 
   equipment?: GetDetailedEquipmentDto;

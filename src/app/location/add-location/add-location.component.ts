@@ -26,6 +26,7 @@ export class AddLocationComponent implements OnInit {
       key: 'description',
       label: 'Description',
       type: 'textarea',
+      required: false,
       order: 2,
     },
     {

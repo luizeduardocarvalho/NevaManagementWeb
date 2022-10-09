@@ -41,13 +41,17 @@
         height: 2em;
         width: 2em;
 
-        background-color: whitesmoke;
+        background-color: var(--cl-tx-primary);
         border-radius: 0.4em;
     }
 
     &__icon {
         color: var(--cl-primary);
     }
+}
+
+a {
+    color: var(--cl-primary);
 }
 
 .cards-container {
@@ -66,7 +70,7 @@
 
     &__icon {
         width: 15%;
-        color: whitesmoke;
+        color: var(--cl-tx-primary);
         align-self: center;
         text-align: center;
     }
