@@ -43,8 +43,8 @@
           {{ container.transferDate | date: "mediumDate" }}
         </p>
       </div>
-      <a class="cards-container__icon">
-        <fa-icon [icon]="faPen"></fa-icon>
+      <a [routerLink]="['/containers', container.id]" class="cards-container__icon">
+        <fa-icon [icon]="faReceipt"></fa-icon>
       </a>
     </div>
   </div>
@@ -70,8 +70,8 @@
             {{ product.quantityUsedInTheLastThreeMonths }}{{ product.unit }}
           </p>
         </div>
-        <a class="cards-container__icon">
-          <fa-icon [icon]="faPen"></fa-icon>
+        <a [routerLink]="['/products', product.id]" class="cards-container__icon">
+          <fa-icon [icon]="faReceipt"></fa-icon>
         </a>
       </div>
     </div>

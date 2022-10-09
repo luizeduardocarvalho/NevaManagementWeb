@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
-  faAngleRight,
-  faPen,
-  faSearch,
+  faAngleRight, faReceipt,
+  faSearch
 } from '@fortawesome/free-solid-svg-icons';
 import { IGetContainersOrderedByTransferDate } from 'src/models/container/get-containers-ordered-by-transfer-date';
 import { GetLastProduct } from 'src/models/product-usage/get-last-product.dto';
@@ -20,7 +19,7 @@ import { UserService } from 'src/services/user.service';
 export class HomeComponent implements OnInit {
   faSearch = faSearch as IconProp;
   faAngleRight = faAngleRight as IconProp;
-  faPen = faPen as IconProp;
+  faReceipt = faReceipt as IconProp;
 
   isLoadingNextTransfers = false;
   isLoadingProductCard = false;
