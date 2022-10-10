@@ -4,10 +4,8 @@ import { Router } from '@angular/router';
 import { ILoggedUser } from 'src/models/user/logged-user.dto';
 import { LoginUserDto } from 'src/models/user/login-user.dto';
 import { AuthService } from 'src/services/auth.service';
-import { ToastService } from 'src/services/toast.service';
 
 @Component({
-  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -19,11 +17,7 @@ export class LoginComponent implements OnInit {
 
   isLoading = false;
 
-  constructor(
-    private authService: AuthService,
-    private toastService: ToastService,
-    private router: Router
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -42,10 +36,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
         this.isLoading = false;
       },
-      (err: any) => {
-        this.isLoading = false;
-        this.toastService.show(err.error, 'Error', true);
-      }
+      (err: any) => (this.isLoading = false)
     );
   }
 }

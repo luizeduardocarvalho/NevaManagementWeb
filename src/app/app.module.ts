@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { UserHistoryComponent } from './user-history/user-history.component';
 import { AuthorizationInterceptor } from 'src/interceptors/authorization.interceptor';
 import { HttpErrorInterceptor } from 'src/interceptors/http-error.interceptor';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HttpErrorInterceptor } from 'src/interceptors/http-error.interceptor';
     HomeComponent,
     MenuComponent,
     UserHistoryComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,

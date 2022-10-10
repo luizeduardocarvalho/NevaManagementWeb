@@ -7,7 +7,15 @@
     <div *ngIf="isLoading" class="loader-section">
       <div class="loader"></div>
     </div>
-    <div *ngIf="!isLoading" class="cards-container">
+    <div
+      *ngIf="!isLoading"
+      class="cards-container"
+      infinite-scroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="1000"
+      [scrollWindow]="false"
+      (scrolled)="onScroll()"
+    >
       <div
         *ngFor="let container of containers"
         class="cards-container__card default-card spaced-columns"

@@ -5,7 +5,11 @@
       <fa-icon icon="user"></fa-icon>
     </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <li><a class="dropdown-item semi-bold" href="#">Profile</a></li>
+      <li>
+        <a class="dropdown-item semi-bold" [routerLink]="['/change-password']"
+          >Change Passowrd</a
+        >
+      </li>
       <li>
         <a class="dropdown-item semi-bold" (click)="onLogout()">Logout</a>
       </li>

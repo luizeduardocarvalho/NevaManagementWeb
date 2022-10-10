@@ -32,8 +32,12 @@
       autocomplete="off"
     />
 
-    <!-- <div class="errorMessage" *ngIf="!isValid">
-      {{ question.label }} is required
-    </div> -->
+    <input
+      *ngSwitchCase="'password'"
+      type="password"
+      [id]="question.key"
+      [formControlName]="question.key"
+      autocomplete="off"
+    />
   </div>
 </div>

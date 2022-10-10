@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { AuthGuard } from 'src/services/auth-guard.service';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
 import { UserHistoryComponent } from './user-history/user-history.component';
@@ -41,6 +42,10 @@ const routes: Routes = [
     path: 'equipment',
     loadChildren: () =>
       import('./equipment/equipment.module').then((m) => m.EquipmentModule),
+  },
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent
   },
   {
     path: 'login',

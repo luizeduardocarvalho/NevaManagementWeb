@@ -96,27 +96,11 @@ export class AddOrganismComponent implements OnInit {
     this.organismService.addOrganism(payload as IAddOrganism).subscribe(
       (res: any) => {
         this.router.navigate(['/organisms']).then(() => {
-          // this.toastService.show(res.body, 'Success', false);
+          this.isLoading = false;
+          this.toastr.success(res.body, 'Success');
         });
       },
-      (err: any) => {
-        console.log(err);
-        let message = '';
-        let errors = err.error.errors;
-        if (errors != null) {
-          let keys = Object.keys(errors);
-          keys.forEach((key: any) => {
-            errors[key].forEach((errorMessage: string) => {
-              console.log(errorMessage);
-              message = errorMessage;
-            });
-          });
-
-          // this.toastService.show(message, 'Error', true);
-          this.isLoading = false;
-        }
-      },
-      () => (this.isLoading = false)
+      (err: any) => (this.isLoading = false)
     );
   }
 }

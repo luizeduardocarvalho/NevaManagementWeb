@@ -49,21 +49,22 @@ export class AddQuantityComponent implements OnInit {
   ) {
     this.questions$ = this.questionService.getQuestions(this.questionsTypes);
   }
-  
+
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.productId = params['id'];
     });
-  
+
     this.isLoading = true;
-  
+
     this.productService
       .getDetailedProductById(this.productId)
       .subscribe((product: IGetDetailedProduct) => {
         this.isLoading = false;
         this.questionsTypes[2].value = product.unit;
-        this.questions$ = this.questionService.getQuestions(this.questionsTypes);
-        console.log(this.questions$);
+        this.questions$ = this.questionService.getQuestions(
+          this.questionsTypes
+        );
       });
   }
 

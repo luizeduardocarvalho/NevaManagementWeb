@@ -1,5 +1,9 @@
 import {
-  HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -18,10 +22,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log(error);
         let errorMessage = error.error;
 
-        if(typeof error.error === 'object') {
+        if (typeof error.error === 'object') {
           errorMessage = error.error.message;
         }
 
