@@ -32,6 +32,7 @@ export class QuestionService {
           required: question.required === undefined ? true : question.required,
           order: question.order,
           value: question.value,
+          disabled: question.disabled === undefined ? false : question.disabled,
         });
       case 'textarea':
         return new TextareaQuestion({
@@ -40,6 +41,7 @@ export class QuestionService {
           required: question.required === undefined ? true : question.required,
           order: question.order,
           value: question.value,
+          disabled: question.disabled === undefined ? false : question.disabled,
         });
       case 'dropdown':
         return new DropdownQuestion({
@@ -49,6 +51,7 @@ export class QuestionService {
           order: question.order,
           options: question.options,
           value: question.value,
+          disabled: question.disabled === undefined ? false : question.disabled,
         });
       case 'date':
         return new DateQuestion({
@@ -57,6 +60,7 @@ export class QuestionService {
           required: question.required === undefined ? true : question.required,
           order: question.order,
           value: question.value,
+          disabled: question.disabled === undefined ? false : question.disabled,
         });
       case 'password':
         return new PasswordQuestion({
@@ -65,6 +69,7 @@ export class QuestionService {
           required: question.required === undefined ? true : question.required,
           order: question.order,
           value: question.value,
+          disabled: question.disabled === undefined ? false : question.disabled,
         });
       default:
         return new TextQuestion({
@@ -74,6 +79,7 @@ export class QuestionService {
           required: question.required === undefined ? true : question.required,
           order: question.order,
           value: question.value,
+          disabled: question.disabled === undefined ? false : question.disabled,
         });
     }
   }

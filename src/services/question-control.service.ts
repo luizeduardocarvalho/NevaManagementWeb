@@ -12,10 +12,16 @@ export class QuestionControlService {
 
     questions.forEach((question) => {
       group[question.key] = question.required
-        ? new FormControl(question.value || '', Validators.required)
-        : new FormControl(question.value || '');
+        ? new FormControl(
+            { value: question.value || '', disabled: question.disabled },
+            Validators.required
+          )
+        : new FormControl({
+            value: question.value || '',
+            disabled: question.disabled,
+          });
     });
-    
+
     return new FormGroup(group);
   }
 }

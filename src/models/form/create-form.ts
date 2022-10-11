@@ -5,5 +5,6 @@ export interface ICreateForm {
     order: number;
     key: string;
     value?: string;
+    disabled?: boolean;
     required?: boolean;
 }
