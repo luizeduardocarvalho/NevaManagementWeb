@@ -30,8 +30,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     );
   }
 
-
-
   onSubmit() {
     this.payLoad = JSON.stringify(this.form.getRawValue());
     this.formEvent.emit(this.payLoad);

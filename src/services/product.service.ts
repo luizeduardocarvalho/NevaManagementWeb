@@ -7,7 +7,7 @@ import { IAddQuantity } from 'src/models/product/add-quantity';
 import { IEditProduct } from 'src/models/product/edit-product.dto';
 import { IGetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
 import { GetProduct } from 'src/models/product/get-product.dto';
-import { UseProduct } from 'src/models/product/use-product.dto';
+import { IUseProduct } from 'src/models/product/use-product.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -48,8 +48,8 @@ export class ProductService {
     });
   }
 
-  useProduct(useProduct: UseProduct): Observable<HttpResponse<UseProduct>> {
-    return this.http.patch<UseProduct>(this.url + 'UseProduct', useProduct, {
+  useProduct(useProduct: IUseProduct): Observable<HttpResponse<IUseProduct>> {
+    return this.http.patch<IUseProduct>(this.url + 'UseProduct', useProduct, {
       observe: 'response',
     });
   }

@@ -1,19 +1,13 @@
-<app-spinner [isLoading]="isLoading"></app-spinner>
-<div class="wrapper">
-    <div class="container">
-        <div class="back-arrow">
-            <app-back-arrow></app-back-arrow>
-        </div>
-        <h2 class="page-title">Use Product</h2>
-        <form [formGroup]="useProductForm" (ngSubmit)="onSubmit()" class="form-grid">
-            <input type="text" formControlName="researcherName" class="grid-item" autocomplete="off">
-            <input type="text" formControlName="date" class="grid-item" autocomplete="off">
-            <input type="text" formControlName="productName" class="grid-item" autocomplete="off">
-            <input type="text" formControlName="quantity" class="grid-item" autocomplete="off">
-            <input type="text" formControlName="unit" class="grid-item" autocomplete="off">
-            <textarea type="text" formControlName="description" placeholder="Description" class="grid-item"
-                autocomplete="off"></textarea>
-            <button type="submit" class="action-button">Add Quantity</button>
-        </form>
-    </div>
+<div *ngIf="isLoading" class="page-loader">
+  <div class="loader"></div>
+</div>
+<div class="header-section">
+  <app-back-arrow></app-back-arrow>
+  <h1 class="bold f-s-2">Use Product</h1>
+</div>
+<div class="form-container">
+  <app-dynamic-form
+    (formEvent)="onSubmit($event)"
+    [questions]="questions"
+  ></app-dynamic-form>
 </div>
