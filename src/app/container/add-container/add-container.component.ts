@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import {
-  IAddContainer
-} from 'src/models/container/add-container';
+import { IAddContainer } from 'src/models/container/add-container';
 import { GetSimpleContainer } from 'src/models/container/get-simple-container.dto';
 import { ICreateForm } from 'src/models/form/create-form';
 import { QuestionBase } from 'src/models/form/question-base';
@@ -57,7 +55,6 @@ export class AddContainerComponent implements OnInit {
       key: 'researcherId',
       label: 'Researcher',
       type: 'dropdown',
-      required: false,
       options: [],
       order: 6,
     } as ICreateForm,
@@ -95,35 +92,41 @@ export class AddContainerComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
 
-    this.organismService
-      .getOrganisms()
-      .subscribe((organisms: GetSimpleOrganism[]) => {
+    this.organismService.getOrganisms().subscribe(
+      (organisms: GetSimpleOrganism[]) => {
         this.questionsTypes[7].options = organisms.map((organism) => ({
           key: organism.id!.toString(),
           value: organism.name,
         }));
 
-        this.researcherService
-          .getResearchers()
-          .subscribe((researchers: GetSimpleResearcher[]) => {
+        this.researcherService.getResearchers().subscribe(
+          (researchers: GetSimpleResearcher[]) => {
             this.questionsTypes[5].options = researchers.map((researcher) => ({
               key: researcher.id!.toString(),
               value: researcher.name,
             }));
 
-            this.containerService
-              .getContainers()
-              .subscribe((containers: GetSimpleContainer[]) => {
+            this.containerService.getContainers().subscribe(
+              (containers: GetSimpleContainer[]) => {
                 this.questionsTypes[6].options = containers.map(
                   (container) => ({
                     key: container.id!.toString(),
                     value: container.name,
                   })
                 );
+                this.questions = this.questionService.getQuestions(
+                  this.questionsTypes
+                );
                 this.isLoading = false;
-              });
-          });
-      });
+              },
+              (err: any) => (this.isLoading = false)
+            );
+          },
+          (err: any) => (this.isLoading = false)
+        );
+      },
+      (err: any) => (this.isLoading = false)
+    );
   }
 
   onSubmit(payload: any) {
@@ -131,27 +134,12 @@ export class AddContainerComponent implements OnInit {
 
     this.containerService.addContainer(payload as IAddContainer).subscribe(
       (res: any) => {
+        this.isLoading = false;
         this.router.navigate(['/containers']).then(() => {
-          this.toastr.error(res.body, 'Success');
+          this.toastr.success(res.body, 'Success');
         });
       },
-      (err: any) => {
-        let message = '';
-        let errors = err.error.errors;
-        if (errors != null) {
-          let keys = Object.keys(errors);
-          keys.forEach((key: any) => {
-            errors[key].forEach((errorMessage: string) => {
-              message = errorMessage;
-            });
-          });
-
-          this.toastr.error(message, 'Error');
-        }
-
-        this.isLoading = false;
-      },
-      () => (this.isLoading = false)
+      (err: any) => (this.isLoading = false)
     );
   }
 }
