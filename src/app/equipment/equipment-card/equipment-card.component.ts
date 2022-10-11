@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CalendarDto } from 'src/models/equipment-usage/calendar.dto';
 import { GetDetailedEquipmentDto } from 'src/models/equipment/get-detailed-equipment.dto';
 import { EquipmentUsageService } from 'src/services/equipment-usage.service';
@@ -13,6 +15,7 @@ export class EquipmentCardComponent implements OnInit {
   isLoading = false;
   isCardLoading = false;
   equipmentId = 0;
+  faPlus = faPlus as IconProp;
 
   equipment?: GetDetailedEquipmentDto;
   calendar: CalendarDto[] = [];
