@@ -10,7 +10,6 @@ import { IGetDetailedProduct } from 'src/models/product/get-detailed-product.dto
 import { LocationService } from 'src/services/location.service';
 import { ProductService } from 'src/services/product.service';
 import { QuestionService } from 'src/services/question.service';
-import { ToastService } from 'src/services/toast.service';
 
 @Component({
   templateUrl: './edit-product.component.html',
@@ -111,7 +110,10 @@ export class EditProductComponent implements OnInit {
   onSubmit(payload: any) {
     this.isLoading = true;
 
-    this.productService.editProduct(payload as IEditProduct).subscribe(
+    let parsedPayload = JSON.parse(payload) as IEditProduct;
+    parsedPayload.id = this.productId;
+
+    this.productService.editProduct(parsedPayload).subscribe(
       (res: any) => {
         this.isLoading = false;
         this.router.navigate(['/products', this.productId]).then(() => {
