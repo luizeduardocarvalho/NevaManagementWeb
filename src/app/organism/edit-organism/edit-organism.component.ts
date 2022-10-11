@@ -58,18 +58,7 @@ export class EditOrganismComponent implements OnInit {
         this.questionsTypes[1].value = organism.description;
         this.questions = this.questionService.getQuestions(this.questionsTypes);
       },
-      (err) => {
-        this.isLoading = false;
-        let message = '';
-
-        if (err.error) {
-          message = err.error.message;
-        } else {
-          message = 'Something bad has happened.'
-        }
-
-        this.toastr.error(message, 'Error');
-      }
+      (err) => (this.isLoading = false)
     );
   }
 
@@ -86,26 +75,12 @@ export class EditOrganismComponent implements OnInit {
 
     this.organismService.editOrganism(editOrganism).subscribe(
       (res: any) => {
+        this.isLoading = false;
         this.router.navigate(['/organisms']).then(() => {
-          this.toastr.success(res.body, 'Success!');
+          this.toastr.success(res.body, 'Success');
         });
       },
-      (err: any) => {
-        let message = '';
-        let errors = err.error.errors;
-        if (errors != null) {
-          let keys = Object.keys(errors);
-          keys.forEach((key: any) => {
-            errors[key].forEach((errorMessage: string) => {
-              message = errorMessage;
-            });
-          });
-
-          this.toastr.error(message, 'Error');
-          this.isLoading = false;
-        }
-      },
-      () => (this.isLoading = false)
+      (err: any) => (this.isLoading = false)
     );
   }
 }

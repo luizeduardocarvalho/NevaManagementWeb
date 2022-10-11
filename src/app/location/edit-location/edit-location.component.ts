@@ -75,15 +75,16 @@ export class EditLocationComponent implements OnInit {
         this.isLoadingLocations = false;
       });
 
-    this.locationService
-      .getLocationById(this.locationId)
-      .subscribe((location: GetDetailedLocation) => {
+    this.locationService.getLocationById(this.locationId).subscribe(
+      (location: GetDetailedLocation) => {
         this.questionsTypes[0].value = location.name;
         this.questionsTypes[1].value = location.subLocationId.toString();
         this.questionsTypes[2].value = location.description;
         this.questions = this.questionService.getQuestions(this.questionsTypes);
         this.isLoadingLocationById = false;
-      });
+      },
+      (err: any) => (this.isLoading = false)
+    );
   }
 
   onSubmit(payload: any) {
@@ -100,27 +101,12 @@ export class EditLocationComponent implements OnInit {
 
     this.locationService.editLocation(editLocation).subscribe(
       (res: any) => {
+        this.isLoading = false;
         this.router.navigate(['/locations']).then(() => {
           this.toastr.success(res.body, 'Success');
         });
       },
-      (err: any) => {
-        let message = '';
-        let errors = err.error.errors;
-
-        if (errors != null) {
-          let keys = Object.keys(errors);
-          keys.forEach((key: any) => {
-            errors[key].forEach((errorMessage: string) => {
-              message = errorMessage;
-            });
-          });
-
-          this.toastr.error(message, 'Error');
-          this.isLoading = false;
-        }
-      },
-      () => (this.isLoading = false)
+      (err: any) => (this.isLoading = false)
     );
   }
 }

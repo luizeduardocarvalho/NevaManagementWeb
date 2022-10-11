@@ -7,7 +7,6 @@ import { IAddOrganism } from 'src/models/organism/add-organism.dto';
 import { GetSimpleOrganism } from 'src/models/organism/get-simple-organism.dto';
 import { OrganismService } from 'src/services/organism.service';
 import { QuestionService } from 'src/services/question.service';
-import { ToastService } from 'src/services/toast.service';
 
 @Component({
   templateUrl: './add-organism.component.html',
@@ -83,10 +82,7 @@ export class AddOrganismComponent implements OnInit {
         }));
         this.questions = this.questionService.getQuestions(this.questionsTypes);
       },
-      (err) => {
-        this.toastr.show(err.errorMessage, 'Error');
-        this.isLoading = false;
-      }
+      (err) => (this.isLoading = false)
     );
   }
 
@@ -95,8 +91,8 @@ export class AddOrganismComponent implements OnInit {
 
     this.organismService.addOrganism(payload as IAddOrganism).subscribe(
       (res: any) => {
+        this.isLoading = false;
         this.router.navigate(['/organisms']).then(() => {
-          this.isLoading = false;
           this.toastr.success(res.body, 'Success');
         });
       },

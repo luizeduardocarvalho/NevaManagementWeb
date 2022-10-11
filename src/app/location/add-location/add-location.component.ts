@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ICreateForm } from 'src/models/form/create-form';
 import { QuestionBase } from 'src/models/form/question-base';
 import { IAddLocation } from 'src/models/location/add-location.dto';
 import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
 import { LocationService } from 'src/services/location.service';
 import { QuestionService } from 'src/services/question.service';
-import { ToastService } from 'src/services/toast.service';
 
 @Component({
   templateUrl: './add-location.component.html',
@@ -43,7 +43,7 @@ export class AddLocationComponent implements OnInit {
   constructor(
     private locationService: LocationService,
     private router: Router,
-    private toastService: ToastService,
+    private toastr: ToastrService,
     private questionService: QuestionService
   ) {
     this.questions = questionService.getQuestions(this.questionsTypes);
@@ -51,9 +51,8 @@ export class AddLocationComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.locationService
-      .getLocations()
-      .subscribe((locations: GetSimpleLocation[]) => {
+    this.locationService.getLocations().subscribe(
+      (locations: GetSimpleLocation[]) => {
         let options = locations.map((location) => ({
           key: location.id?.toString()!,
           value: location.name,
@@ -62,34 +61,21 @@ export class AddLocationComponent implements OnInit {
         this.questions = this.questionService.getQuestions(this.questionsTypes);
 
         this.isLoading = false;
-      });
+      },
+      (err: any) => (this.isLoading = false)
+    );
   }
 
   onSubmit(payload: any): void {
     this.isLoading = true;
     this.locationService.addLocation(payload as IAddLocation).subscribe(
       (res: any) => {
+        this.isLoading = false;
         this.router.navigate(['/locations']).then(() => {
-          this.toastService.show(res.body, 'Success', false);
+          this.toastr.success(res.body, 'Success');
         });
       },
-      (err: any) => {
-        let message = '';
-        let errors = err.error.errors;
-
-        if (errors != null) {
-          let keys = Object.keys(errors);
-          keys.forEach((key: any) => {
-            errors[key].forEach((errorMessage: string) => {
-              message = errorMessage;
-            });
-          });
-
-          this.toastService.show(message, 'Error', true);
-          this.isLoading = false;
-        }
-      },
-      () => (this.isLoading = false)
+      (err: any) => (this.isLoading = false)
     );
   }
 }
