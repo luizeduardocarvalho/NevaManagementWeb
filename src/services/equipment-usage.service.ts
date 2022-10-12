@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { CalendarDto } from 'src/models/equipment-usage/calendar.dto';
+import { IUseEquipment } from 'src/models/equipment-usage/use-equipment';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,13 @@ export class EquipmentUsageService {
     return this.http.get<CalendarDto[]>(
       this.url + 'GetEquipmentUsageCalendar',
       { params: { id } }
+    );
+  }
+
+  useEquipment(useEquipment: IUseEquipment): Observable<IUseEquipment> {
+    return this.http.post<IUseEquipment>(
+      this.url + 'UseEquipment',
+      useEquipment
     );
   }
 }

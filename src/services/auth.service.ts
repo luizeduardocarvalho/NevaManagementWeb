@@ -40,4 +40,8 @@ export class AuthService {
     var user = JSON.parse(localStorage.getItem('user') as string) as IUser;
     return user.email;
   }
+
+  getUser() {
+    return JSON.parse(localStorage.getItem('user') as string) as IUser;
+  }
 }

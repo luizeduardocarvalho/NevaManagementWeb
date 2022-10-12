@@ -6,6 +6,7 @@ import { EquipmentCardComponent } from './equipment-card/equipment-card.componen
 import { EquipmentInfoComponent } from './equipment-info/equipment-info.component';
 import { EquipmentListComponent } from './equipment-list/equipment-list.component';
 import { EquipmentComponent } from './equipment/equipment.component';
+import { UseEquipmentComponent } from './use-equipment/use-equipment.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: '', component: EquipmentListComponent },
       { path: 'add', component: AddEquipmentComponent },
       { path: ':id', component: EquipmentCardComponent },
+      { path: ':id/use', component: UseEquipmentComponent },
       { path: ':id/info', component: EquipmentInfoComponent },
       { path: ':id/edit', component: EditEquipmentComponent },
     ],
