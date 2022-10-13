@@ -6,7 +6,7 @@ import { GetSimpleContainer } from 'src/models/container/get-simple-container.dt
 import { ICreateForm } from 'src/models/form/create-form';
 import { QuestionBase } from 'src/models/form/question-base';
 import { GetSimpleOrganism } from 'src/models/organism/get-simple-organism.dto';
-import { GetSimpleResearcher } from 'src/models/researcher/get-simple-researcher.dto';
+import { IGetSimpleResearcher } from 'src/models/researcher/get-simple-researcher';
 import { ContainerService } from 'src/services/container.service';
 import { OrganismService } from 'src/services/organism.service';
 import { QuestionService } from 'src/services/question.service';
@@ -100,7 +100,7 @@ export class AddContainerComponent implements OnInit {
         }));
 
         this.researcherService.getResearchers().subscribe(
-          (researchers: GetSimpleResearcher[]) => {
+          (researchers: IGetSimpleResearcher[]) => {
             this.questionsTypes[5].options = researchers.map((researcher) => ({
               key: researcher.id!.toString(),
               value: researcher.name,

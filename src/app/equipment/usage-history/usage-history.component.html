@@ -1,0 +1,23 @@
+<section class="header-section">
+  <app-back-arrow></app-back-arrow>
+  <h1 class="bold f-s-2">History</h1>
+</section>
+<section class="cards-section">
+  <div
+    class="card-section"
+    infinite-scroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="1000"
+    [scrollWindow]="false"
+    (scrolled)="onScroll()"
+  >
+    <div *ngFor="let card of history" class="card-section__card default-card">
+      <p class="semi-bold">{{ card.researcher.name }}</p>
+      <div class="card-section__dates">
+          <span>{{ card.startDate | date: "mediumDate" }}</span>
+          <span> - </span>
+          <span>{{ card.endDate | date: "mediumDate" }}</span>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs/internal/observable/of';
-import { GetSimpleResearcher } from 'src/models/researcher/get-simple-researcher.dto';
+import { GetSimpleResearcher } from 'src/models/researcher/get-simple-researcher';
 import { ResearcherService } from '../researcher.service';
 import { TokenService } from '../token.service';
 

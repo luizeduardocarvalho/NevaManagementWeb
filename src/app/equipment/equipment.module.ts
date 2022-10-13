@@ -9,6 +9,7 @@ import { EquipmentComponent } from './equipment/equipment.component';
 import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
 import { EquipmentInfoComponent } from './equipment-info/equipment-info.component';
 import { UseEquipmentComponent } from './use-equipment/use-equipment.component';
+import { UsageHistoryComponent } from './usage-history/usage-history.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { UseEquipmentComponent } from './use-equipment/use-equipment.component';
     EditEquipmentComponent,
     AddEquipmentComponent,
     EquipmentInfoComponent,
-    UseEquipmentComponent
+    UseEquipmentComponent,
+    UsageHistoryComponent
   ],
   imports: [
     EquipmentRoutingModule,
