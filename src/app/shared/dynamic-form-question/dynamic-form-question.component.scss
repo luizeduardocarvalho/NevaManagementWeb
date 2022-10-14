@@ -33,7 +33,7 @@ select::after {
     top: 7%;
     right: 1%;
     display: block;
-    background: #FAF9F6;
+    background: var(--cl-tx-secondary);
     height: 90%;
     width: 4em;
     pointer-events: none;
