@@ -58,50 +58,49 @@
 }
 
 @media(min-height: 740px) {
+    @-moz-document url-prefix() {
+        .card-section {
+            height: 55vh;
+        }
+    }
 
     .card-section {
         height: 57vh;
     }
 }
 
-@-moz-document url-prefix() and (min-height: 740px) {
-    .card-section {
-        height: 55vh;
-    }
-}
-
 @media(min-height: 844px) {
+    @-moz-document url-prefix() {
+        .card-section {
+            height: 57vh;
+        }
+    }
+
     .card-section {
         height: 59vh;
     }
 }
 
-@-moz-document url-prefix() and (min-height: 844px) {
-    .card-section {
-        height: 57vh;
-    }
-}
-
 @media(min-height: 896px) {
+    @-moz-document url-prefix() {
+        .card-section {
+            height: 60vh;
+        }
+    }
+
     .card-section {
         height: 62vh;
     }
 }
 
-@-moz-document url-prefix() and (min-height: 896px) {
-    .card-section {
-        height: 60vh;
-    }
-}
-
 @media(min-height: 900px) {
+    @-moz-document url-prefix() {
+        .card-section {
+            height: 61vh;
+        }
+    }
+
     .card-section {
         height: 63vh;
-    }
-}
-
-@-moz-document url-prefix() and (min-height: 900px) {
-    .card-section {
-        height: 61vh;
     }
 }
