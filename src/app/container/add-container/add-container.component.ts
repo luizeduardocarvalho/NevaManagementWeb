@@ -35,7 +35,7 @@ export class AddContainerComponent implements OnInit {
     },
     {
       key: 'creationDate',
-      label: 'Create Date',
+      label: 'Creation Date',
       type: 'date',
       order: 3,
     },
@@ -70,7 +70,6 @@ export class AddContainerComponent implements OnInit {
       key: 'organismId',
       label: 'Organism',
       type: 'dropdown',
-      required: false,
       options: [],
       order: 8,
     } as ICreateForm,
@@ -132,7 +131,12 @@ export class AddContainerComponent implements OnInit {
   onSubmit(payload: any) {
     this.isLoading = true;
 
-    this.containerService.addContainer(payload as IAddContainer).subscribe(
+    let serializedPayload: IAddContainer = JSON.parse(payload);
+    if (!serializedPayload.subContainerId) {
+      delete serializedPayload.subContainerId;
+    }
+
+    this.containerService.addContainer(serializedPayload).subscribe(
       (res: any) => {
         this.isLoading = false;
         this.router.navigate(['/containers']).then(() => {
