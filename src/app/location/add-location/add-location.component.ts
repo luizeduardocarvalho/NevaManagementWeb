@@ -35,6 +35,7 @@ export class AddLocationComponent implements OnInit {
       type: 'dropdown',
       options: [],
       order: 3,
+      required: false
     } as ICreateForm,
   ];
 
