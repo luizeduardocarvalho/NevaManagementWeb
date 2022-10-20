@@ -6,10 +6,9 @@ import { EquipmentService } from 'src/services/equipment.service';
 
 @Component({
   templateUrl: './equipment-list.component.html',
-  styleUrls: ['./equipment-list.component.scss']
+  styleUrls: ['./equipment-list.component.scss'],
 })
 export class EquipmentListComponent implements OnInit {
-
   faSearch = faSearch as IconProp;
   faReceipt = faReceipt as IconProp;
 
@@ -18,7 +17,7 @@ export class EquipmentListComponent implements OnInit {
 
   isLoading = false;
 
-  constructor(private equipmentService: EquipmentService) { }
+  constructor(private equipmentService: EquipmentService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -27,7 +26,6 @@ export class EquipmentListComponent implements OnInit {
       .subscribe((equipments: GetSimpleEquipmentDto[]) => {
         this.equipments = equipments;
         this.isLoading = false;
-      }
-    );
+      });
   }
 }
