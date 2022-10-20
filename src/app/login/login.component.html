@@ -1,8 +1,8 @@
-<section *ngIf="isLoading" class="loader-section">
+<div *ngIf="isLoading" class="page-loader">
   <div class="loader"></div>
-</section>
+</div>
 <section class="form-section">
-  <div class="form">
+  <div>
     <form
       [formGroup]="loginForm"
       (ngSubmit)="onSubmit(loginForm)"
