@@ -2,6 +2,6 @@ export interface IEditEquipment {
   id: number;
   name: string;
   description: string;
-  patrimony: string;
+  propertyNumber: string;
   locationId: string;
 }
