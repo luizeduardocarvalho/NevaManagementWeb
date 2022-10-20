@@ -2,28 +2,26 @@
   <div class="loader"></div>
 </div>
 <section class="form-section">
-  <div>
-    <form
-      [formGroup]="loginForm"
-      (ngSubmit)="onSubmit(loginForm)"
-      class="text-center border border-light p-5"
-    >
-      <p class="bold f-s-3">Sign in</p>
-      <input
-        type="email"
-        formControlName="email"
-        id="defaultLoginFormEmail"
-        placeholder="E-mail"
-        autocomplete="off"
-      />
-      <input
-        type="password"
-        formControlName="password"
-        id="defaultLoginFormPassword"
-        placeholder="Password"
-        autocomplete="off"
-      />
-      <button class="action-button" type="submit">Sign in</button>
-    </form>
-  </div>
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit(loginForm)"
+    class="text-center border border-light p-5"
+  >
+    <p class="bold f-s-3">Sign in</p>
+    <input
+      type="email"
+      formControlName="email"
+      id="defaultLoginFormEmail"
+      placeholder="E-mail"
+      autocomplete="off"
+    />
+    <input
+      type="password"
+      formControlName="password"
+      id="defaultLoginFormPassword"
+      placeholder="Password"
+      autocomplete="off"
+    />
+    <button class="action-button" type="submit">Sign in</button>
+  </form>
 </section>
