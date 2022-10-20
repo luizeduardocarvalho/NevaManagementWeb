@@ -131,12 +131,7 @@ export class AddContainerComponent implements OnInit {
   onSubmit(payload: any) {
     this.isLoading = true;
 
-    let serializedPayload: IAddContainer = JSON.parse(payload);
-    if (!serializedPayload.subContainerId) {
-      delete serializedPayload.subContainerId;
-    }
-
-    this.containerService.addContainer(serializedPayload).subscribe(
+    this.containerService.addContainer(payload as IAddContainer).subscribe(
       (res: any) => {
         this.isLoading = false;
         this.router.navigate(['/containers']).then(() => {
