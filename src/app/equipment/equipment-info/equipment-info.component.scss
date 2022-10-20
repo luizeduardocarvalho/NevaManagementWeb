@@ -1,63 +1,37 @@
-.header-container {
-    width: var(--container-width);
-    height: 15vh;
-    display: grid;
+.header-section {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+
     margin-bottom: 1em;
 }
 
-.back-arrow {
-    height: 2.3em;
-    margin-bottom: 1em;
+.equipment-description {
+    margin-top: 1em;
+    overflow: scroll;
+    height: 56vh;
 }
 
-.form-grid {
-    display: grid;
+@media(min-height: 740px) {
+    .equipment-description {
+        height: 55vh;
+    }
 }
 
-.grid-item {
-    margin-bottom: 0.7em;
-    border: none;
-    border-radius: 1em;
-    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
-    padding: 0.8em;
+@media(min-height: 844px) {
+    .equipment-description {
+        height: 62vh;
+    }
 }
 
-.card-container {
-    overflow-y: auto;
-    width: var(--container-width);
-    height: 65vh;
-    padding-bottom: 1em;
+@media(min-height: 896px) {
+    .equipment-description {
+        height: 62vh;
+    }
 }
 
-.action-button {
-    font-size: 1em;
-    padding: 1em 2em 1em 2em;
-    border: none;
-    background-color: var(--cl-primary);
-    color: white;
-    border-radius: 3em;
-}
-
-.equipment-card {
-    background-color: white;
-    box-shadow: 0 0 1em rgba(180, 180, 180, 0.2);
-    border-radius: 1em;
-    padding: 1em 1em 0 1em;
-    margin-bottom: 1em;
-    
-    &__information {
-        font-size: 1.2em;
-        margin-bottom: 0.8em;
-        display: grid;
-        align-items: center;
-
-        &__title {
-            margin-bottom: 0.5em;
-        }
-
-        &__description {
-            color: #6B6B6B;
-            margin-bottom: 0.5em;
-        }
+@media(min-height: 900px) {
+    .equipment-description {
+        height: 63vh;
     }
 }
