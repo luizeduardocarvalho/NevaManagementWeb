@@ -5,6 +5,6 @@ export interface IAddOrganism {
   collectionDate: Date;
   collectionLocation: string;
   isolationDate: Date;
-  originOrganismId: number | null;
+  originOrganismId?: number | undefined;
   originPart: string;
 }

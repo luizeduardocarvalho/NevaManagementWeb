@@ -53,6 +53,7 @@ export class AddOrganismComponent implements OnInit {
       type: 'dropdown',
       order: 6,
       options: [],
+      required: false,
     } as ICreateForm,
     {
       key: 'originPart',
@@ -89,7 +90,12 @@ export class AddOrganismComponent implements OnInit {
   onSubmit(payload: any) {
     this.isLoading = true;
 
-    this.organismService.addOrganism(payload as IAddOrganism).subscribe(
+    let addOrganism: IAddOrganism = JSON.parse(payload);
+    if(!addOrganism.originOrganismId) {
+      delete addOrganism.originOrganismId;
+    }
+
+    this.organismService.addOrganism(addOrganism).subscribe(
       (res: any) => {
         this.isLoading = false;
         this.router.navigate(['/organisms']).then(() => {

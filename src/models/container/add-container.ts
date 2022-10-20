@@ -3,7 +3,7 @@ export interface IAddContainer {
   description: string;
   cultureMedia: string;
   organismId: number | null;
-  subContainerId: number | null;
+  subContainerId?: number;
   researcherId: number | null;
   creationDate: Date;
   transferDate: Date;
