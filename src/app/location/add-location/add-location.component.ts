@@ -35,7 +35,7 @@ export class AddLocationComponent implements OnInit {
       type: 'dropdown',
       options: [],
       order: 3,
-      required: false
+      required: false,
     } as ICreateForm,
   ];
 
@@ -69,6 +69,7 @@ export class AddLocationComponent implements OnInit {
 
   onSubmit(payload: any): void {
     this.isLoading = true;
+
     this.locationService.addLocation(payload as IAddLocation).subscribe(
       (res: any) => {
         this.isLoading = false;
