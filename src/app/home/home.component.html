@@ -1,12 +1,17 @@
 <section>
   <div class="spaced-columns">
     <h1 class="last-used-header__title bold">Last Used</h1>
-    <span><a [routerLink]="['/user-history']" class="semi-bold">See All</a></span>
+    <span
+      ><a [routerLink]="['/user-history']" class="semi-bold">See All</a></span
+    >
   </div>
   <div *ngIf="isLoadingProductCard" class="loader-section">
     <div class="loader"></div>
   </div>
-  <div *ngIf="!isLoadingProductCard" class="last-used-card default-card">
+  <div
+    *ngIf="!isLoadingProductCard && product != null"
+    class="last-used-card default-card"
+  >
     <div class="last-used-card__text-section">
       <p class="last-used-card__product bold">{{ product?.productName }}</p>
       <p class="last-used-card__location">{{ product?.locationName }}</p>
@@ -23,16 +28,26 @@
       </a>
     </div>
   </div>
+  <p *ngIf="!isLoadingProductCard && product == null" class="f-s-05 m-b-1">
+    There are no products available.
+  </p>
 </section>
 <section>
   <div class="spaced-columns">
     <h1 class="bold">Next Transfers</h1>
-    <span><a [routerLink]="['/containers/next-transfers']" class="semi-bold">See All</a></span>
+    <span
+      ><a [routerLink]="['/containers/next-transfers']" class="semi-bold"
+        >See All</a
+      ></span
+    >
   </div>
   <div *ngIf="isLoadingNextTransfers" class="loader-section">
     <div class="loader"></div>
   </div>
-  <div *ngIf="!isLoadingNextTransfers" class="cards-container">
+  <div
+    *ngIf="!isLoadingNextTransfers && containers.length > 0"
+    class="cards-container"
+  >
     <div
       *ngFor="let container of containers"
       class="cards-container__card default-card"
@@ -43,15 +58,24 @@
           {{ container.transferDate | date: "mediumDate" }}
         </p>
       </div>
-      <a [routerLink]="['/containers', container.id]" class="cards-container__icon">
+      <a
+        [routerLink]="['/containers', container.id]"
+        class="cards-container__icon"
+      >
         <fa-icon [icon]="faReceipt"></fa-icon>
       </a>
     </div>
   </div>
+  <p
+    *ngIf="!isLoadingNextTransfers && containers.length == 0"
+    class="f-s-05 m-b-1"
+  >
+    There are no containers available.
+  </p>
 </section>
 <section>
   <h1 class="bold">Low in Stock</h1>
-  <div class="container-scroll">
+  <div class="container-scroll" *ngIf="lowInStockProducts.length > 0">
     <div *ngIf="isLoadingLowInStock" class="loader-section">
       <div class="loader"></div>
     </div>
@@ -70,10 +94,19 @@
             {{ product.quantityUsedInTheLastThreeMonths }}{{ product.unit }}
           </p>
         </div>
-        <a [routerLink]="['/products', product.id]" class="cards-container__icon">
+        <a
+          [routerLink]="['/products', product.id]"
+          class="cards-container__icon"
+        >
           <fa-icon [icon]="faReceipt"></fa-icon>
         </a>
       </div>
     </div>
   </div>
+  <p
+  *ngIf="!isLoadingLowInStock && lowInStockProducts.length == 0"
+  class="f-s-05 m-b-1"
+>
+  There are no products available.
+</p>
 </section>
