@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GetDetailedEquipmentDto } from 'src/models/equipment/get-detailed-equipment.dto';
+import { IGetDetailedEquipment } from 'src/models/equipment/get-detailed-equipment.dto';
 import { EquipmentService } from 'src/services/equipment.service';
 
 @Component({
@@ -11,7 +11,7 @@ export class EquipmentInfoComponent implements OnInit {
   isLoading = false;
   equipmentId = 0;
 
-  equipment?: GetDetailedEquipmentDto;
+  equipment?: IGetDetailedEquipment;
   calendar: any[] = [];
 
   constructor(
@@ -26,7 +26,7 @@ export class EquipmentInfoComponent implements OnInit {
 
     this.equipmentService
       .getDetailedEquipment(this.equipmentId)
-      .subscribe((equipment: GetDetailedEquipmentDto) => {
+      .subscribe((equipment: IGetDetailedEquipment) => {
         this.equipment = equipment;
       });
   }

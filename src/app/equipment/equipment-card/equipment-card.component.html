@@ -19,7 +19,10 @@
   </div>
 </section>
 <h1 class="bold">Calendar</h1>
-<section *ngIf="calendar.length != 0" class="calendar">
+<div *ngIf="isLoading" class="loader-section">
+  <div class="loader"></div>
+</div>
+<section *ngIf="calendar.length != 0 && !isLoading" class="calendar">
   <div *ngFor="let month of calendar">
     <p class="calendar__month">{{ month.month | toMonthName }}</p>
     <div *ngFor="let day of month.days">
@@ -33,6 +36,7 @@
     </div>
   </div>
 </section>
+<p *ngIf="calendar.length == 0 && !isLoading" class="text-center">There are no scheduled uses.</p>
 <div class="button-container">
   <button [routerLink]="['use']" type="button" class="action-button">
     Schedule

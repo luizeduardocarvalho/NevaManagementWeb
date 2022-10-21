@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CalendarDto } from 'src/models/equipment-usage/calendar.dto';
-import { GetDetailedEquipmentDto } from 'src/models/equipment/get-detailed-equipment.dto';
+import { IGetDetailedEquipment } from 'src/models/equipment/get-detailed-equipment.dto';
 import { EquipmentUsageService } from 'src/services/equipment-usage.service';
 import { EquipmentService } from 'src/services/equipment.service';
 
@@ -17,7 +17,7 @@ export class EquipmentCardComponent implements OnInit {
   equipmentId = 0;
   faPlus = faPlus as IconProp;
 
-  equipment?: GetDetailedEquipmentDto;
+  equipment?: IGetDetailedEquipment;
   calendar: CalendarDto[] = [];
 
   constructor(
@@ -31,9 +31,10 @@ export class EquipmentCardComponent implements OnInit {
       this.equipmentId = params['id'];
     });
 
+    this.isCardLoading = true;
     this.equipmentService
       .getDetailedEquipment(this.equipmentId)
-      .subscribe((equipment: GetDetailedEquipmentDto) => {
+      .subscribe((equipment: IGetDetailedEquipment) => {
         this.equipment = equipment;
 
         if (this.equipment.description.length > 40) {
@@ -41,12 +42,19 @@ export class EquipmentCardComponent implements OnInit {
             .substring(0, 40)
             .concat('...');
         }
+
+        this.isCardLoading = false;
       });
 
+    this.isLoading = true;
     this.equipmentUsageService
       .getEquipmentUsageCalendar(this.equipmentId)
-      .subscribe((data: CalendarDto[]) => {
-        this.calendar = data;
-      });
+      .subscribe(
+        (data: CalendarDto[]) => {
+          this.calendar = data;
+          this.isLoading = false;
+        },
+        (err: any) => (this.isLoading = false)
+      );
   }
 }

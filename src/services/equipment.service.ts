@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { IAddEquipment } from 'src/models/equipment/add-equipment';
 import { IEditEquipment } from 'src/models/equipment/edit-equipment';
-import { GetDetailedEquipmentDto } from 'src/models/equipment/get-detailed-equipment.dto';
+import { IGetDetailedEquipment } from 'src/models/equipment/get-detailed-equipment.dto';
 import { GetSimpleEquipmentDto } from 'src/models/equipment/get-simple-equipment.dto';
 
 @Injectable({
@@ -19,8 +19,8 @@ export class EquipmentService {
     return this.http.get<GetSimpleEquipmentDto[]>(this.url + 'GetEquipments');
   }
 
-  getDetailedEquipment(id: number): Observable<GetDetailedEquipmentDto> {
-    return this.http.get<GetDetailedEquipmentDto>(
+  getDetailedEquipment(id: number): Observable<IGetDetailedEquipment> {
+    return this.http.get<IGetDetailedEquipment>(
       this.url + 'GetDetailedEquipment',
       { params: { id } }
     );

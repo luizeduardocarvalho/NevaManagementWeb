@@ -1,9 +1,8 @@
-export class GetDetailedEquipmentDto {
+import { ISimpleLocation } from "../location/get-simple-location.dto";
+
+export interface IGetDetailedEquipment {
   name: string;
   description: string;
-
-  constructor(name: string, description: string) {
-    this.name = name;
-    this.description = description;
-  }
+  propertyNumber: string;
+  location: ISimpleLocation;
 }
