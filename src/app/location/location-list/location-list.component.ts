@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faPen, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
+import { ISimpleLocation } from 'src/models/location/get-simple-location.dto';
 import { LocationService } from 'src/services/location.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class LocationListComponent implements OnInit {
   faSearch = faSearch as IconProp;
   faPen = faPen as IconProp;
 
-  locations: GetSimpleLocation[] = [];
+  locations: ISimpleLocation[] = [];
   searchText: string = '';
 
   isLoading = false;
@@ -23,7 +23,7 @@ export class LocationListComponent implements OnInit {
     this.isLoading = true;
     this.locationService
       .getLocations()
-      .subscribe((locations: GetSimpleLocation[]) => {
+      .subscribe((locations: ISimpleLocation[]) => {
         this.locations = locations;
         this.isLoading = false;
       });

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ICreateForm } from 'src/models/form/create-form';
 import { QuestionBase } from 'src/models/form/question-base';
-import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
+import { ISimpleLocation } from 'src/models/location/get-simple-location.dto';
 import { IEditProduct } from 'src/models/product/edit-product.dto';
 import { IGetDetailedProduct } from 'src/models/product/get-detailed-product.dto';
 import { LocationService } from 'src/services/location.service';
@@ -16,14 +15,6 @@ import { QuestionService } from 'src/services/question.service';
   styleUrls: ['./edit-product.component.scss'],
 })
 export class EditProductComponent implements OnInit {
-  editForm = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-    location: new FormControl(),
-    formula: new FormControl(null),
-    expirationDate: new FormControl(),
-  });
-
   questions: QuestionBase<any>[];
 
   questionsTypes = [
@@ -85,7 +76,7 @@ export class EditProductComponent implements OnInit {
 
     this.locationService
       .getLocations()
-      .subscribe((locations: GetSimpleLocation[]) => {
+      .subscribe((locations: ISimpleLocation[]) => {
         this.questionsTypes[2].options = locations.map((location) => ({
           key: location.id!.toString(),
           value: location.name,

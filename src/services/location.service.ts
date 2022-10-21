@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { IAddLocation } from 'src/models/location/add-location.dto';
 import { IEditLocation } from 'src/models/location/edit-location.dto';
 import { GetDetailedLocation } from 'src/models/location/get-detailed-location.dto';
-import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
+import { ISimpleLocation } from 'src/models/location/get-simple-location.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +15,8 @@ export class LocationService {
 
   constructor(private http: HttpClient) {}
 
-  getLocations(): Observable<GetSimpleLocation[]> {
-    return this.http.get<GetSimpleLocation[]>(this.url + 'GetLocations');
+  getLocations(): Observable<ISimpleLocation[]> {
+    return this.http.get<ISimpleLocation[]>(this.url + 'GetLocations');
   }
 
   getLocationById(locationId: number): Observable<GetDetailedLocation> {

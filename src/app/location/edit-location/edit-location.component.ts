@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ICreateForm } from 'src/models/form/create-form';
 import { QuestionBase } from 'src/models/form/question-base';
 import { GetDetailedLocation } from 'src/models/location/get-detailed-location.dto';
-import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
+import { ISimpleLocation } from 'src/models/location/get-simple-location.dto';
 import { LocationService } from 'src/services/location.service';
 import { QuestionService } from 'src/services/question.service';
 
@@ -66,7 +66,7 @@ export class EditLocationComponent implements OnInit {
 
     this.locationService
       .getLocations()
-      .subscribe((locations: GetSimpleLocation[]) => {
+      .subscribe((locations: ISimpleLocation[]) => {
         this.questionsTypes[1].options = locations.map((location) => ({
           key: location.id!.toString(),
           value: location.name,

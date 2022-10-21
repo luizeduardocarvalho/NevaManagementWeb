@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { IAddEquipment } from 'src/models/equipment/add-equipment';
 import { ICreateForm } from 'src/models/form/create-form';
 import { QuestionBase } from 'src/models/form/question-base';
-import { GetSimpleLocation } from 'src/models/location/get-simple-location.dto';
+import { ISimpleLocation } from 'src/models/location/get-simple-location.dto';
 import { EquipmentService } from 'src/services/equipment.service';
 import { LocationService } from 'src/services/location.service';
 import { QuestionService } from 'src/services/question.service';
@@ -31,8 +31,8 @@ export class AddEquipmentComponent implements OnInit {
       required: false,
     },
     {
-      key: 'patrimony',
-      label: 'Patrimony',
+      key: 'propertyNumber',
+      label: 'Property Number',
       type: 'text',
       order: 3,
     },
@@ -59,12 +59,11 @@ export class AddEquipmentComponent implements OnInit {
   ngOnInit(): void {
     this.locationService
       .getLocations()
-      .subscribe((locations: GetSimpleLocation[]) => {
+      .subscribe((locations: ISimpleLocation[]) => {
         let options = locations.map((location) => ({
           key: location.id?.toString()!,
           value: location.name,
         }));
-        console.log(options);
         this.questionsTypes[3].options = options;
         this.questions = this.questionService.getQuestions(this.questionsTypes);
       });
