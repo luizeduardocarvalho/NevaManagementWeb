@@ -20,6 +20,9 @@ export class EquipmentListComponent implements OnInit {
   constructor(private equipmentService: EquipmentService) {}
 
   ngOnInit(): void {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
     this.isLoading = true;
     this.equipmentService
       .getEquipments()
