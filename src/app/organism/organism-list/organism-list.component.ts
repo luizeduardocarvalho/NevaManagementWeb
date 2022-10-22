@@ -24,16 +24,19 @@ export class OrganismListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
     this.isLoading = true;
-    this.organismService
-      .getOrganisms()
-      .subscribe((organisms: GetSimpleOrganism[]) => {
+    this.organismService.getOrganisms().subscribe(
+      (organisms: GetSimpleOrganism[]) => {
         this.organisms = organisms;
         this.isLoading = false;
       },
       (err) => {
         this.isLoading = false;
         this.toastr.error(err.error.message, 'Error');
-      });
+      }
+    );
   }
 }

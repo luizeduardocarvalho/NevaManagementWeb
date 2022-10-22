@@ -1,10 +1,14 @@
 .wrapper {
-    height: 85%;
+    height: calc(var(--vh, 1vh) * 85);
     padding: 1em 1.5em 1em 1.5em;
 }
 
+.menu {
+    height: calc(var(--vh, 1vh) * 8);
+}
+
 .header {
-    height: 8%;
+    height: calc(var(--vh, 1vh) * 7);
     padding-inline: 1.5em;
 
     display: flex;

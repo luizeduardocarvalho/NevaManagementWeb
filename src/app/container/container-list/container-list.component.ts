@@ -20,6 +20,9 @@ export class ContainerListComponent implements OnInit {
   constructor(private containerService: ContainerService) {}
 
   ngOnInit(): void {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
     this.isLoading = true;
     this.containerService
       .getContainers()

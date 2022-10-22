@@ -23,6 +23,9 @@ export class UserHistoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    
     let user = this.userService.getUser();
     this.isLoading = true;
     this.productUsageService

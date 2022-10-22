@@ -37,12 +37,12 @@
 
 .card-section {
     overflow-y: scroll;
-    height: 55vh;
+    height: calc(var(--vh, 1vh) * 52);
 }
 
 .card-container {
     &__card {
-        padding: 0.2em 1em 0.2em 1em;
+        padding: 0.5em 1em 0.5em 1em;
         margin-bottom: 0.5em;
 
         display: flex;
@@ -58,49 +58,25 @@
 }
 
 @media(min-height: 740px) {
-    @-moz-document url-prefix() {
-        .card-section {
-            height: 55vh;
-        }
-    }
-
     .card-section {
-        height: 57vh;
+        height: calc(var(--vh, 1vh) * 57);
     }
 }
 
 @media(min-height: 844px) {
-    @-moz-document url-prefix() {
-        .card-section {
-            height: 57vh;
-        }
-    }
-
     .card-section {
-        height: 59vh;
+        height: calc(var(--vh, 1vh) * 59);
     }
 }
 
 @media(min-height: 896px) {
-    @-moz-document url-prefix() {
-        .card-section {
-            height: 60vh;
-        }
-    }
-
     .card-section {
-        height: 62vh;
+        height: calc(var(--vh, 1vh) * 60);
     }
 }
 
 @media(min-height: 900px) {
-    @-moz-document url-prefix() {
-        .card-section {
-            height: 61vh;
-        }
-    }
-
     .card-section {
-        height: 63vh;
+        height: calc(var(--vh, 1vh) * 61);
     }
 }

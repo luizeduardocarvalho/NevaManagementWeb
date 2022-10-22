@@ -30,6 +30,9 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
     this.isLoading = true;
     this.productService.getAll(this.page).subscribe(
       (products: GetProduct[]) => {

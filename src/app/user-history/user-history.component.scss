@@ -25,7 +25,7 @@ h1 {
 
 .card-section {
     overflow-y: scroll;
-    height: 55vh;
+    height: calc(var(--vh, 1vh) * 52);
 }
 
 .card-container {
@@ -43,24 +43,24 @@ h1 {
 
 @media(min-height: 740px) {
     .card-section {
-        height: 57vh;
+        height: calc(var(--vh, 1vh) * 57);
     }
 }
 
 @media(min-height: 844px) {
     .card-section {
-        height: 59vh;
+        height: calc(var(--vh, 1vh) * 59);
     }
 }
 
 @media(min-height: 896px) {
     .card-section {
-        height: 62vh;
+        height: calc(var(--vh, 1vh) * 60);
     }
 }
 
 @media(min-height: 900px) {
     .card-section {
-        height: 63vh;
+        height: calc(var(--vh, 1vh) * 61);
     }
 }

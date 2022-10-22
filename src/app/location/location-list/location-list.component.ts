@@ -20,6 +20,9 @@ export class LocationListComponent implements OnInit {
   constructor(private locationService: LocationService) {}
 
   ngOnInit(): void {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    
     this.isLoading = true;
     this.locationService
       .getLocations()
