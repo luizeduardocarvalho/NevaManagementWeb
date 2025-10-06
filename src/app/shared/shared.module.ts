@@ -9,7 +9,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { ToastComponent } from './toast/toast.component';
 import { SpinnerComponent } from './spinner/spinner.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormulaAndNameSearchPipe } from 'src/pipes/formula-searcher.pipe';
 import { NumberToMonthNamePipe } from 'src/pipes/number-to-month-name.pipe';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -37,7 +36,6 @@ import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
     ReactiveFormsModule,
     FontAwesomeModule,
     RouterModule,
-    MatProgressSpinnerModule,
     InfiniteScrollModule,
   ],
   exports: [

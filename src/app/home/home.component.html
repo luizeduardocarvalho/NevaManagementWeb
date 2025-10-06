@@ -13,16 +13,16 @@
     class="last-used-card default-card"
   >
     <div class="last-used-card__text-section">
-      <p class="last-used-card__product bold">{{ product?.productName }}</p>
-      <p class="last-used-card__location">{{ product?.locationName }}</p>
+      <p class="last-used-card__product bold">{{ product.productName }}</p>
+      <p class="last-used-card__location">{{ product.locationName }}</p>
       <p class="last-used-card__quantity">
-        Last used quantity: {{ product?.quantity }}{{ product?.unit }}
+        Last used quantity: {{ product.quantity }}{{ product.unit }}
       </p>
     </div>
     <div class="last-used-card__button-section">
       <a
         class="last-used-card__button"
-        [routerLink]="['/products', product?.productId]"
+        [routerLink]="['/products', product.productId]"
       >
         <fa-icon class="last-used-card__icon" [icon]="faAngleRight"></fa-icon>
       </a>
