@@ -1,0 +1,42 @@
+{
+  "appName": "LabFlux",
+  "language": "Language",
+  "actions": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "search": "Search",
+    "loading": "Loading...",
+    "viewAll": "View All",
+    "viewMore": "View More",
+    "backTo": "Back to {{name}}",
+    "scrollToLoadMore": "Scroll to load more",
+    "allLoaded": "All {{type}} loaded ({{count}} total)"
+  },
+  "sorting": {
+    "sortBy": "Sort by",
+    "nameAZ": "Name (A-Z)",
+    "expiringSoon": "Expiring Soon",
+    "quantityLowToHigh": "Quantity (Low to High)",
+    "lowStockFirst": "Low Stock First"
+  },
+  "fields": {
+    "name": "Name",
+    "description": "Description",
+    "location": "Location",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "formula": "Formula",
+    "expirationDate": "Expiration Date",
+    "propertyNumber": "Property Number",
+    "required": "required"
+  },
+  "messages": {
+    "success": "Success",
+    "error": "Error",
+    "noResults": "No results found",
+    "failedToLoad": "Failed to load {{type}}"
+  }
+}

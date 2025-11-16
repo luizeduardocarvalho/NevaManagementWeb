@@ -1,0 +1,55 @@
+{
+  "title": "Equipamentos",
+  "subtitle": "Gerenciar equipamentos de laboratório e agendar uso",
+  "addEquipment": "Adicionar Equipamento",
+  "editEquipment": "Editar Equipamento",
+  "equipmentDetails": "Detalhes do Equipamento",
+  "equipmentInfo": "Informações do Equipamento",
+  "searchPlaceholder": "Buscar equipamentos por nome...",
+  "noEquipment": "Nenhum equipamento ainda",
+  "noEquipmentSearch": "Nenhum equipamento encontrado para sua busca",
+  "fields": {
+    "equipmentName": "Nome do Equipamento",
+    "namePlaceholder": "ex: Termociclador PCR",
+    "propertyNumberPlaceholder": "ex: EQ-2023-001",
+    "descriptionPlaceholder": "Descrição detalhada do equipamento..."
+  },
+  "actions": {
+    "scheduleUsage": "Agendar Uso",
+    "viewHistory": "Ver Histórico",
+    "saveEquipment": "Salvar Equipamento",
+    "updateEquipment": "Atualizar Equipamento"
+  },
+  "calendar": {
+    "title": "Calendário de Uso",
+    "description": "Uso agendado do equipamento para {{month}}",
+    "noScheduled": "Nenhum uso agendado para este mês"
+  },
+  "usage": {
+    "scheduleTitle": "Agendar Uso do Equipamento",
+    "usageDetails": "Detalhes do Uso",
+    "usageDescription": "Agende quando você usará este equipamento",
+    "researcher": "Pesquisador",
+    "selectResearcher": "Selecionar pesquisador",
+    "descriptionOptional": "Descrição (Opcional)",
+    "descriptionPlaceholder": "O que você fará com este equipamento?",
+    "startDateTime": "Data e Hora de Início",
+    "endDateTime": "Data e Hora de Término",
+    "scheduling": "Agendando...",
+    "schedule": "Agendar Uso"
+  },
+  "history": {
+    "title": "Histórico de Uso",
+    "pastRecords": "Registros de Uso Anteriores",
+    "description": "Histórico completo de uso do equipamento",
+    "noHistory": "Nenhum histórico de uso registrado ainda"
+  },
+  "messages": {
+    "createSuccess": "Equipamento criado com sucesso",
+    "updateSuccess": "Equipamento atualizado com sucesso",
+    "scheduleSuccess": "Uso do equipamento agendado com sucesso",
+    "createError": "Falha ao criar equipamento",
+    "updateError": "Falha ao atualizar equipamento",
+    "scheduleError": "Falha ao agendar equipamento"
+  }
+}

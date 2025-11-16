@@ -1,0 +1,42 @@
+{
+  "title": "Products",
+  "subtitle": "Manage laboratory products and inventory",
+  "addProduct": "Add Product",
+  "editProduct": "Edit Product",
+  "productDetails": "Product Details",
+  "searchPlaceholder": "Search products by name, description, or formula...",
+  "noProducts": "No products yet",
+  "noProductsSearch": "No products found matching your search",
+  "fields": {
+    "productName": "Product Name",
+    "namePlaceholder": "e.g., Ethanol 70%",
+    "descriptionPlaceholder": "Optional description...",
+    "formulaPlaceholder": "e.g., C2H5OH",
+    "unitPlaceholder": "e.g., mL, g, units"
+  },
+  "info": {
+    "quantity": "Quantity",
+    "location": "Location",
+    "expires": "Expires",
+    "expired": "(Expired)",
+    "lowStock": "Low Stock"
+  },
+  "actions": {
+    "addQuantity": "Add Quantity",
+    "useProduct": "Use Product",
+    "saveProduct": "Save Product",
+    "updateProduct": "Update Product"
+  },
+  "usage": {
+    "usageStats": "Usage Statistics",
+    "last3Months": "Last 3 months usage",
+    "avgMonthly": "Average monthly",
+    "estimatedDays": "Estimated days remaining"
+  },
+  "messages": {
+    "createSuccess": "Product created successfully",
+    "updateSuccess": "Product updated successfully",
+    "createError": "Failed to create product",
+    "updateError": "Failed to update product"
+  }
+}

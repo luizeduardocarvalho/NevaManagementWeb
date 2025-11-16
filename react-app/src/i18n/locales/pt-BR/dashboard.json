@@ -1,0 +1,30 @@
+{
+  "title": "Painel",
+  "subtitle": "Visão geral do inventário do laboratório",
+  "stats": {
+    "lowStock": "Produtos em Baixo Estoque",
+    "lowStockDesc": "Produtos abaixo do limite de uso",
+    "expiringSoon": "Vencendo em Breve",
+    "expiringSoonDesc": "Vence em até 30 dias",
+    "expired": "Produtos Vencidos",
+    "expiredDesc": "Requer atenção imediata"
+  },
+  "lowStockAlerts": {
+    "title": "Alertas de Baixo Estoque",
+    "description": "Produtos que precisam ser reabastecidos com base no uso recente",
+    "empty": "Todos os produtos estão adequadamente estocados",
+    "viewMore": "Ver mais {{count}} produtos com baixo estoque",
+    "used": "Usado: {{quantity}} {{unit}} (3 meses)"
+  },
+  "expiringProducts": {
+    "title": "Vencendo em Breve",
+    "description": "Produtos que vencem nos próximos 30 dias",
+    "expires": "Vence: {{date}}",
+    "daysLeft": "{{days}} dias restantes"
+  },
+  "expiredProducts": {
+    "title": "Produtos Vencidos",
+    "description": "Estes produtos venceram e devem ser descartados",
+    "expired": "Vencido: {{date}}"
+  }
+}

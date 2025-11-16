@@ -1,0 +1,42 @@
+{
+  "title": "Produtos",
+  "subtitle": "Gerenciar produtos e inventário do laboratório",
+  "addProduct": "Adicionar Produto",
+  "editProduct": "Editar Produto",
+  "productDetails": "Detalhes do Produto",
+  "searchPlaceholder": "Buscar produtos por nome, descrição ou fórmula...",
+  "noProducts": "Nenhum produto ainda",
+  "noProductsSearch": "Nenhum produto encontrado para sua busca",
+  "fields": {
+    "productName": "Nome do Produto",
+    "namePlaceholder": "ex: Etanol 70%",
+    "descriptionPlaceholder": "Descrição opcional...",
+    "formulaPlaceholder": "ex: C2H5OH",
+    "unitPlaceholder": "ex: mL, g, unidades"
+  },
+  "info": {
+    "quantity": "Quantidade",
+    "location": "Localização",
+    "expires": "Vence",
+    "expired": "(Vencido)",
+    "lowStock": "Estoque Baixo"
+  },
+  "actions": {
+    "addQuantity": "Adicionar Quantidade",
+    "useProduct": "Usar Produto",
+    "saveProduct": "Salvar Produto",
+    "updateProduct": "Atualizar Produto"
+  },
+  "usage": {
+    "usageStats": "Estatísticas de Uso",
+    "last3Months": "Uso nos últimos 3 meses",
+    "avgMonthly": "Média mensal",
+    "estimatedDays": "Dias estimados restantes"
+  },
+  "messages": {
+    "createSuccess": "Produto criado com sucesso",
+    "updateSuccess": "Produto atualizado com sucesso",
+    "createError": "Falha ao criar produto",
+    "updateError": "Falha ao atualizar produto"
+  }
+}
