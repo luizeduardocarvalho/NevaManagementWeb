@@ -6,8 +6,11 @@ import { Spinner } from '@/components/shared/Spinner'
 import { History, User, ArrowLeft } from 'lucide-react'
 import { format } from 'date-fns'
 import { useMemo, useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export function UsageHistoryPage() {
+  const { t } = useTranslation('equipment')
+  const { t: tCommon } = useTranslation('common')
   const { id } = useParams<{ id: string }>()
   const equipmentId = parseInt(id!)
   const loadMoreRef = useRef<HTMLDivElement>(null)
@@ -55,7 +58,7 @@ export function UsageHistoryPage() {
   if (error || !equipment) {
     return (
       <div className="text-center py-12">
-        <p className="text-destructive">Failed to load usage history</p>
+        <p className="text-destructive">{tCommon('errors.loadFailed')}</p>
       </div>
     )
   }
@@ -69,7 +72,7 @@ export function UsageHistoryPage() {
           </Button>
         </Link>
         <div>
-          <h1 className="text-3xl font-bold">Usage History</h1>
+          <h1 className="text-3xl font-bold">{t('history.title')}</h1>
           <p className="text-muted-foreground mt-2">{equipment.name}</p>
         </div>
       </div>
@@ -78,16 +81,16 @@ export function UsageHistoryPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <History className="h-5 w-5" />
-            Past Usage Records
+            {t('history.pastRecords')}
           </CardTitle>
           <CardDescription>
-            Complete history of equipment usage
+            {t('history.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {usages.length === 0 ? (
             <p className="text-center py-8 text-muted-foreground">
-              No usage history recorded yet
+              {t('history.noHistory')}
             </p>
           ) : (
             <div className="space-y-4">
@@ -123,7 +126,7 @@ export function UsageHistoryPage() {
                   {isFetchingNextPage ? (
                     <Spinner size="md" />
                   ) : (
-                    <p className="text-muted-foreground text-sm">Scroll to load more</p>
+                    <p className="text-muted-foreground text-sm">{tCommon('loadMore')}</p>
                   )}
                 </div>
               )}
@@ -131,7 +134,7 @@ export function UsageHistoryPage() {
               {!hasNextPage && usages.length > 0 && (
                 <div className="py-4 text-center">
                   <p className="text-muted-foreground text-sm">
-                    All usage records loaded ({usages.length} total)
+                    {tCommon('allLoaded', { count: usages.length })}
                   </p>
                 </div>
               )}

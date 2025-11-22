@@ -14,17 +14,23 @@ import { Plus, Search, AlertTriangle, ArrowUpDown } from 'lucide-react'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { format } from 'date-fns'
 import type { Product } from '@/types/product.types'
+import { useTranslation } from 'react-i18next'
 
 type SortOption = 'name' | 'expiration' | 'quantity' | 'lowStock'
 
 export function ProductListPage() {
+  const { t } = useTranslation('products')
+  const { t: tCommon } = useTranslation('common')
   const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteProducts()
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>('name')
   const loadMoreRef = useRef<HTMLDivElement>(null)
 
   const products = useMemo(() => {
-    return data?.pages.flatMap((page) => page.products) ?? []
+    const result = data?.pages.flatMap((page) => page.products) ?? []
+    console.log('Products from API:', result)
+    console.log('Pages data:', data?.pages)
+    return result
   }, [data])
 
   const isExpired = (expirationDate: string) => {
@@ -38,9 +44,10 @@ export function ProductListPage() {
 
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products.filter((product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product && product.name &&
+      (product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.formula?.toLowerCase().includes(searchTerm.toLowerCase())
+      product.formula?.toLowerCase().includes(searchTerm.toLowerCase()))
     )
 
     // Apply sorting
@@ -99,15 +106,15 @@ export function ProductListPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Products</h1>
+          <h1 className="text-3xl font-bold">{t('title')}</h1>
           <p className="text-muted-foreground mt-2">
-            Manage laboratory products and inventory
+            {t('subtitle')}
           </p>
         </div>
         <Link to="/products/add">
           <Button className="flex items-center gap-2">
             <Plus className="h-4 w-4" />
-            Add Product
+            {t('addProduct')}
           </Button>
         </Link>
       </div>
@@ -116,7 +123,7 @@ export function ProductListPage() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search products by name, description, or formula..."
+            placeholder={t('searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
@@ -126,13 +133,13 @@ export function ProductListPage() {
           <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
           <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
             <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Sort by..." />
+              <SelectValue placeholder={tCommon('sorting.sortBy')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="name">Name (A-Z)</SelectItem>
-              <SelectItem value="expiration">Expiring Soon</SelectItem>
-              <SelectItem value="quantity">Quantity (Low to High)</SelectItem>
-              <SelectItem value="lowStock">Low Stock First</SelectItem>
+              <SelectItem value="name">{tCommon('sorting.nameAZ')}</SelectItem>
+              <SelectItem value="expiration">{tCommon('sorting.expiringSoon')}</SelectItem>
+              <SelectItem value="quantity">{tCommon('sorting.quantityLowToHigh')}</SelectItem>
+              <SelectItem value="lowStock">{tCommon('sorting.lowStockFirst')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -142,7 +149,7 @@ export function ProductListPage() {
         {filteredAndSortedProducts.length === 0 ? (
           <div className="col-span-full text-center py-12">
             <p className="text-muted-foreground">
-              {searchTerm ? 'No products found matching your search' : 'No products yet'}
+              {searchTerm ? t('noProductsSearch') : t('noProducts')}
             </p>
           </div>
         ) : (
@@ -168,7 +175,7 @@ export function ProductListPage() {
                   )}
 
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Quantity:</span>
+                    <span className="text-sm font-medium">{t('info.quantity')}:</span>
                     <span className={`text-sm font-semibold ${isLowStock(product) ? 'text-destructive' : ''}`}>
                       {product.quantity} {product.unit}
                       {isLowStock(product) && (
@@ -179,16 +186,16 @@ export function ProductListPage() {
 
                   {product.location && (
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Location:</span>
+                      <span className="text-sm font-medium">{t('info.location')}:</span>
                       <span className="text-sm">{product.location.name}</span>
                     </div>
                   )}
 
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Expires:</span>
+                    <span className="text-sm font-medium">{t('info.expires')}:</span>
                     <span className={`text-sm ${isExpired(product.expiration_date) ? 'text-destructive font-semibold' : ''}`}>
                       {format(new Date(product.expiration_date), 'MMM dd, yyyy')}
-                      {isExpired(product.expiration_date) && ' (Expired)'}
+                      {isExpired(product.expiration_date) && ` ${t('info.expired')}`}
                     </span>
                   </div>
                 </div>

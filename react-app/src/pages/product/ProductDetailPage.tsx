@@ -1,23 +1,36 @@
 import { useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { useProductDetailedById, useAddQuantity, useUseProduct } from '@/hooks/useProducts'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useProductDetailedById, useAddQuantity, useUseProduct, useDeleteProduct } from '@/hooks/useProducts'
 import { Button } from '@/components/ui/button'
 import { BackArrow } from '@/components/shared/BackArrow'
 import { Spinner } from '@/components/shared/Spinner'
 import { AddQuantityModal } from '@/components/product/AddQuantityModal'
 import { UseProductModal } from '@/components/product/UseProductModal'
-import { Plus, Minus, Edit, AlertTriangle } from 'lucide-react'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+import { Plus, Minus, Edit, AlertTriangle, Trash2 } from 'lucide-react'
 import { format } from 'date-fns'
 
 export function ProductDetailPage() {
   const { id } = useParams<{ id: string }>()
   const productId = Number(id)
+  const navigate = useNavigate()
   const { data: product, isLoading } = useProductDetailedById(productId)
   const addQuantity = useAddQuantity()
   const useProduct = useUseProduct()
+  const deleteProduct = useDeleteProduct()
 
   const [isAddQuantityModalOpen, setIsAddQuantityModalOpen] = useState(false)
   const [isUseProductModalOpen, setIsUseProductModalOpen] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   const handleAddQuantity = async (quantity: number) => {
     if (!productId) return
@@ -34,6 +47,12 @@ export function ProductDetailPage() {
       quantity,
       unit: product.unit,
     })
+  }
+
+  const handleDelete = async () => {
+    if (!productId) return
+    await deleteProduct.mutateAsync(productId)
+    navigate('/products')
   }
 
   const isExpired = (expirationDate: string) => {
@@ -71,12 +90,22 @@ export function ProductDetailPage() {
             <p className="text-lg text-muted-foreground mt-1">{product.formula}</p>
           )}
         </div>
-        <Link to={`/products/${id}/edit`}>
-          <Button variant="outline" className="flex items-center gap-2">
-            <Edit className="h-4 w-4" />
-            Edit
+        <div className="flex gap-2">
+          <Link to={`/products/${id}/edit`}>
+            <Button variant="outline" className="flex items-center gap-2">
+              <Edit className="h-4 w-4" />
+              Edit
+            </Button>
+          </Link>
+          <Button
+            variant="destructive"
+            onClick={() => setIsDeleteDialogOpen(true)}
+            className="flex items-center gap-2"
+          >
+            <Trash2 className="h-4 w-4" />
+            Delete
           </Button>
-        </Link>
+        </div>
       </div>
 
       {(expired || lowStock) && (
@@ -207,6 +236,26 @@ export function ProductDetailPage() {
         productName={product.name}
         isSubmitting={useProduct.isPending}
       />
+
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Product</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{product.name}"? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deleteProduct.isPending ? 'Deleting...' : 'Delete'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

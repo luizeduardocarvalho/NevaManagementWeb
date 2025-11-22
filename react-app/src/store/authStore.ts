@@ -11,37 +11,47 @@ interface AuthState {
   updateUser: (user: User) => void
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  token: localStorage.getItem('auth_token'),
-  user: JSON.parse(localStorage.getItem('user') || 'null'),
-  isAuthenticated: !!localStorage.getItem('auth_token'),
-  // Mock laboratoryId for development
-  laboratoryId: JSON.parse(localStorage.getItem('user') || 'null')?.laboratoryId || 1,
+export const useAuthStore = create<AuthState>((set) => {
+  const storedToken = localStorage.getItem('auth_token')
+  const storedUser = JSON.parse(localStorage.getItem('user') || 'null')
 
-  setAuth: (token, user) => {
-    localStorage.setItem('auth_token', token)
-    localStorage.setItem('user', JSON.stringify(user))
-    set({
-      token,
-      user,
-      isAuthenticated: true,
-      laboratoryId: user.laboratoryId
-    })
-  },
+  console.log('[AuthStore] Initializing with:', {
+    storedToken,
+    storedUser,
+    isAuthenticated: !!storedToken,
+  })
 
-  clearAuth: () => {
-    localStorage.removeItem('auth_token')
-    localStorage.removeItem('user')
-    set({
-      token: null,
-      user: null,
-      isAuthenticated: false,
-      laboratoryId: null
-    })
-  },
+  return {
+    token: storedToken,
+    user: storedUser,
+    isAuthenticated: !!storedToken,
+    laboratoryId: storedUser?.laboratoryId || null,
 
-  updateUser: (user) => {
-    localStorage.setItem('user', JSON.stringify(user))
-    set({ user, laboratoryId: user.laboratoryId })
-  },
-}))
+    setAuth: (token, user) => {
+      localStorage.setItem('auth_token', token)
+      localStorage.setItem('user', JSON.stringify(user))
+      set({
+        token,
+        user,
+        isAuthenticated: true,
+        laboratoryId: user.laboratoryId
+      })
+    },
+
+    clearAuth: () => {
+      localStorage.removeItem('auth_token')
+      localStorage.removeItem('user')
+      set({
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        laboratoryId: null
+      })
+    },
+
+    updateUser: (user) => {
+      localStorage.setItem('user', JSON.stringify(user))
+      set({ user, laboratoryId: user.laboratoryId })
+    },
+  }
+})

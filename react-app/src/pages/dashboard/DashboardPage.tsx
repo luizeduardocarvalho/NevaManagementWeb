@@ -3,25 +3,30 @@ import { useLowStockProducts } from '@/hooks/useProducts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/shared/Spinner'
+import { UpcomingRoutinesWidget } from '@/components/dashboard/UpcomingRoutinesWidget'
 import { AlertTriangle, Package, MapPin, Calendar, TrendingDown } from 'lucide-react'
 import { format, differenceInDays } from 'date-fns'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export function DashboardPage() {
+  const { t } = useTranslation('dashboard')
   const { data: lowStockProducts, isLoading } = useLowStockProducts()
 
   const stats = useMemo(() => {
-    if (!lowStockProducts) return null
+    if (!lowStockProducts || !Array.isArray(lowStockProducts)) return null
 
     const now = new Date()
     const expiringProducts = lowStockProducts.filter((product) => {
+      if (!product?.expiration_date) return false
       const daysUntilExpiry = differenceInDays(new Date(product.expiration_date), now)
       return daysUntilExpiry <= 30 && daysUntilExpiry > 0
     })
 
-    const expiredProducts = lowStockProducts.filter(
-      (product) => new Date(product.expiration_date) < now
-    )
+    const expiredProducts = lowStockProducts.filter((product) => {
+      if (!product?.expiration_date) return false
+      return new Date(product.expiration_date) < now
+    })
 
     return {
       totalLowStock: lowStockProducts.length,
@@ -43,49 +48,52 @@ export function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Dashboard</h1>
+        <h1 className="text-3xl font-bold">{t('title')}</h1>
         <p className="text-muted-foreground mt-2">
-          Overview of your laboratory inventory
+          {t('subtitle')}
         </p>
       </div>
+
+      {/* Upcoming Routines Widget */}
+      <UpcomingRoutinesWidget />
 
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Low Stock Products</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('stats.lowStock')}</CardTitle>
             <TrendingDown className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.totalLowStock || 0}</div>
             <p className="text-xs text-muted-foreground mt-1">
-              Products below usage threshold
+              {t('stats.lowStockDesc')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Expiring Soon</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('stats.expiringSoon')}</CardTitle>
             <Calendar className="h-4 w-4 text-orange-500" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.expiringSoon || 0}</div>
             <p className="text-xs text-muted-foreground mt-1">
-              Expires within 30 days
+              {t('stats.expiringSoonDesc')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Expired Products</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('stats.expired')}</CardTitle>
             <AlertTriangle className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-destructive">{stats?.expired || 0}</div>
             <p className="text-xs text-muted-foreground mt-1">
-              Requires immediate attention
+              {t('stats.expiredDesc')}
             </p>
           </CardContent>
         </Card>
@@ -98,10 +106,10 @@ export function DashboardPage() {
             <div>
               <CardTitle className="flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-destructive" />
-                Low Stock Alerts
+                {t('lowStockAlerts.title')}
               </CardTitle>
               <CardDescription className="mt-2">
-                Products that need to be restocked based on recent usage
+                {t('lowStockAlerts.description')}
               </CardDescription>
             </div>
             <Link to="/products">
@@ -179,10 +187,10 @@ export function DashboardPage() {
               <div>
                 <CardTitle className="flex items-center gap-2">
                   <Calendar className="h-5 w-5 text-orange-500" />
-                  Expiring Soon
+                  {t('expiringProducts.title')}
                 </CardTitle>
                 <CardDescription className="mt-2">
-                  Products expiring within the next 30 days
+                  {t('expiringProducts.description')}
                 </CardDescription>
               </div>
             </div>
@@ -206,11 +214,11 @@ export function DashboardPage() {
                           <div className="flex items-center justify-between">
                             <h4 className="font-semibold">{product.name}</h4>
                             <span className="text-sm font-semibold text-orange-600">
-                              {daysLeft} days left
+                              {t('expiringProducts.daysLeft', { days: daysLeft })}
                             </span>
                           </div>
                           <p className="text-sm text-muted-foreground">
-                            Expires: {format(new Date(product.expiration_date), 'MMM dd, yyyy')}
+                            {t('expiringProducts.expires', { date: format(new Date(product.expiration_date), 'MMM dd, yyyy') })}
                           </p>
                         </div>
                       </div>
@@ -229,10 +237,10 @@ export function DashboardPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-destructive">
               <AlertTriangle className="h-5 w-5" />
-              Expired Products
+              {t('expiredProducts.title')}
             </CardTitle>
             <CardDescription className="mt-2">
-              These products have expired and should be disposed of
+              {t('expiredProducts.description')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -251,7 +259,7 @@ export function DashboardPage() {
                       <div className="flex-1 space-y-1">
                         <h4 className="font-semibold">{product.name}</h4>
                         <p className="text-sm text-destructive">
-                          Expired: {format(new Date(product.expiration_date), 'MMM dd, yyyy')}
+                          {t('expiredProducts.expired', { date: format(new Date(product.expiration_date), 'MMM dd, yyyy') })}
                         </p>
                       </div>
                     </div>

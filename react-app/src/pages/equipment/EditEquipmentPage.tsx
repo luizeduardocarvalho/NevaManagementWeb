@@ -4,8 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Spinner } from '@/components/shared/Spinner'
 import { EquipmentForm } from '@/components/equipment/EquipmentForm'
 import type { CreateEquipmentRequest } from '@/types/equipment.types'
+import { useTranslation } from 'react-i18next'
 
 export function EditEquipmentPage() {
+  const { t } = useTranslation('equipment')
+  const { t: tCommon } = useTranslation('common')
   const { id } = useParams<{ id: string }>()
   const equipmentId = parseInt(id!)
   const navigate = useNavigate()
@@ -29,7 +32,7 @@ export function EditEquipmentPage() {
   if (error || !equipment) {
     return (
       <div className="text-center py-12">
-        <p className="text-destructive">Failed to load equipment</p>
+        <p className="text-destructive">{tCommon('errors.loadFailed')}</p>
       </div>
     )
   }
@@ -37,17 +40,17 @@ export function EditEquipmentPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Edit Equipment</h1>
+        <h1 className="text-3xl font-bold">{t('editEquipment')}</h1>
         <p className="text-muted-foreground mt-2">
-          Update equipment information
+          {t('actions.updateEquipment')}
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Equipment Details</CardTitle>
+          <CardTitle>{t('equipmentDetails')}</CardTitle>
           <CardDescription>
-            Modify the equipment information below
+            {t('actions.updateEquipment')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -60,7 +63,7 @@ export function EditEquipmentPage() {
             }}
             onSubmit={handleSubmit}
             isSubmitting={editEquipment.isPending}
-            submitLabel="Update Equipment"
+            submitLabel={t('actions.updateEquipment')}
           />
         </CardContent>
       </Card>

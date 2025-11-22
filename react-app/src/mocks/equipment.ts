@@ -215,6 +215,44 @@ export async function mockUseEquipment(data: UseEquipmentRequest): Promise<strin
   return 'Equipment usage scheduled successfully (mock)'
 }
 
+export async function mockDeleteEquipment(equipmentId: number): Promise<void> {
+  const index = findEquipmentIndex(equipmentId)
+  mockEquipmentStore.splice(index, 1)
+  // Also remove related usage history
+  mockUsageHistory = mockUsageHistory.filter((usage) => usage.equipmentId !== equipmentId)
+  await delay(null)
+}
+
+export async function mockCheckEquipmentOverlap(
+  equipmentId: number,
+  startDate: string,
+  endDate: string,
+  excludeUsageId?: number
+): Promise<{ hasOverlap: boolean; conflictingUsages: EquipmentUsageRecord[] }> {
+  const start = new Date(startDate)
+  const end = new Date(endDate)
+
+  const conflictingUsages = mockUsageHistory.filter((usage) => {
+    // Skip if checking different equipment
+    if (usage.equipmentId !== equipmentId) return false
+
+    // Skip if this is the usage being edited
+    if (excludeUsageId && usage.id === excludeUsageId) return false
+
+    const usageStart = new Date(usage.startDate)
+    const usageEnd = new Date(usage.endDate)
+
+    // Check for overlap: two date ranges overlap if one starts before the other ends
+    // Overlap exists if: start < usageEnd AND end > usageStart
+    return start < usageEnd && end > usageStart
+  })
+
+  return delay({
+    hasOverlap: conflictingUsages.length > 0,
+    conflictingUsages,
+  })
+}
+
 export async function mockGetEquipmentUsageHistory(
   equipmentId: number,
   page = 1,
@@ -275,3 +313,6 @@ export async function mockGetEquipmentCalendar(
     days,
   })
 }
+
+// Export equipment store for use in other mocks
+export const mockEquipment = mockEquipmentStore

@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useEquipmentById, useUseEquipment } from '@/hooks/useEquipment'
+import { useEquipmentById, useUseEquipment, useCheckEquipmentOverlap } from '@/hooks/useEquipment'
 import { useResearchers } from '@/hooks/useResearchers'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -13,11 +13,15 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Spinner } from '@/components/shared/Spinner'
-import { Calendar } from 'lucide-react'
-import { useState } from 'react'
+import { Calendar, AlertTriangle, Clock } from 'lucide-react'
+import { useState, useMemo } from 'react'
+import { format } from 'date-fns'
 import type { UseEquipmentRequest } from '@/types/equipment.types'
+import { useTranslation } from 'react-i18next'
 
 export function UseEquipmentPage() {
+  const { t } = useTranslation('equipment')
+  const { t: tCommon } = useTranslation('common')
   const { id } = useParams<{ id: string }>()
   const equipmentId = parseInt(id!)
   const navigate = useNavigate()
@@ -32,6 +36,22 @@ export function UseEquipmentPage() {
     startDate: '',
     endDate: '',
   })
+
+  // Convert dates to ISO for overlap check
+  const overlapStartDate = useMemo(() => {
+    return formData.startDate ? new Date(formData.startDate).toISOString() : ''
+  }, [formData.startDate])
+
+  const overlapEndDate = useMemo(() => {
+    return formData.endDate ? new Date(formData.endDate).toISOString() : ''
+  }, [formData.endDate])
+
+  // Check for overlapping bookings
+  const { data: overlapCheck } = useCheckEquipmentOverlap(
+    equipmentId,
+    overlapStartDate,
+    overlapEndDate
+  )
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -59,7 +79,7 @@ export function UseEquipmentPage() {
   if (error || !equipment) {
     return (
       <div className="text-center py-12">
-        <p className="text-destructive">Failed to load equipment</p>
+        <p className="text-destructive">{tCommon('errors.loadFailed')}</p>
       </div>
     )
   }
@@ -67,7 +87,7 @@ export function UseEquipmentPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Schedule Equipment Usage</h1>
+        <h1 className="text-3xl font-bold">{t('usage.scheduleTitle')}</h1>
         <p className="text-muted-foreground mt-2">{equipment.name}</p>
       </div>
 
@@ -75,17 +95,17 @@ export function UseEquipmentPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5" />
-            Usage Details
+            {t('usage.usageDetails')}
           </CardTitle>
           <CardDescription>
-            Schedule when you'll be using this equipment
+            {t('usage.usageDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="researcher">
-                Researcher <span className="text-destructive">*</span>
+                {t('usage.researcher')} <span className="text-destructive">*</span>
               </Label>
               <Select
                 value={formData.researcherId ? String(formData.researcherId) : ''}
@@ -93,7 +113,7 @@ export function UseEquipmentPage() {
                 disabled={researchersLoading}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder={researchersLoading ? 'Loading...' : 'Select researcher'} />
+                  <SelectValue placeholder={researchersLoading ? tCommon('loading') : t('usage.selectResearcher')} />
                 </SelectTrigger>
                 <SelectContent>
                   {researchers?.map((researcher) => (
@@ -106,21 +126,21 @@ export function UseEquipmentPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Description (Optional)</Label>
+              <Label htmlFor="description">{t('usage.descriptionOptional')}</Label>
               <textarea
                 id="description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 disabled={useEquipmentMutation.isPending}
                 className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                placeholder="What will you be doing with this equipment?"
+                placeholder={t('usage.descriptionPlaceholder')}
               />
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="startDate">
-                  Start Date & Time <span className="text-destructive">*</span>
+                  {t('usage.startDateTime')} <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="startDate"
@@ -134,7 +154,7 @@ export function UseEquipmentPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="endDate">
-                  End Date & Time <span className="text-destructive">*</span>
+                  {t('usage.endDateTime')} <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="endDate"
@@ -147,6 +167,50 @@ export function UseEquipmentPage() {
               </div>
             </div>
 
+            {/* Overlap Warning */}
+            {overlapCheck?.hasOverlap && (
+              <div className="rounded-lg border border-orange-500 bg-orange-50 p-4 space-y-3">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="h-5 w-5 text-orange-600 shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-orange-900">
+                      {t('usage.conflictDetected')}
+                    </h4>
+                    <p className="text-sm text-orange-800 mt-1">
+                      {t('usage.conflictDescription')}
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-2 ml-8">
+                  {overlapCheck.conflictingUsages.map((usage) => (
+                    <div
+                      key={usage.id}
+                      className="flex items-center justify-between p-3 rounded-md bg-white border border-orange-200"
+                    >
+                      <div className="flex-1">
+                        <p className="font-medium text-sm text-gray-900">
+                          {usage.researcher.name}
+                        </p>
+                        {usage.description && (
+                          <p className="text-xs text-gray-600 mt-0.5">{usage.description}</p>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-1 text-xs text-gray-600">
+                        <Clock className="h-3 w-3" />
+                        <span>
+                          {format(new Date(usage.startDate), 'MMM dd, HH:mm')} -{' '}
+                          {format(new Date(usage.endDate), 'HH:mm')}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-orange-700 ml-8">
+                  {t('usage.conflictNote')}
+                </p>
+              </div>
+            )}
+
             <div className="flex gap-4">
               <Button
                 type="button"
@@ -155,16 +219,16 @@ export function UseEquipmentPage() {
                 onClick={() => navigate(`/equipment/${equipmentId}`)}
                 disabled={useEquipmentMutation.isPending}
               >
-                Cancel
+                {tCommon('actions.cancel')}
               </Button>
               <Button type="submit" className="flex-1" disabled={useEquipmentMutation.isPending}>
                 {useEquipmentMutation.isPending ? (
                   <>
                     <Spinner size="sm" className="mr-2" />
-                    Scheduling...
+                    {t('usage.scheduling')}
                   </>
                 ) : (
-                  'Schedule Usage'
+                  t('usage.schedule')
                 )}
               </Button>
             </div>

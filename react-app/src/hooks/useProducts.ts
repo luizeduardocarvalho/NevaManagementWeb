@@ -56,9 +56,12 @@ export function useProductDetailedById(id: number) {
 }
 
 export function useLowStockProducts() {
+  const laboratoryId = useAuthStore((state) => state.laboratoryId)
+
   return useQuery({
-    queryKey: ['products', 'low-stock'],
-    queryFn: () => productService.getLowInStock(),
+    queryKey: ['products', 'low-stock', laboratoryId],
+    queryFn: () => productService.getLowInStock(laboratoryId!),
+    enabled: !!laboratoryId,
   })
 }
 
@@ -153,6 +156,30 @@ export function useUseProduct() {
       toast({
         title: 'Error',
         description: getErrorMessage(error, 'Failed to use product'),
+        variant: 'destructive',
+      })
+    },
+  })
+}
+
+export function useDeleteProduct() {
+  const queryClient = useQueryClient()
+  const { toast } = useToast()
+  const laboratoryId = useAuthStore((state) => state.laboratoryId)
+
+  return useMutation({
+    mutationFn: (productId: number) => productService.delete(productId, laboratoryId!),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] })
+      toast({
+        title: 'Success',
+        description: 'Product deleted successfully',
+      })
+    },
+    onError: (error: unknown) => {
+      toast({
+        title: 'Error',
+        description: getErrorMessage(error, 'Failed to delete product'),
         variant: 'destructive',
       })
     },

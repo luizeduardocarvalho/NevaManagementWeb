@@ -7,7 +7,7 @@ export const locationService = {
     return mockGetLocations()
   },
 
-  getById: async (id: number): Promise<Location | undefined> => {
+  getById: async (id: number): Promise<Location> => {
     return mockGetLocationById(id)
   },
 }

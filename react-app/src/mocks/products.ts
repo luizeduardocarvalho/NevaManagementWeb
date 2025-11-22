@@ -324,3 +324,12 @@ export async function mockUseProduct(productId: number, quantity: number): Promi
   await delay(null)
   return 'Product usage recorded (mock)'
 }
+
+export async function mockDeleteProduct(productId: number): Promise<void> {
+  const index = findProductIndex(productId)
+  mockProductStore.splice(index, 1)
+  await delay(null)
+}
+
+// Export product store for use in other mocks
+export const mockProducts = mockProductStore

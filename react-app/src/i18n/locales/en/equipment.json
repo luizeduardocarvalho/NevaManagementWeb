@@ -36,7 +36,10 @@
     "startDateTime": "Start Date & Time",
     "endDateTime": "End Date & Time",
     "scheduling": "Scheduling...",
-    "schedule": "Schedule Usage"
+    "schedule": "Schedule Usage",
+    "conflictDetected": "Scheduling Conflict Detected",
+    "conflictDescription": "This equipment is already booked during the selected time period. Please review the conflicting bookings below:",
+    "conflictNote": "You can still proceed with this booking, but please coordinate with the conflicting users."
   },
   "history": {
     "title": "Usage History",

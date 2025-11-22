@@ -36,7 +36,10 @@
     "startDateTime": "Data e Hora de Início",
     "endDateTime": "Data e Hora de Término",
     "scheduling": "Agendando...",
-    "schedule": "Agendar Uso"
+    "schedule": "Agendar Uso",
+    "conflictDetected": "Conflito de Agendamento Detectado",
+    "conflictDescription": "Este equipamento já está reservado durante o período selecionado. Por favor, revise as reservas conflitantes abaixo:",
+    "conflictNote": "Você ainda pode prosseguir com esta reserva, mas coordene com os usuários conflitantes."
   },
   "history": {
     "title": "Histórico de Uso",

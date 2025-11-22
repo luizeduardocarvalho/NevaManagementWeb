@@ -1,4 +1,5 @@
 import type { Location } from './location.types'
+import type { SimpleResearcher } from './researcher.types'
 
 export interface SimpleEquipment {
   id: number
@@ -24,11 +25,6 @@ export interface CreateEquipmentRequest {
 
 export interface EditEquipmentRequest extends CreateEquipmentRequest {
   id: number
-}
-
-export interface SimpleResearcher {
-  id: number
-  name: string
 }
 
 export interface EquipmentUsageRecord {
@@ -65,4 +61,9 @@ export interface CalendarMonth {
   month: number
   year: number
   days: CalendarDay[]
+}
+
+export interface EquipmentOverlapCheck {
+  hasOverlap: boolean
+  conflictingUsages: EquipmentUsageRecord[]
 }

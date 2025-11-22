@@ -12,10 +12,13 @@ import {
 import { Spinner } from '@/components/shared/Spinner'
 import { Plus, Search, ArrowUpDown, Wrench } from 'lucide-react'
 import { useState, useMemo, useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type SortOption = 'name' | 'propertyNumber'
 
 export function EquipmentListPage() {
+  const { t } = useTranslation('equipment')
+  const { t: tCommon } = useTranslation('common')
   const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteEquipment()
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>('name')
@@ -77,15 +80,15 @@ export function EquipmentListPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Equipment</h1>
+          <h1 className="text-3xl font-bold">{t('title')}</h1>
           <p className="text-muted-foreground mt-2">
-            Manage laboratory equipment and schedule usage
+            {t('subtitle')}
           </p>
         </div>
         <Link to="/equipment/add">
           <Button className="flex items-center gap-2">
             <Plus className="h-4 w-4" />
-            Add Equipment
+            {t('addEquipment')}
           </Button>
         </Link>
       </div>
@@ -94,7 +97,7 @@ export function EquipmentListPage() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search equipment by name..."
+            placeholder={t('searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
@@ -104,10 +107,10 @@ export function EquipmentListPage() {
           <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
           <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Sort by..." />
+              <SelectValue placeholder={tCommon('sorting.sortBy')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="name">Name (A-Z)</SelectItem>
+              <SelectItem value="name">{tCommon('sorting.nameAZ')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -117,7 +120,7 @@ export function EquipmentListPage() {
         {filteredAndSortedEquipment.length === 0 ? (
           <div className="col-span-full text-center py-12">
             <p className="text-muted-foreground">
-              {searchTerm ? 'No equipment found matching your search' : 'No equipment yet'}
+              {searchTerm ? t('noEquipmentSearch') : t('noEquipment')}
             </p>
           </div>
         ) : (

@@ -6,6 +6,7 @@ import type {
   EquipmentUsageRecord,
   UseEquipmentRequest,
   CalendarMonth,
+  EquipmentOverlapCheck,
 } from '@/types/equipment.types'
 import {
   mockGetEquipment,
@@ -15,6 +16,8 @@ import {
   mockUseEquipment,
   mockGetEquipmentUsageHistory,
   mockGetEquipmentCalendar,
+  mockDeleteEquipment,
+  mockCheckEquipmentOverlap,
 } from '@/mocks/equipment'
 
 export const equipmentService = {
@@ -54,5 +57,19 @@ export const equipmentService = {
 
   getCalendar: async (equipmentId: number, year: number, month: number): Promise<CalendarMonth> => {
     return mockGetEquipmentCalendar(equipmentId, year, month)
+  },
+
+  delete: async (equipmentId: number, laboratoryId: number): Promise<void> => {
+    void laboratoryId
+    return mockDeleteEquipment(equipmentId)
+  },
+
+  checkOverlap: async (
+    equipmentId: number,
+    startDate: string,
+    endDate: string,
+    excludeUsageId?: number
+  ): Promise<EquipmentOverlapCheck> => {
+    return mockCheckEquipmentOverlap(equipmentId, startDate, endDate, excludeUsageId)
   },
 }

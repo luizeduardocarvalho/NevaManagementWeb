@@ -11,6 +11,19 @@ import type {
 } from '@/types/equipment.types'
 import { getErrorMessage } from '@/lib/errors'
 
+export function useEquipment() {
+  const laboratoryId = useAuthStore((state) => state.laboratoryId)
+
+  return useQuery({
+    queryKey: ['equipment', 'all', laboratoryId],
+    queryFn: async (): Promise<SimpleEquipment[]> => {
+      const result = await equipmentService.getAll(laboratoryId!, 1, 1000)
+      return result.equipment
+    },
+    enabled: !!laboratoryId,
+  })
+}
+
 export function useInfiniteEquipment() {
   const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
@@ -119,5 +132,42 @@ export function useUseEquipment() {
         variant: 'destructive',
       })
     },
+  })
+}
+
+export function useDeleteEquipment() {
+  const queryClient = useQueryClient()
+  const { toast } = useToast()
+  const laboratoryId = useAuthStore((state) => state.laboratoryId)
+
+  return useMutation({
+    mutationFn: (equipmentId: number) => equipmentService.delete(equipmentId, laboratoryId!),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['equipment'] })
+      toast({
+        title: 'Success',
+        description: 'Equipment deleted successfully',
+      })
+    },
+    onError: (error: unknown) => {
+      toast({
+        title: 'Error',
+        description: getErrorMessage(error, 'Failed to delete equipment'),
+        variant: 'destructive',
+      })
+    },
+  })
+}
+
+export function useCheckEquipmentOverlap(
+  equipmentId: number,
+  startDate: string,
+  endDate: string,
+  excludeUsageId?: number
+) {
+  return useQuery({
+    queryKey: ['equipment', equipmentId, 'overlap', startDate, endDate, excludeUsageId],
+    queryFn: () => equipmentService.checkOverlap(equipmentId, startDate, endDate, excludeUsageId),
+    enabled: !!equipmentId && !!startDate && !!endDate,
   })
 }

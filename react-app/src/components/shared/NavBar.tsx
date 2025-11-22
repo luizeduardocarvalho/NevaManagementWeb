@@ -1,12 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/authStore'
+import { usePermissions } from '@/hooks/usePermissions'
 import { Button } from '@/components/ui/button'
-import { Home, FlaskConical, Package, Calendar, Users, LogOut, Menu } from 'lucide-react'
-import { useState } from 'react'
+import { Home, FlaskConical, Package, Calendar, Users, LogOut, Menu, Settings, ClipboardList } from 'lucide-react'
+import { useState, useMemo } from 'react'
 
 export function NavBar() {
   const navigate = useNavigate()
   const { user, clearAuth } = useAuthStore()
+  const { canViewResearchers } = usePermissions()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const handleLogout = () => {
@@ -14,13 +16,22 @@ export function NavBar() {
     navigate('/login')
   }
 
-  const navLinks = [
-    { to: '/', label: 'Home', icon: Home },
-    { to: '/products', label: 'Products', icon: Package },
-    { to: '/equipment', label: 'Equipment', icon: Calendar },
-    { to: '/samples', label: 'Samples', icon: FlaskConical },
-    { to: '/researchers', label: 'Researchers', icon: Users },
-  ]
+  const navLinks = useMemo(() => {
+    const links = [
+      { to: '/', label: 'Home', icon: Home },
+      { to: '/products', label: 'Products', icon: Package },
+      { to: '/equipment', label: 'Equipment', icon: Calendar },
+      { to: '/samples', label: 'Samples', icon: FlaskConical },
+      { to: '/routines', label: 'Routines', icon: ClipboardList },
+    ]
+
+    // Only show Researchers link for coordinators
+    if (canViewResearchers) {
+      links.push({ to: '/researchers', label: 'Researchers', icon: Users })
+    }
+
+    return links
+  }, [canViewResearchers])
 
   return (
     <nav className="border-b bg-background">
@@ -50,6 +61,16 @@ export function NavBar() {
             <span className="text-sm text-muted-foreground">
               {user?.firstName} {user?.lastName}
             </span>
+            <Link to="/settings">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Settings className="h-4 w-4" />
+                Settings
+              </Button>
+            </Link>
             <Button
               variant="outline"
               size="sm"
@@ -86,10 +107,18 @@ export function NavBar() {
                 {link.label}
               </Link>
             ))}
-            <div className="pt-2 border-t">
+            <div className="pt-2 border-t space-y-2">
               <div className="px-2 py-2 text-sm text-muted-foreground">
                 {user?.firstName} {user?.lastName}
               </div>
+              <Link
+                to="/settings"
+                className="flex items-center gap-2 px-2 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:bg-accent rounded-md"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Settings className="h-4 w-4" />
+                Settings
+              </Link>
               <Button
                 variant="outline"
                 size="sm"

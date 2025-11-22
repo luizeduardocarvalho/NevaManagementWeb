@@ -1,18 +1,34 @@
-import { useParams, Link } from 'react-router-dom'
-import { useEquipmentById, useEquipmentCalendar } from '@/hooks/useEquipment'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useEquipmentById, useEquipmentCalendar, useDeleteEquipment } from '@/hooks/useEquipment'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/shared/Spinner'
-import { Wrench, MapPin, Calendar, History, Edit, ChevronLeft, ChevronRight } from 'lucide-react'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+import { Wrench, MapPin, Calendar, History, Edit, ChevronLeft, ChevronRight, Trash2 } from 'lucide-react'
 import { format } from 'date-fns'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export function EquipmentDetailPage() {
+  const { t } = useTranslation('equipment')
+  const { t: tCommon } = useTranslation('common')
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
   const equipmentId = parseInt(id!)
   const { data: equipment, isLoading, error } = useEquipmentById(equipmentId)
+  const deleteEquipment = useDeleteEquipment()
 
   const [currentDate, setCurrentDate] = useState(new Date())
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth() + 1
 
@@ -26,6 +42,11 @@ export function EquipmentDetailPage() {
     setCurrentDate(new Date(year, month, 1))
   }
 
+  const handleDelete = async () => {
+    await deleteEquipment.mutateAsync(equipmentId)
+    navigate('/equipment')
+  }
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -37,7 +58,7 @@ export function EquipmentDetailPage() {
   if (error || !equipment) {
     return (
       <div className="text-center py-12">
-        <p className="text-destructive">Failed to load equipment</p>
+        <p className="text-destructive">{tCommon('errors.loadFailed')}</p>
       </div>
     )
   }
@@ -57,22 +78,32 @@ export function EquipmentDetailPage() {
             </p>
           </div>
         </div>
-        <Link to={`/equipment/${equipment.id}/edit`}>
-          <Button variant="outline" className="flex items-center gap-2">
-            <Edit className="h-4 w-4" />
-            Edit
+        <div className="flex gap-2">
+          <Link to={`/equipment/${equipment.id}/edit`}>
+            <Button variant="outline" className="flex items-center gap-2">
+              <Edit className="h-4 w-4" />
+              {tCommon('actions.edit')}
+            </Button>
+          </Link>
+          <Button
+            variant="destructive"
+            onClick={() => setIsDeleteDialogOpen(true)}
+            className="flex items-center gap-2"
+          >
+            <Trash2 className="h-4 w-4" />
+            {tCommon('actions.delete')}
           </Button>
-        </Link>
+        </div>
       </div>
 
       {/* Equipment Info Card */}
       <Card>
         <CardHeader>
-          <CardTitle>Equipment Information</CardTitle>
+          <CardTitle>{t('equipmentInfo')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <h4 className="text-sm font-medium text-muted-foreground">Description</h4>
+            <h4 className="text-sm font-medium text-muted-foreground">{tCommon('fields.description')}</h4>
             <p className="mt-1">{equipment.description}</p>
           </div>
 
@@ -93,10 +124,10 @@ export function EquipmentDetailPage() {
             <div>
               <CardTitle className="flex items-center gap-2">
                 <Calendar className="h-5 w-5" />
-                Usage Calendar
+                {t('calendar.title')}
               </CardTitle>
               <CardDescription className="mt-2">
-                Scheduled equipment usage for {format(currentDate, 'MMMM yyyy')}
+                {t('calendar.description', { month: format(currentDate, 'MMMM yyyy') })}
               </CardDescription>
             </div>
             <div className="flex items-center gap-2">
@@ -145,7 +176,7 @@ export function EquipmentDetailPage() {
             </div>
           ) : (
             <p className="text-center py-8 text-muted-foreground">
-              No scheduled usage for this month
+              {t('calendar.noScheduled')}
             </p>
           )}
         </CardContent>
@@ -156,16 +187,36 @@ export function EquipmentDetailPage() {
         <Link to={`/equipment/${equipment.id}/use`} className="flex-1">
           <Button className="w-full flex items-center gap-2">
             <Calendar className="h-4 w-4" />
-            Schedule Usage
+            {t('actions.scheduleUsage')}
           </Button>
         </Link>
         <Link to={`/equipment/${equipment.id}/history`} className="flex-1">
           <Button variant="outline" className="w-full flex items-center gap-2">
             <History className="h-4 w-4" />
-            View History
+            {t('actions.viewHistory')}
           </Button>
         </Link>
       </div>
+
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{tCommon('actions.delete')} {t('equipment')}</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{equipment.name}"? This action cannot be undone and will remove all usage history.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{tCommon('actions.cancel')}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deleteEquipment.isPending ? 'Deleting...' : tCommon('actions.delete')}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

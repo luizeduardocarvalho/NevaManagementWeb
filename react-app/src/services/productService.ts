@@ -4,16 +4,7 @@ import type {
   CreateProductRequest,
   EditProductRequest,
 } from '@/types/product.types'
-import {
-  mockAddQuantity,
-  mockCreateProduct,
-  mockEditProduct,
-  mockGetDetailedProductById,
-  mockGetLowStockProducts,
-  mockGetProductById,
-  mockGetProducts,
-  mockUseProduct,
-} from '@/mocks/products'
+import api from './api'
 
 export const productService = {
   getAll: async (
@@ -21,38 +12,67 @@ export const productService = {
     page = 1,
     pageSize = 9
   ): Promise<{ products: Product[]; nextPage: number | null; totalCount: number }> => {
-    void laboratoryId
-    return mockGetProducts(page, pageSize)
+    const response = await api.get('/products', {
+      params: { laboratory_id: laboratoryId, page, pageSize },
+    })
+    const data = response.data
+    return {
+      products: Array.isArray(data?.products) ? data.products : [],
+      nextPage: data?.nextPage ?? null,
+      totalCount: data?.totalCount ?? 0,
+    }
   },
 
   getById: async (id: number, laboratoryId: number): Promise<Product> => {
-    void laboratoryId
-    return mockGetProductById(id)
+    const response = await api.get(`/products/${id}`, {
+      params: { laboratory_id: laboratoryId },
+    })
+    if (!response.data) {
+      throw new Error('Product not found')
+    }
+    return response.data
   },
 
   getDetailedById: async (id: number, laboratoryId: number): Promise<DetailedProduct> => {
-    void laboratoryId
-    return mockGetDetailedProductById(id)
+    const response = await api.get(`/products/${id}`, {
+      params: { laboratory_id: laboratoryId },
+    })
+    if (!response.data) {
+      throw new Error('Product not found')
+    }
+    return response.data
   },
 
-  getLowInStock: async (): Promise<Product[]> => {
-    return mockGetLowStockProducts()
+  getLowInStock: async (laboratoryId: number): Promise<Product[]> => {
+    const response = await api.get('/products/low-stock', {
+      params: { laboratory_id: laboratoryId },
+    })
+    return Array.isArray(response.data) ? response.data : []
   },
 
   create: async (data: CreateProductRequest): Promise<string> => {
-    return mockCreateProduct(data)
+    const response = await api.post('/products', data)
+    return response.data.message
   },
 
   edit: async (data: EditProductRequest): Promise<string> => {
-    return mockEditProduct(data)
+    const response = await api.put(`/products/${data.id}`, data)
+    return response.data.message
   },
 
   addQuantity: async (productId: number, quantity: number): Promise<string> => {
-    return mockAddQuantity(productId, quantity)
+    const response = await api.post(`/products/${productId}/add-quantity`, { quantity })
+    return response.data.message
   },
 
   useProduct: async (productId: number, quantity: number, unit: string): Promise<string> => {
-    void unit
-    return mockUseProduct(productId, quantity)
+    const response = await api.post(`/products/${productId}/use`, { quantity, unit })
+    return response.data.message
+  },
+
+  delete: async (productId: number, laboratoryId: number): Promise<void> => {
+    await api.delete(`/products/${productId}`, {
+      params: { laboratory_id: laboratoryId },
+    })
   },
 }

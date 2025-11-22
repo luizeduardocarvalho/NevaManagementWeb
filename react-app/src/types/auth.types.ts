@@ -1,3 +1,5 @@
+export type UserRole = 'coordinator' | 'technician' | 'student'
+
 export interface User {
   id: number
   clerkUserId: string
@@ -5,5 +7,5 @@ export interface User {
   firstName: string
   lastName: string
   laboratoryId: number | null
-  role: 'admin' | 'researcher' | 'viewer'
+  role: UserRole
 }
