@@ -120,6 +120,7 @@ export function useAddQuantity() {
     mutationFn: ({ productId, quantity }: { productId: number; quantity: number }) =>
       productService.addQuantity(productId, quantity),
     onSuccess: (message, { productId }) => {
+      queryClient.invalidateQueries({ queryKey: ['product', 'detailed', productId] })
       queryClient.invalidateQueries({ queryKey: ['product', productId] })
       queryClient.invalidateQueries({ queryKey: ['products'] })
       toast({
@@ -142,14 +143,17 @@ export function useUseProduct() {
   const { toast } = useToast()
 
   return useMutation({
-    mutationFn: ({ productId, quantity, unit }: { productId: number; quantity: number; unit: string }) =>
-      productService.useProduct(productId, quantity, unit),
-    onSuccess: (message, { productId }) => {
+    mutationFn: ({ productId, quantity, unit, notes }: { productId: number; quantity: number; unit: string; notes?: string }) =>
+      productService.useProduct(productId, { quantity, unit, notes }),
+    onSuccess: (updatedProduct, { productId }) => {
+      queryClient.invalidateQueries({ queryKey: ['product', 'detailed', productId] })
       queryClient.invalidateQueries({ queryKey: ['product', productId] })
       queryClient.invalidateQueries({ queryKey: ['products'] })
+      queryClient.invalidateQueries({ queryKey: ['product', 'usage-history', productId] })
+      queryClient.invalidateQueries({ queryKey: ['product', 'usage-stats', productId] })
       toast({
         title: 'Success',
-        description: message,
+        description: 'Product used successfully',
       })
     },
     onError: (error: unknown) => {
@@ -183,5 +187,21 @@ export function useDeleteProduct() {
         variant: 'destructive',
       })
     },
+  })
+}
+
+export function useProductUsageHistory(productId: number, limit = 100, offset = 0) {
+  return useQuery({
+    queryKey: ['product', 'usage-history', productId, limit, offset],
+    queryFn: () => productService.getUsageHistory(productId, limit, offset),
+    enabled: !!productId,
+  })
+}
+
+export function useProductUsageStats(productId: number) {
+  return useQuery({
+    queryKey: ['product', 'usage-stats', productId],
+    queryFn: () => productService.getUsageStats(productId),
+    enabled: !!productId,
   })
 }

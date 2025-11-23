@@ -6,6 +6,14 @@ import type {
 } from '@/types/product.types'
 import api from './api'
 
+// Transform backend product to include location_id
+function transformProduct(backendProduct: any): Product {
+  return {
+    ...backendProduct,
+    location_id: backendProduct.location?.id || backendProduct.location_id,
+  }
+}
+
 export const productService = {
   getAll: async (
     laboratoryId: number,
@@ -17,7 +25,7 @@ export const productService = {
     })
     const data = response.data
     return {
-      products: Array.isArray(data?.products) ? data.products : [],
+      products: Array.isArray(data?.products) ? data.products.map(transformProduct) : [],
       nextPage: data?.nextPage ?? null,
       totalCount: data?.totalCount ?? 0,
     }
@@ -30,7 +38,7 @@ export const productService = {
     if (!response.data) {
       throw new Error('Product not found')
     }
-    return response.data
+    return transformProduct(response.data)
   },
 
   getDetailedById: async (id: number, laboratoryId: number): Promise<DetailedProduct> => {
@@ -40,14 +48,14 @@ export const productService = {
     if (!response.data) {
       throw new Error('Product not found')
     }
-    return response.data
+    return transformProduct(response.data) as DetailedProduct
   },
 
   getLowInStock: async (laboratoryId: number): Promise<Product[]> => {
     const response = await api.get('/products/low-stock', {
       params: { laboratory_id: laboratoryId },
     })
-    return Array.isArray(response.data) ? response.data : []
+    return Array.isArray(response.data) ? response.data.map(transformProduct) : []
   },
 
   create: async (data: CreateProductRequest): Promise<string> => {
@@ -65,9 +73,21 @@ export const productService = {
     return response.data.message
   },
 
-  useProduct: async (productId: number, quantity: number, unit: string): Promise<string> => {
-    const response = await api.post(`/products/${productId}/use`, { quantity, unit })
-    return response.data.message
+  useProduct: async (productId: number, data: { quantity: number; unit: string; notes?: string }): Promise<Product> => {
+    const response = await api.post(`/products/${productId}/use`, data)
+    return transformProduct(response.data)
+  },
+
+  getUsageHistory: async (productId: number, limit = 100, offset = 0): Promise<import('@/types/product.types').ProductUsageHistory> => {
+    const response = await api.get(`/products/${productId}/usage-history`, {
+      params: { limit, offset },
+    })
+    return response.data
+  },
+
+  getUsageStats: async (productId: number): Promise<import('@/types/product.types').ProductUsageStats> => {
+    const response = await api.get(`/products/${productId}/usage-stats`)
+    return response.data
   },
 
   delete: async (productId: number, laboratoryId: number): Promise<void> => {

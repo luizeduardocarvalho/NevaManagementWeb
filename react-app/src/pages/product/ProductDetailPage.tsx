@@ -40,12 +40,13 @@ export function ProductDetailPage() {
     })
   }
 
-  const handleUseProduct = async (quantity: number) => {
+  const handleUseProduct = async (quantity: number, notes?: string) => {
     if (!productId || !product) return
     await useProduct.mutateAsync({
       productId,
       quantity,
       unit: product.unit,
+      notes,
     })
   }
 
@@ -190,7 +191,9 @@ export function ProductDetailPage() {
                 Used in Last 3 Months
               </p>
               <p className="text-2xl font-bold mt-1">
-                {product.quantity_used_in_the_last_three_months || 0} {product.unit}
+                {product.quantity_used_in_the_last_three_months > 0
+                  ? `${product.quantity_used_in_the_last_three_months} ${product.unit}`
+                  : 'N/A'}
               </p>
             </div>
 
@@ -199,7 +202,9 @@ export function ProductDetailPage() {
                 Average Monthly Usage
               </p>
               <p className="text-lg font-semibold mt-1">
-                {((product.quantity_used_in_the_last_three_months || 0) / 3).toFixed(2)} {product.unit}
+                {product.quantity_used_in_the_last_three_months > 0
+                  ? `${(product.quantity_used_in_the_last_three_months / 3).toFixed(2)} ${product.unit}`
+                  : 'N/A'}
               </p>
             </div>
 

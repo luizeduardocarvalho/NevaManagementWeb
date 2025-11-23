@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/authStore'
 import { usePermissions } from '@/hooks/usePermissions'
 import { Button } from '@/components/ui/button'
-import { Home, FlaskConical, Package, Calendar, Users, LogOut, Menu, Settings, ClipboardList } from 'lucide-react'
+import { Home, FlaskConical, Package, Calendar, Users, LogOut, Menu, Settings, ClipboardList, MapPin } from 'lucide-react'
 import { useState, useMemo } from 'react'
 
 export function NavBar() {
@@ -21,6 +21,7 @@ export function NavBar() {
       { to: '/', label: 'Home', icon: Home },
       { to: '/products', label: 'Products', icon: Package },
       { to: '/equipment', label: 'Equipment', icon: Calendar },
+      { to: '/locations', label: 'Locations', icon: MapPin },
       { to: '/samples', label: 'Samples', icon: FlaskConical },
       { to: '/routines', label: 'Routines', icon: ClipboardList },
     ]

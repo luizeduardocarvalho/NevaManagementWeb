@@ -36,6 +36,10 @@ import { ExecuteRoutinePage } from '@/pages/routine/ExecuteRoutinePage'
 import { ExecutionHistoryPage } from '@/pages/routine/ExecutionHistoryPage'
 import { InviteTeamMemberPage } from '@/pages/team/InviteTeamMemberPage'
 import { PendingInvitationsPage } from '@/pages/team/PendingInvitationsPage'
+import { LocationListPage } from '@/pages/location/LocationListPage'
+import { AddLocationPage } from '@/pages/location/AddLocationPage'
+import { EditLocationPage } from '@/pages/location/EditLocationPage'
+import { LocationDetailPage } from '@/pages/location/LocationDetailPage'
 
 const router = createBrowserRouter([
   {
@@ -173,6 +177,15 @@ const router = createBrowserRouter([
               </ProtectedRoute>
             ),
           },
+        ],
+      },
+      {
+        path: 'locations',
+        children: [
+          { index: true, element: <LocationListPage /> },
+          { path: 'add', element: <AddLocationPage /> },
+          { path: ':id', element: <LocationDetailPage /> },
+          { path: ':id/edit', element: <EditLocationPage /> },
         ],
       },
     ],

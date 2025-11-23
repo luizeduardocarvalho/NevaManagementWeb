@@ -39,7 +39,55 @@ export interface AddQuantityRequest {
 }
 
 export interface UseProductRequest {
-  product_id: number
   quantity: number
   unit: string
+  notes?: string
+}
+
+export interface ProductUsageUser {
+  id: number
+  email: string
+  first_name: string
+  last_name: string
+  role: string
+}
+
+export interface ProductUsageRecord {
+  id: number
+  product_id: number
+  user_id: number
+  user: ProductUsageUser
+  quantity_used: number
+  unit: string
+  used_at: string
+  notes?: string
+  created_at: string
+}
+
+export interface ProductUsageHistory {
+  product_id: number
+  product_name: string
+  total_records: number
+  usage_history: ProductUsageRecord[]
+}
+
+export interface ProductUsageTopUser {
+  user_id: number
+  user_email: string
+  user_name: string
+  total_used: number
+  usage_count: number
+}
+
+export interface ProductUsageStats {
+  product_id: number
+  product_name: string
+  current_quantity: number
+  unit: string
+  usage_last_30_days: number
+  usage_last_3_months: number
+  total_usage_all_time: number
+  average_monthly_usage: number
+  estimated_days_remaining: number
+  top_users: ProductUsageTopUser[]
 }

@@ -10,12 +10,13 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 import { Spinner } from '@/components/shared/Spinner'
 
 interface UseProductModalProps {
   isOpen: boolean
   onClose: () => void
-  onSubmit: (quantity: number) => Promise<void>
+  onSubmit: (quantity: number, notes?: string) => Promise<void>
   currentQuantity: number
   unit: string
   productName: string
@@ -32,13 +33,15 @@ export function UseProductModal({
   isSubmitting = false,
 }: UseProductModalProps) {
   const [quantity, setQuantity] = useState<number>(0)
+  const [notes, setNotes] = useState<string>('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (quantity > 0 && quantity <= currentQuantity) {
       try {
-        await onSubmit(quantity)
+        await onSubmit(quantity, notes || undefined)
         setQuantity(0)
+        setNotes('')
         onClose()
       } catch {
         // toast handled upstream; keep dialog open for correction
@@ -95,6 +98,21 @@ export function UseProductModal({
               <Label>Remaining Quantity</Label>
               <p className={`text-sm font-semibold ${remainingQuantity < 0 ? 'text-destructive' : ''}`}>
                 {remainingQuantity.toFixed(2)} {unit}
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="notes">Notes (Optional)</Label>
+              <Textarea
+                id="notes"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                disabled={isSubmitting}
+                placeholder="e.g., Used for experiment XYZ-123"
+                rows={3}
+              />
+              <p className="text-xs text-muted-foreground">
+                Record details about this usage for tracking purposes
               </p>
             </div>
           </div>
