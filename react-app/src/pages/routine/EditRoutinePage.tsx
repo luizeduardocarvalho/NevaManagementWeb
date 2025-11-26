@@ -309,11 +309,15 @@ export function EditRoutinePage() {
                       <SelectValue placeholder={t('fields.assignToPlaceholder')} />
                     </SelectTrigger>
                     <SelectContent>
-                      {researchers?.filter(r => !assignedUserIds.includes(r.id)).map((researcher) => (
-                        <SelectItem key={researcher.id} value={researcher.id.toString()}>
-                          {researcher.name}
-                        </SelectItem>
-                      ))}
+                      {researchers?.filter(r => !assignedUserIds.includes(r.id)).map((researcher) => {
+                        const displayName = `${researcher.first_name || ''} ${researcher.last_name || ''}`.trim() ||
+                                           `Researcher #${researcher.id}`
+                        return (
+                          <SelectItem key={researcher.id} value={researcher.id.toString()}>
+                            {displayName}
+                          </SelectItem>
+                        )
+                      })}
                     </SelectContent>
                   </Select>
 

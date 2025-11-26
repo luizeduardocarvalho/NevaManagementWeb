@@ -116,11 +116,21 @@ export function UseEquipmentPage() {
                   <SelectValue placeholder={researchersLoading ? tCommon('loading') : t('usage.selectResearcher')} />
                 </SelectTrigger>
                 <SelectContent>
-                  {researchers?.map((researcher) => (
-                    <SelectItem key={researcher.id} value={String(researcher.id)}>
-                      {researcher.name}
+                  {researchers && researchers.length > 0 ? (
+                    researchers.map((researcher) => {
+                      const displayName = `${researcher.first_name || ''} ${researcher.last_name || ''}`.trim() ||
+                                         `Researcher #${researcher.id}`
+                      return (
+                        <SelectItem key={researcher.id} value={String(researcher.id)}>
+                          {displayName}
+                        </SelectItem>
+                      )
+                    })
+                  ) : (
+                    <SelectItem value="no-researchers" disabled>
+                      No researchers available
                     </SelectItem>
-                  ))}
+                  )}
                 </SelectContent>
               </Select>
             </div>
@@ -189,7 +199,7 @@ export function UseEquipmentPage() {
                     >
                       <div className="flex-1">
                         <p className="font-medium text-sm text-gray-900">
-                          {usage.researcher.name}
+                          {usage.researcher.first_name} {usage.researcher.last_name}
                         </p>
                         {usage.description && (
                           <p className="text-xs text-gray-600 mt-0.5">{usage.description}</p>

@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { researcherService } from '@/services/researcherService'
-import { useAuthStore } from '@/store/authStore'
 import { toast } from 'sonner'
 import type { SimpleResearcher } from '@/types/researcher.types'
 import type { CreateResearcherRequest } from '@/types/researcher.types'
@@ -15,70 +14,62 @@ export function useResearchers() {
 
 // For researcher management page (full details)
 export function useAllResearchers() {
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
-
   return useQuery({
-    queryKey: ['researchers', 'all', laboratoryId],
-    queryFn: () => researcherService.getAll(laboratoryId!),
-    enabled: !!laboratoryId,
+    queryKey: ['researchers', 'all'],
+    queryFn: () => researcherService.getAll(),
   })
 }
 
 export function useResearcherById(id: number) {
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
-
   return useQuery({
-    queryKey: ['researchers', id, laboratoryId],
-    queryFn: () => researcherService.getById(id, laboratoryId!),
-    enabled: !!laboratoryId && !!id,
+    queryKey: ['researchers', id],
+    queryFn: () => researcherService.getById(id),
+    enabled: !!id,
   })
 }
 
 export function useCreateResearcher() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
-    mutationFn: (data: CreateResearcherRequest) => researcherService.create(data, laboratoryId!),
+    mutationFn: (data: CreateResearcherRequest) => researcherService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['researchers'] })
-      toast.success('Researcher created successfully')
+      toast.success('Team member created successfully')
     },
     onError: () => {
-      toast.error('Failed to create researcher')
+      toast.error('Failed to create team member')
     },
   })
 }
 
 export function useEditResearcher() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
     mutationFn: ({ id, data }: { id: number; data: CreateResearcherRequest }) =>
-      researcherService.edit(id, data, laboratoryId!),
+      researcherService.edit(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['researchers'] })
-      toast.success('Researcher updated successfully')
+      toast.success('Team member updated successfully')
     },
     onError: () => {
-      toast.error('Failed to update researcher')
+      toast.error('Failed to update team member')
     },
   })
 }
 
 export function useDeleteResearcher() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
-    mutationFn: (id: number) => researcherService.delete(id, laboratoryId!),
+    mutationFn: (id: number) => researcherService.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['researchers'] })
-      toast.success('Researcher deleted successfully')
+      toast.success('Team member deleted successfully')
     },
     onError: () => {
-      toast.error('Failed to delete researcher')
+      toast.error('Failed to delete team member')
     },
   })
 }

@@ -120,4 +120,26 @@ export const authService = {
     const response = await api.get<BackendUser>('/auth/me')
     return transformUser(response.data)
   },
+
+  refreshToken: async (currentToken: string): Promise<string> => {
+    if (USE_MOCK) {
+      console.log('[AuthService] Mock: Refreshing token')
+      // In mock mode, just return the same token
+      return currentToken
+    }
+
+    console.log('[AuthService] Refreshing token')
+    try {
+      const response = await api.post<{ token: string }>('/auth/refresh', null, {
+        headers: {
+          Authorization: `Bearer ${currentToken}`
+        }
+      })
+      console.log('[AuthService] Token refreshed successfully')
+      return response.data.token
+    } catch (error) {
+      console.error('[AuthService] Token refresh failed:', error)
+      throw error
+    }
+  },
 }

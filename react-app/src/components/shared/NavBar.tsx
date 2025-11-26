@@ -2,8 +2,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/authStore'
 import { usePermissions } from '@/hooks/usePermissions'
 import { Button } from '@/components/ui/button'
-import { Home, FlaskConical, Package, Calendar, Users, LogOut, Menu, Settings, ClipboardList, MapPin } from 'lucide-react'
-import { useState, useMemo } from 'react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Home, FlaskConical, Package, Calendar, Users, LogOut, Menu, Settings, ClipboardList, MapPin, ChevronDown, Beaker } from 'lucide-react'
+import { useState } from 'react'
 
 export function NavBar() {
   const navigate = useNavigate()
@@ -16,23 +22,21 @@ export function NavBar() {
     navigate('/login')
   }
 
-  const navLinks = useMemo(() => {
-    const links = [
-      { to: '/', label: 'Home', icon: Home },
-      { to: '/products', label: 'Products', icon: Package },
-      { to: '/equipment', label: 'Equipment', icon: Calendar },
-      { to: '/locations', label: 'Locations', icon: MapPin },
-      { to: '/samples', label: 'Samples', icon: FlaskConical },
-      { to: '/routines', label: 'Routines', icon: ClipboardList },
-    ]
+  const labManagementLinks = [
+    { to: '/equipment', label: 'Equipment', icon: Calendar },
+    { to: '/locations', label: 'Locations', icon: MapPin },
+    { to: '/samples', label: 'Samples', icon: FlaskConical },
+  ]
 
-    // Only show Researchers link for coordinators
-    if (canViewResearchers) {
-      links.push({ to: '/researchers', label: 'Researchers', icon: Users })
-    }
+  const resourceLinks = [
+    { to: '/products', label: 'Products', icon: Package },
+    { to: '/routines', label: 'Routines', icon: ClipboardList },
+  ]
 
-    return links
-  }, [canViewResearchers])
+  // Add team to resources if user has permission
+  if (canViewResearchers) {
+    resourceLinks.push({ to: '/researchers', label: 'Team', icon: Users })
+  }
 
   return (
     <nav className="border-b bg-background">
@@ -45,16 +49,51 @@ export function NavBar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
-                <link.icon className="h-4 w-4" />
-                {link.label}
-              </Link>
-            ))}
+            <Link
+              to="/"
+              className="flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            >
+              <Home className="h-4 w-4" />
+              Home
+            </Link>
+
+            {/* Lab Management Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary outline-none">
+                <Beaker className="h-4 w-4" />
+                Lab Management
+                <ChevronDown className="h-3 w-3" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {labManagementLinks.map((link) => (
+                  <DropdownMenuItem key={link.to} asChild>
+                    <Link to={link.to} className="flex items-center gap-2 cursor-pointer">
+                      <link.icon className="h-4 w-4" />
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Resources Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary outline-none">
+                <Package className="h-4 w-4" />
+                Resources
+                <ChevronDown className="h-3 w-3" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {resourceLinks.map((link) => (
+                  <DropdownMenuItem key={link.to} asChild>
+                    <Link to={link.to} className="flex items-center gap-2 cursor-pointer">
+                      <link.icon className="h-4 w-4" />
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* User Menu */}
@@ -97,17 +136,53 @@ export function NavBar() {
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 space-y-2 border-t">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="flex items-center gap-2 px-2 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:bg-accent rounded-md"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <link.icon className="h-4 w-4" />
-                {link.label}
-              </Link>
-            ))}
+            {/* Home */}
+            <Link
+              to="/"
+              className="flex items-center gap-2 px-2 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:bg-accent rounded-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Home className="h-4 w-4" />
+              Home
+            </Link>
+
+            {/* Lab Management Section */}
+            <div className="pt-2">
+              <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                Lab Management
+              </div>
+              {labManagementLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="flex items-center gap-2 px-2 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:bg-accent rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <link.icon className="h-4 w-4" />
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Resources Section */}
+            <div className="pt-2">
+              <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                Resources
+              </div>
+              {resourceLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="flex items-center gap-2 px-2 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:bg-accent rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <link.icon className="h-4 w-4" />
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* User Section */}
             <div className="pt-2 border-t space-y-2">
               <div className="px-2 py-2 text-sm text-muted-foreground">
                 {user?.firstName} {user?.lastName}

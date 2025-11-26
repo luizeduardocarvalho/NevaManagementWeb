@@ -19,10 +19,16 @@ export function ResearcherListPage() {
     if (!researchers) return []
 
     return researchers.filter(
-      (researcher) =>
-        researcher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        researcher.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        researcher.specialization?.toLowerCase().includes(searchTerm.toLowerCase())
+      (researcher) => {
+        const fullName = `${researcher.first_name} ${researcher.last_name}`.toLowerCase()
+        const searchLower = searchTerm.toLowerCase()
+
+        return (
+          fullName.includes(searchLower) ||
+          researcher.email?.toLowerCase().includes(searchLower) ||
+          researcher.specialization?.toLowerCase().includes(searchLower)
+        )
+      }
     )
   }, [researchers, searchTerm])
 
@@ -93,7 +99,7 @@ export function ResearcherListPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-lg truncate">
-                      {researcher.name}
+                      {researcher.first_name} {researcher.last_name}
                     </h3>
                     {researcher.specialization && (
                       <p className="text-sm text-muted-foreground truncate">

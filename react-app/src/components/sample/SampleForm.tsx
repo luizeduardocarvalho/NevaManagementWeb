@@ -38,8 +38,8 @@ export function SampleForm({ initialData, onSubmit, isSubmitting, submitLabel }:
     longitude: initialData?.longitude,
     subcultureMedium: initialData?.subcultureMedium || '',
     subcultureIntervalDays: initialData?.subcultureIntervalDays || 30,
-    researcherId: initialData?.researcherId || 0,
-    locationId: initialData?.locationId || 0,
+    researcherId: initialData?.researcherId || undefined as any,
+    locationId: initialData?.locationId || undefined as any,
     tags: initialData?.tags || [],
   })
 
@@ -195,8 +195,13 @@ export function SampleForm({ initialData, onSubmit, isSubmitting, submitLabel }:
           {t('fields.researcher')} <span className="text-destructive">*</span>
         </Label>
         <Select
-          value={formData.researcherId ? String(formData.researcherId) : ''}
-          onValueChange={(value) => setFormData({ ...formData, researcherId: parseInt(value) })}
+          value={formData.researcherId ? String(formData.researcherId) : undefined}
+          onValueChange={(value) => {
+            const researcherId = parseInt(value)
+            if (!isNaN(researcherId)) {
+              setFormData({ ...formData, researcherId })
+            }
+          }}
           disabled={researchersLoading || isSubmitting}
         >
           <SelectTrigger>
@@ -205,11 +210,21 @@ export function SampleForm({ initialData, onSubmit, isSubmitting, submitLabel }:
             />
           </SelectTrigger>
           <SelectContent>
-            {researchers?.map((researcher) => (
-              <SelectItem key={researcher.id} value={String(researcher.id)}>
-                {researcher.name}
+            {researchers && researchers.length > 0 ? (
+              researchers.map((researcher) => {
+                const displayName = `${researcher.first_name || ''} ${researcher.last_name || ''}`.trim() ||
+                                   `Researcher #${researcher.id}`
+                return (
+                  <SelectItem key={researcher.id} value={String(researcher.id)}>
+                    {displayName}
+                  </SelectItem>
+                )
+              })
+            ) : (
+              <SelectItem value="no-researchers" disabled>
+                {t('fields.noResearchers') || 'No researchers available'}
               </SelectItem>
-            ))}
+            )}
           </SelectContent>
         </Select>
       </div>
@@ -220,8 +235,13 @@ export function SampleForm({ initialData, onSubmit, isSubmitting, submitLabel }:
           {tCommon('fields.location')} <span className="text-destructive">*</span>
         </Label>
         <Select
-          value={formData.locationId ? String(formData.locationId) : ''}
-          onValueChange={(value) => setFormData({ ...formData, locationId: parseInt(value) })}
+          value={formData.locationId ? String(formData.locationId) : undefined}
+          onValueChange={(value) => {
+            const locationId = parseInt(value)
+            if (!isNaN(locationId)) {
+              setFormData({ ...formData, locationId })
+            }
+          }}
           disabled={locationsLoading || isSubmitting}
         >
           <SelectTrigger>

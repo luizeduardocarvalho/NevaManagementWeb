@@ -38,5 +38,87 @@
     "error": "Error",
     "noResults": "No results found",
     "failedToLoad": "Failed to load {{type}}"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Manage your application preferences and account settings",
+    "tabs": {
+      "general": "General",
+      "appearance": "Appearance",
+      "notifications": "Notifications",
+      "account": "Account"
+    },
+    "language": {
+      "title": "Language",
+      "description": "Select your preferred language for the application"
+    },
+    "theme": {
+      "title": "Theme",
+      "description": "Customize the appearance of the application",
+      "light": "Light",
+      "lightDescription": "Use light theme",
+      "dark": "Dark",
+      "darkDescription": "Use dark theme",
+      "system": "System",
+      "systemDescription": "Use system preference"
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Customize how the application looks"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Manage how you receive notifications",
+      "cardTitle": "Notification Preferences",
+      "cardDescription": "Configure your notification settings",
+      "browser": "Browser Notifications",
+      "browserDescription": "Receive notifications in your browser",
+      "browserEnabled": "Browser notifications enabled",
+      "browserDisabled": "Browser notifications disabled",
+      "browserDenied": "Browser notifications are blocked. Please enable them in your browser settings.",
+      "browserBlocked": "Notifications blocked by browser settings",
+      "email": "Email Notifications",
+      "emailDescription": "Receive notifications via email",
+      "emailEnabled": "Email notifications enabled",
+      "emailDisabled": "Email notifications disabled",
+      "emailPreferences": "Email notification preferences",
+      "sampleUpdates": "Sample updates and changes",
+      "equipmentMaintenance": "Equipment maintenance reminders",
+      "invitations": "Team invitations",
+      "routineAssignments": "Routine assignments"
+    },
+    "display": {
+      "title": "Display Preferences",
+      "description": "Customize how data is displayed",
+      "cardDescription": "Configure how dates, times, and measurements are displayed",
+      "dateFormat": "Date Format",
+      "dateFormatDescription": "Choose how dates are displayed throughout the application",
+      "dateFormatUpdated": "Date format updated",
+      "timeFormat": "Time Format",
+      "timeFormatDescription": "Choose between 12-hour or 24-hour time format",
+      "timeFormatUpdated": "Time format updated",
+      "decimals": "Decimal Places",
+      "decimalsDescription": "Number of decimal places to show for measurements",
+      "decimalsPlaces": "decimal places",
+      "decimalsUpdated": "Decimal places updated"
+    },
+    "account": {
+      "title": "Account Information",
+      "description": "View your account details",
+      "cardTitle": "Your Account",
+      "cardDescription": "Your profile and account information",
+      "name": "Name",
+      "email": "Email Address",
+      "role": "Role",
+      "laboratory": "Laboratory",
+      "laboratoryId": "Lab ID",
+      "note": "To update your account information, please contact your laboratory coordinator or organization administrator.",
+      "roles": {
+        "orgCoordinator": "Organization Coordinator",
+        "labCoordinator": "Laboratory Coordinator",
+        "technician": "Technician",
+        "student": "Student"
+      }
+    }
   }
 }

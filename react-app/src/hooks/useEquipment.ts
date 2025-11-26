@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query'
 import { equipmentService } from '@/services/equipmentService'
-import { useAuthStore } from '@/store/authStore'
 import { useToast } from '@/hooks/use-toast'
 import type {
   CreateEquipmentRequest,
@@ -12,37 +11,29 @@ import type {
 import { getErrorMessage } from '@/lib/errors'
 
 export function useEquipment() {
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
-
   return useQuery({
-    queryKey: ['equipment', 'all', laboratoryId],
+    queryKey: ['equipment', 'all'],
     queryFn: async (): Promise<SimpleEquipment[]> => {
-      const result = await equipmentService.getAll(laboratoryId!, 1, 1000)
+      const result = await equipmentService.getAll(1, 1000)
       return result.equipment
     },
-    enabled: !!laboratoryId,
   })
 }
 
 export function useInfiniteEquipment() {
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
-
   return useInfiniteQuery({
-    queryKey: ['equipment', 'infinite', laboratoryId],
-    queryFn: ({ pageParam = 1 }) => equipmentService.getAll(laboratoryId!, pageParam),
+    queryKey: ['equipment', 'infinite'],
+    queryFn: ({ pageParam = 1 }) => equipmentService.getAll(pageParam),
     getNextPageParam: (lastPage) => lastPage.nextPage,
     initialPageParam: 1,
-    enabled: !!laboratoryId,
   })
 }
 
 export function useEquipmentById(id: number) {
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
-
   return useQuery({
-    queryKey: ['equipment', id, laboratoryId],
-    queryFn: (): Promise<DetailedEquipment> => equipmentService.getById(id, laboratoryId!),
-    enabled: !!id && !!laboratoryId,
+    queryKey: ['equipment', id],
+    queryFn: (): Promise<DetailedEquipment> => equipmentService.getById(id),
+    enabled: !!id,
   })
 }
 
@@ -138,10 +129,9 @@ export function useUseEquipment() {
 export function useDeleteEquipment() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
-    mutationFn: (equipmentId: number) => equipmentService.delete(equipmentId, laboratoryId!),
+    mutationFn: (equipmentId: number) => equipmentService.delete(equipmentId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['equipment'] })
       toast({

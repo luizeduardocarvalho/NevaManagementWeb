@@ -38,5 +38,87 @@
     "error": "Erro",
     "noResults": "Nenhum resultado encontrado",
     "failedToLoad": "Falha ao carregar {{type}}"
+  },
+  "settings": {
+    "title": "Configurações",
+    "description": "Gerencie suas preferências e configurações da conta",
+    "tabs": {
+      "general": "Geral",
+      "appearance": "Aparência",
+      "notifications": "Notificações",
+      "account": "Conta"
+    },
+    "language": {
+      "title": "Idioma",
+      "description": "Selecione seu idioma preferido para o aplicativo"
+    },
+    "theme": {
+      "title": "Tema",
+      "description": "Personalize a aparência do aplicativo",
+      "light": "Claro",
+      "lightDescription": "Usar tema claro",
+      "dark": "Escuro",
+      "darkDescription": "Usar tema escuro",
+      "system": "Sistema",
+      "systemDescription": "Usar preferência do sistema"
+    },
+    "appearance": {
+      "title": "Aparência",
+      "description": "Personalize como o aplicativo é exibido"
+    },
+    "notifications": {
+      "title": "Notificações",
+      "description": "Gerencie como você recebe notificações",
+      "cardTitle": "Preferências de Notificação",
+      "cardDescription": "Configure suas preferências de notificação",
+      "browser": "Notificações do Navegador",
+      "browserDescription": "Receber notificações no navegador",
+      "browserEnabled": "Notificações do navegador ativadas",
+      "browserDisabled": "Notificações do navegador desativadas",
+      "browserDenied": "As notificações do navegador estão bloqueadas. Por favor, ative-as nas configurações do navegador.",
+      "browserBlocked": "Notificações bloqueadas pelas configurações do navegador",
+      "email": "Notificações por Email",
+      "emailDescription": "Receber notificações por email",
+      "emailEnabled": "Notificações por email ativadas",
+      "emailDisabled": "Notificações por email desativadas",
+      "emailPreferences": "Preferências de notificação por email",
+      "sampleUpdates": "Atualizações e alterações de amostras",
+      "equipmentMaintenance": "Lembretes de manutenção de equipamentos",
+      "invitations": "Convites para equipe",
+      "routineAssignments": "Atribuições de rotina"
+    },
+    "display": {
+      "title": "Preferências de Exibição",
+      "description": "Personalize como os dados são exibidos",
+      "cardDescription": "Configure como datas, horários e medidas são exibidos",
+      "dateFormat": "Formato de Data",
+      "dateFormatDescription": "Escolha como as datas são exibidas no aplicativo",
+      "dateFormatUpdated": "Formato de data atualizado",
+      "timeFormat": "Formato de Hora",
+      "timeFormatDescription": "Escolha entre formato de 12 ou 24 horas",
+      "timeFormatUpdated": "Formato de hora atualizado",
+      "decimals": "Casas Decimais",
+      "decimalsDescription": "Número de casas decimais para exibir em medidas",
+      "decimalsPlaces": "casas decimais",
+      "decimalsUpdated": "Casas decimais atualizadas"
+    },
+    "account": {
+      "title": "Informações da Conta",
+      "description": "Visualize os detalhes da sua conta",
+      "cardTitle": "Sua Conta",
+      "cardDescription": "Suas informações de perfil e conta",
+      "name": "Nome",
+      "email": "Endereço de Email",
+      "role": "Função",
+      "laboratory": "Laboratório",
+      "laboratoryId": "ID do Lab",
+      "note": "Para atualizar as informações da sua conta, entre em contato com o coordenador do laboratório ou administrador da organização.",
+      "roles": {
+        "orgCoordinator": "Coordenador da Organização",
+        "labCoordinator": "Coordenador do Laboratório",
+        "technician": "Técnico",
+        "student": "Estudante"
+      }
+    }
   }
 }

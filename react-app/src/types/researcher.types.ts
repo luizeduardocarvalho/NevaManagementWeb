@@ -1,17 +1,22 @@
 export interface Researcher {
   id: number
-  name: string
+  clerk_user_id: string
   email: string
+  first_name: string
+  last_name: string
+  role: string
+  status: string
+  laboratory_id: number
   phone?: string
   specialization?: string
   department?: string
-  laboratory_id: number
-  createdAt: string
+  createdAt?: string
 }
 
 export interface SimpleResearcher {
   id: number
-  name: string
+  first_name: string
+  last_name: string
 }
 
 export interface CreateResearcherRequest {

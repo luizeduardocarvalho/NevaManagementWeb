@@ -5,45 +5,51 @@ export function usePermissions() {
   const user = useAuthStore((state) => state.user)
   const userRole = user?.role
 
-  const isCoordinator = userRole === 'coordinator'
+  const isOrgCoordinator = userRole === 'org-coordinator'
+  const isLabCoordinator = userRole === 'lab-coordinator'
   const isTechnician = userRole === 'technician'
   const isStudent = userRole === 'student'
 
+  // Helper: any coordinator role
+  const isAnyCoordinator = isOrgCoordinator || isLabCoordinator
+
   return {
     // User role checks
-    isCoordinator,
+    isOrgCoordinator,
+    isLabCoordinator,
     isTechnician,
     isStudent,
+    isAnyCoordinator,
     userRole,
 
-    // Researchers module permissions
-    canViewResearchers: isCoordinator,
-    canAddResearcher: isCoordinator,
-    canEditResearcher: isCoordinator,
-    canDeleteResearcher: isCoordinator,
+    // Researchers module permissions (team management)
+    canViewResearchers: isAnyCoordinator,
+    canAddResearcher: isAnyCoordinator,
+    canEditResearcher: isAnyCoordinator,
+    canDeleteResearcher: isAnyCoordinator,
 
     // Samples module permissions
     canViewSamples: true, // All roles can view
-    canAddSample: isCoordinator || isTechnician,
-    canEditSample: isCoordinator || isTechnician,
-    canDeleteSample: isCoordinator,
-    canDuplicateReplica: isCoordinator || isTechnician,
+    canAddSample: isAnyCoordinator || isTechnician,
+    canEditSample: isAnyCoordinator || isTechnician,
+    canDeleteSample: isAnyCoordinator,
+    canDuplicateReplica: isAnyCoordinator || isTechnician,
 
     // Products module permissions
     canViewProducts: true,
-    canAddProduct: isCoordinator || isTechnician,
-    canEditProduct: isCoordinator || isTechnician,
-    canDeleteProduct: isCoordinator,
+    canAddProduct: isAnyCoordinator || isTechnician,
+    canEditProduct: isAnyCoordinator || isTechnician,
+    canDeleteProduct: isAnyCoordinator,
 
     // Equipment module permissions
     canViewEquipment: true,
-    canAddEquipment: isCoordinator || isTechnician,
-    canEditEquipment: isCoordinator || isTechnician,
-    canDeleteEquipment: isCoordinator,
+    canAddEquipment: isAnyCoordinator || isTechnician,
+    canEditEquipment: isAnyCoordinator || isTechnician,
+    canDeleteEquipment: isAnyCoordinator,
     canScheduleEquipment: true, // All roles can schedule
 
     // General permissions
-    canManageSettings: isCoordinator,
+    canManageSettings: isAnyCoordinator,
   }
 }
 

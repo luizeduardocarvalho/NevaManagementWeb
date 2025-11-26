@@ -1,4 +1,4 @@
-export type UserRole = 'coordinator' | 'technician' | 'student'
+export type UserRole = 'org-coordinator' | 'lab-coordinator' | 'technician' | 'student'
 
 export interface User {
   id: number

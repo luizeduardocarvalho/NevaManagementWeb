@@ -122,7 +122,7 @@ const router = createBrowserRouter([
       {
         path: 'researchers',
         element: (
-          <ProtectedRoute requiredRole="coordinator">
+          <ProtectedRoute requiredRole={['org-coordinator', 'lab-coordinator']}>
             <ResearcherListPage />
           </ProtectedRoute>
         ),
@@ -130,7 +130,7 @@ const router = createBrowserRouter([
       {
         path: 'researchers/add',
         element: (
-          <ProtectedRoute requiredRole="coordinator">
+          <ProtectedRoute requiredRole={['org-coordinator', 'lab-coordinator']}>
             <AddResearcherPage />
           </ProtectedRoute>
         ),
@@ -142,7 +142,7 @@ const router = createBrowserRouter([
       {
         path: 'researchers/:id/edit',
         element: (
-          <ProtectedRoute requiredRole="coordinator">
+          <ProtectedRoute requiredRole={['org-coordinator', 'lab-coordinator']}>
             <EditResearcherPage />
           </ProtectedRoute>
         ),
@@ -164,7 +164,7 @@ const router = createBrowserRouter([
           {
             path: 'invite',
             element: (
-              <ProtectedRoute requiredRole="coordinator">
+              <ProtectedRoute requiredRole={['org-coordinator', 'lab-coordinator']}>
                 <InviteTeamMemberPage />
               </ProtectedRoute>
             ),
@@ -172,7 +172,7 @@ const router = createBrowserRouter([
           {
             path: 'invitations',
             element: (
-              <ProtectedRoute requiredRole="coordinator">
+              <ProtectedRoute requiredRole={['org-coordinator', 'lab-coordinator']}>
                 <PendingInvitationsPage />
               </ProtectedRoute>
             ),
