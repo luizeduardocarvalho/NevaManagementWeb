@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/shared/Spinner'
 import { Calendar, Clock, AlertCircle, CheckCircle, Users } from 'lucide-react'
-import { format, formatDistanceToNow } from 'date-fns'
+import { format, differenceInDays, startOfDay, isValid } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 
 export function UpcomingRoutinesWidget() {
@@ -44,6 +44,15 @@ export function UpcomingRoutinesWidget() {
     )
   }
 
+  const calculateDaysUntilDue = (dueDate: string): number => {
+    const today = startOfDay(new Date())
+    const due = new Date(dueDate)
+    if (!isValid(due)) {
+      return 999 // Return a large number for invalid dates
+    }
+    return differenceInDays(startOfDay(due), today)
+  }
+
   const getUrgencyColor = (daysUntilDue: number) => {
     if (daysUntilDue === 0) return 'text-destructive'
     if (daysUntilDue === 1) return 'text-orange-600'
@@ -74,43 +83,58 @@ export function UpcomingRoutinesWidget() {
           </div>
         ) : (
           <div className="space-y-3">
-            {upcomingRoutines.slice(0, 5).map((routine, index) => (
-              <Link
-                key={`${routine.id}-${index}`}
-                to={`/routines/${routine.id}/execute`}
-                className="block p-3 rounded-lg border hover:border-primary hover:bg-accent/50 transition-all"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      {getUrgencyIcon(routine.daysUntilDue)}
-                      <h4 className="font-medium text-sm truncate">{routine.name}</h4>
-                    </div>
-                    <p className="text-xs text-muted-foreground line-clamp-1">
-                      {routine.description}
-                    </p>
-                    {routine.assignedToNames && routine.assignedToNames.length > 0 && (
-                      <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
-                        <Users className="h-3 w-3" />
-                        <span>{routine.assignedToNames.join(', ')}</span>
+            {upcomingRoutines.slice(0, 5).map((scheduled, index) => {
+              const daysUntilDue = calculateDaysUntilDue(scheduled.dueDate)
+              const dueDate = new Date(scheduled.dueDate)
+              const isValidDate = isValid(dueDate)
+
+              return (
+                <Link
+                  key={`${scheduled.id}-${index}`}
+                  to={`/routines/${scheduled.routineId}/execute`}
+                  className="block p-3 rounded-lg border hover:border-primary hover:bg-accent/50 transition-all"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        {getUrgencyIcon(daysUntilDue)}
+                        <h4 className="font-medium text-sm truncate">{scheduled.routineName}</h4>
                       </div>
-                    )}
+                      {scheduled.routineDescription && (
+                        <p className="text-xs text-muted-foreground line-clamp-1">
+                          {scheduled.routineDescription}
+                        </p>
+                      )}
+                      {scheduled.assignedToNames && scheduled.assignedToNames.length > 0 ? (
+                        <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
+                          <Users className="h-3 w-3" />
+                          <span>{scheduled.assignedToNames.join(', ')}</span>
+                        </div>
+                      ) : scheduled.assignedTo && scheduled.assignedTo.length > 0 ? (
+                        <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
+                          <Users className="h-3 w-3" />
+                          <span>{scheduled.assignedTo.length} {scheduled.assignedTo.length === 1 ? 'person' : 'people'} assigned</span>
+                        </div>
+                      ) : null}
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <span className={`text-xs font-semibold ${getUrgencyColor(daysUntilDue)}`}>
+                        {daysUntilDue === 0
+                          ? t('dueToday')
+                          : daysUntilDue === 1
+                          ? t('dueTomorrow')
+                          : daysUntilDue < 999
+                          ? t('dueInDays', { count: daysUntilDue })
+                          : 'Invalid date'}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        {isValidDate ? format(dueDate, 'MMM dd, HH:mm') : 'Invalid date'}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex flex-col items-end gap-1">
-                    <span className={`text-xs font-semibold ${getUrgencyColor(routine.daysUntilDue)}`}>
-                      {routine.daysUntilDue === 0
-                        ? t('dueToday')
-                        : routine.daysUntilDue === 1
-                        ? t('dueTomorrow')
-                        : t('dueInDays', { count: routine.daysUntilDue })}
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      {format(new Date(routine.dueDate), 'MMM dd, HH:mm')}
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              )
+            })}
 
             {upcomingRoutines.length > 5 && (
               <Link to="/routines">

@@ -3,6 +3,8 @@ import { useRoutineById, useCheckAvailability, useStartExecution, useUpdateStepC
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/shared/Spinner'
 import { BackArrow } from '@/components/shared/BackArrow'
 import { AlertCircle, CheckCircle, XCircle, Beaker, Wrench, Play, CheckCheck, X } from 'lucide-react'
@@ -28,8 +30,10 @@ export function ExecuteRoutinePage() {
   const [stepCompletions, setStepCompletions] = useState<Record<number, boolean>>({})
   const [showCompleteConfirm, setShowCompleteConfirm] = useState(false)
   const [showCancelConfirm, setShowCancelConfirm] = useState(false)
+  const [completionNotes, setCompletionNotes] = useState('')
+  const [actualMaterials, setActualMaterials] = useState<Record<number, number>>({})
 
-  // Initialize step completions when execution starts
+  // Initialize step completions and material quantities when execution starts
   useEffect(() => {
     if (execution) {
       const initialCompletions: Record<number, boolean> = {}
@@ -39,6 +43,17 @@ export function ExecuteRoutinePage() {
       setStepCompletions(initialCompletions)
     }
   }, [execution])
+
+  // Initialize actual material quantities with planned quantities
+  useEffect(() => {
+    if (routine && routine.materials.length > 0) {
+      const initialMaterials: Record<number, number> = {}
+      routine.materials.forEach((material) => {
+        initialMaterials[material.productId] = material.quantity
+      })
+      setActualMaterials(initialMaterials)
+    }
+  }, [routine])
 
   const handleStartExecution = async () => {
     const result = await startExecution.mutateAsync(routineId)
@@ -59,7 +74,17 @@ export function ExecuteRoutinePage() {
   const handleComplete = async () => {
     if (!execution) return
 
-    await completeExecution.mutateAsync(execution.id)
+    // Build materials array with actual quantities
+    const materials = routine?.materials.map((material) => ({
+      productId: material.productId,
+      actualQuantity: actualMaterials[material.productId] || material.quantity,
+    }))
+
+    await completeExecution.mutateAsync({
+      executionId: execution.id,
+      notes: completionNotes || undefined,
+      materials,
+    })
     navigate('/routines')
   }
 
@@ -126,7 +151,7 @@ export function ExecuteRoutinePage() {
           <CardContent>
             <div className="space-y-3">
               {routine.materials.map((material) => {
-                const issue = availability?.materialIssues.find((i) => i.productId === material.productId)
+                const issue = availability?.materialIssues?.find((i) => i.productId === material.productId)
 
                 return (
                   <div
@@ -186,7 +211,7 @@ export function ExecuteRoutinePage() {
           <CardContent>
             <div className="space-y-3">
               {routine.equipment.map((equipment) => {
-                const conflict = availability?.equipmentConflicts.find(
+                const conflict = availability?.equipmentConflicts?.find(
                   (c) => c.equipmentId === equipment.equipmentId
                 )
 
@@ -368,22 +393,81 @@ export function ExecuteRoutinePage() {
               <CardDescription>{t('execution.completeConfirmMessage')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2 p-3 bg-muted rounded-lg">
-                {routine.materials.map((material) => (
-                  <div key={material.id} className="flex justify-between text-sm">
-                    <span>{material.productName}</span>
-                    <span className="font-semibold">
-                      -{material.quantity} {material.unit}
-                    </span>
+              {routine.materials.length > 0 && (
+                <div className="space-y-3">
+                  <div className="text-sm font-medium">
+                    Materials to be deducted (adjust if actual usage differs):
                   </div>
-                ))}
+                  {routine.materials.map((material) => {
+                    const plannedQty = material.quantity
+                    const actualQty = actualMaterials[material.productId] || plannedQty
+                    const variance = actualQty - plannedQty
+                    const hasVariance = Math.abs(variance) > 0.001
+
+                    return (
+                      <div key={material.id} className="space-y-2 p-3 bg-muted rounded-lg">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium">{material.productName}</span>
+                          <span className="text-xs text-muted-foreground">
+                            Planned: {plannedQty} {material.unit}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor={`material-${material.productId}`} className="text-xs">
+                            Actual:
+                          </Label>
+                          <Input
+                            id={`material-${material.productId}`}
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value={actualQty}
+                            onChange={(e) =>
+                              setActualMaterials({
+                                ...actualMaterials,
+                                [material.productId]: parseFloat(e.target.value) || 0,
+                              })
+                            }
+                            className="h-8 w-24"
+                            disabled={completeExecution.isPending}
+                          />
+                          <span className="text-xs">{material.unit}</span>
+                          {hasVariance && (
+                            <span
+                              className={`text-xs font-semibold ml-auto ${
+                                variance > 0 ? 'text-orange-600' : 'text-green-600'
+                              }`}
+                            >
+                              {variance > 0 ? '+' : ''}
+                              {variance.toFixed(2)} {material.unit}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+              <div className="space-y-2">
+                <Label htmlFor="completion-notes">{t('execution.notesLabel')}</Label>
+                <Textarea
+                  id="completion-notes"
+                  placeholder={t('execution.notesPlaceholder')}
+                  value={completionNotes}
+                  onChange={(e) => setCompletionNotes(e.target.value)}
+                  rows={3}
+                  disabled={completeExecution.isPending}
+                />
               </div>
               <div className="flex gap-4">
                 <Button
                   type="button"
                   variant="outline"
                   className="flex-1"
-                  onClick={() => setShowCompleteConfirm(false)}
+                  onClick={() => {
+                    setShowCompleteConfirm(false)
+                    setCompletionNotes('')
+                  }}
                   disabled={completeExecution.isPending}
                 >
                   {tCommon('actions.cancel')}

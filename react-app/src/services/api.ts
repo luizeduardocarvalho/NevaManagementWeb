@@ -85,40 +85,105 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
-// Response interceptor - handle errors
+// Track if we're currently refreshing to avoid multiple refresh attempts
+let isRefreshingOn401 = false
+let failedQueue: Array<{
+  resolve: (value?: any) => void
+  reject: (reason?: any) => void
+}> = []
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error)
+    } else {
+      prom.resolve(token)
+    }
+  })
+  failedQueue = []
+}
+
+// Response interceptor - handle errors and token refresh
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     console.log('[API] Error intercepted:', error.response?.status, error.config?.url)
     console.log('[API] Error response:', error.response?.data)
     console.log('[API] Request headers:', error.config?.headers)
 
-    // Endpoints that shouldn't trigger automatic logout on 401
-    const noLogoutEndpoints = ['/auth/signin', '/laboratories', '/invitations/accept']
-    const shouldSkipLogout = noLogoutEndpoints.some((endpoint) =>
-      error.config.url?.includes(endpoint)
+    const originalRequest = error.config
+
+    // Endpoints that shouldn't trigger automatic logout/refresh on 401
+    const noRefreshEndpoints = ['/auth/signin', '/auth/signup', '/auth/refresh', '/laboratories', '/invitations/accept']
+    const shouldSkipRefresh = noRefreshEndpoints.some((endpoint) =>
+      error.config?.url?.includes(endpoint)
     )
 
-    // Don't redirect to login for certain endpoints or if there's no token
-    if (error.response?.status === 401 && !shouldSkipLogout) {
-      console.log('[API] 401 error detected')
+    // Handle 401 errors with token refresh
+    if (error.response?.status === 401 && !shouldSkipRefresh && !originalRequest._retry) {
+      console.log('[API] 401 error detected, attempting token refresh')
 
-      // Only clear auth and redirect if we actually have a token
-      // This prevents infinite loops and unnecessary redirects
       const hasToken = localStorage.getItem('auth_token')
 
-      if (hasToken) {
-        console.log('[API] Token exists but is invalid/expired, clearing auth and redirecting to /login')
-        // Clear token and redirect to login
-        localStorage.removeItem('auth_token')
-        localStorage.removeItem('user')
-
-        // Only redirect if we're not already on the login page
+      if (!hasToken) {
+        console.log('[API] No token found, redirecting to login')
         if (!window.location.pathname.includes('/login')) {
           window.location.href = '/login'
         }
+        return Promise.reject(error)
+      }
+
+      // If already refreshing, queue this request
+      if (isRefreshingOn401) {
+        console.log('[API] Refresh already in progress, queueing request')
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject })
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`
+            return api(originalRequest)
+          })
+          .catch((err) => {
+            return Promise.reject(err)
+          })
+      }
+
+      // Mark this request as retried to prevent infinite loops
+      originalRequest._retry = true
+      isRefreshingOn401 = true
+
+      try {
+        console.log('[API] Attempting to refresh token...')
+        const { authService } = await import('./authService')
+        const authStore = useAuthStore.getState()
+
+        const newToken = await authService.refreshToken(hasToken)
+        console.log('[API] Token refreshed successfully')
+
+        authStore.setToken(newToken)
+        processQueue(null, newToken)
+
+        // Retry the original request with new token
+        originalRequest.headers.Authorization = `Bearer ${newToken}`
+        return api(originalRequest)
+      } catch (refreshError) {
+        console.error('[API] Token refresh failed:', refreshError)
+        processQueue(refreshError, null)
+
+        // Clear auth and redirect to login
+        const authStore = useAuthStore.getState()
+        authStore.clearAuth()
+
+        if (!window.location.pathname.includes('/login')) {
+          window.location.href = '/login'
+        }
+
+        return Promise.reject(refreshError)
+      } finally {
+        isRefreshingOn401 = false
       }
     }
+
     return Promise.reject(error)
   }
 )

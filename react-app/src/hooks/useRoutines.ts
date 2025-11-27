@@ -4,12 +4,12 @@ import { useAuthStore } from '@/store/authStore'
 import { toast } from 'sonner'
 import type { CreateRoutineRequest, UpdateStepCompletionRequest } from '@/types/routine.types'
 
-export function useRoutines() {
+export function useRoutines(scheduleType?: string) {
   const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useQuery({
-    queryKey: ['routines', laboratoryId],
-    queryFn: () => routineService.getAll(laboratoryId!),
+    queryKey: ['routines', laboratoryId, scheduleType],
+    queryFn: () => routineService.getAll(laboratoryId!, scheduleType),
     enabled: !!laboratoryId,
   })
 }
@@ -122,7 +122,15 @@ export function useCompleteExecution() {
   const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
-    mutationFn: (executionId: number) => routineService.completeExecution(executionId, laboratoryId!),
+    mutationFn: ({
+      executionId,
+      notes,
+      materials,
+    }: {
+      executionId: number
+      notes?: string
+      materials?: Array<{ productId: number; actualQuantity: number }>
+    }) => routineService.completeExecution(executionId, laboratoryId!, notes, materials),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['routine-executions'] })
       queryClient.invalidateQueries({ queryKey: ['products'] }) // Refresh products since inventory was deducted
@@ -150,12 +158,28 @@ export function useCancelExecution() {
   })
 }
 
-export function useExecutionHistory(routineId?: number) {
+export function useExecutionById(executionId: number) {
   const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useQuery({
-    queryKey: ['routine-executions', laboratoryId, routineId],
-    queryFn: () => routineService.getExecutionHistory(laboratoryId!, routineId),
+    queryKey: ['routine-execution', executionId, laboratoryId],
+    queryFn: () => routineService.getExecutionById(executionId, laboratoryId!),
+    enabled: !!laboratoryId && !!executionId,
+  })
+}
+
+export function useExecutionHistory(filters?: {
+  routineId?: number
+  status?: string
+  executedBy?: number
+  startDate?: string
+  endDate?: string
+}) {
+  const laboratoryId = useAuthStore((state) => state.laboratoryId)
+
+  return useQuery({
+    queryKey: ['routine-executions', laboratoryId, filters],
+    queryFn: () => routineService.getExecutionHistory(laboratoryId!, filters),
     enabled: !!laboratoryId,
   })
 }
@@ -166,6 +190,16 @@ export function useUpcomingRoutines(days: number = 7) {
   return useQuery({
     queryKey: ['upcoming-routines', laboratoryId, days],
     queryFn: () => routineService.getUpcomingRoutines(laboratoryId!, days),
+    enabled: !!laboratoryId,
+  })
+}
+
+export function useRoutineStatistics() {
+  const laboratoryId = useAuthStore((state) => state.laboratoryId)
+
+  return useQuery({
+    queryKey: ['routine-statistics', laboratoryId],
+    queryFn: () => routineService.getStatistics(laboratoryId!),
     enabled: !!laboratoryId,
   })
 }

@@ -159,7 +159,7 @@ export function EquipmentDetailPage() {
                         className="p-3 rounded-lg bg-muted/50 text-sm"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="font-medium">{appointment.researcher.first_name} {appointment.researcher.last_name}</span>
+                          <span className="font-medium">{appointment.researcher.name}</span>
                           <span className="text-muted-foreground">
                             {format(new Date(appointment.startDate), 'HH:mm')} -{' '}
                             {format(new Date(appointment.endDate), 'HH:mm')}

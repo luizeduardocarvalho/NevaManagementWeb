@@ -165,3 +165,27 @@ export interface ScheduledRoutine {
   executionId?: number // if already started/completed
   laboratory_id: number
 }
+
+// Statistics
+export interface RoutineStatistics {
+  totalRoutines: number
+  routinesByScheduleType: Array<{
+    scheduleType: string
+    count: number
+  }>
+  totalExecutions: number
+  executionsByStatus: Array<{
+    status: string
+    count: number
+  }>
+  completionRate: number
+  avgCompletionTime: number // in seconds
+  topRoutines: Array<{
+    routineId: number
+    routineName: string
+    count: number
+  }>
+  recentActivity: {
+    last7Days: number
+  }
+}

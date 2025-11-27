@@ -2,8 +2,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useRoutines, useDeleteRoutine } from '@/hooks/useRoutines'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Spinner } from '@/components/shared/Spinner'
-import { Plus, Search, Trash2, Play, Clock, Beaker, Wrench } from 'lucide-react'
+import { Plus, Search, Trash2, Play, Clock, Beaker, Wrench, Calendar } from 'lucide-react'
 import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -11,10 +12,12 @@ export function RoutineListPage() {
   const { t } = useTranslation('routines')
   const { t: tCommon } = useTranslation('common')
   const navigate = useNavigate()
-  const { data: routines, isLoading, error } = useRoutines()
-  const deleteRoutine = useDeleteRoutine()
   const [searchTerm, setSearchTerm] = useState('')
+  const [scheduleType, setScheduleType] = useState<string | undefined>(undefined)
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null)
+
+  const { data: routines, isLoading, error } = useRoutines(scheduleType)
+  const deleteRoutine = useDeleteRoutine()
 
   const filteredRoutines = useMemo(() => {
     if (!routines) return []
@@ -56,6 +59,12 @@ export function RoutineListPage() {
           <p className="text-muted-foreground mt-2">{t('subtitle')}</p>
         </div>
         <div className="flex gap-3">
+          <Link to="/routines/statistics">
+            <Button variant="outline" className="flex items-center gap-2">
+              <Beaker className="h-4 w-4" />
+              Statistics
+            </Button>
+          </Link>
           <Link to="/routines/history">
             <Button variant="outline" className="flex items-center gap-2">
               <Clock className="h-4 w-4" />
@@ -71,15 +80,29 @@ export function RoutineListPage() {
         </div>
       </div>
 
-      {/* Search */}
-      <div className="relative flex-1">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          placeholder="Search routines..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10"
-        />
+      {/* Search and Filters */}
+      <div className="flex gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Search routines..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+        <Select value={scheduleType || 'all'} onValueChange={(v) => setScheduleType(v === 'all' ? undefined : v)}>
+          <SelectTrigger className="w-[180px]">
+            <Calendar className="h-4 w-4 mr-2" />
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All types</SelectItem>
+            <SelectItem value="template">Templates</SelectItem>
+            <SelectItem value="one_time">One-time</SelectItem>
+            <SelectItem value="recurring">Recurring</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Routines Grid */}

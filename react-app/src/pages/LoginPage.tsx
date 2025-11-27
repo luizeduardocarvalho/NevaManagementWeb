@@ -18,12 +18,9 @@ export function LoginPage() {
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  console.log('[LoginPage] isAuthenticated:', isAuthenticated)
-
   // If already authenticated, redirect to dashboard
   useEffect(() => {
     if (isAuthenticated) {
-      console.log('[LoginPage] Already authenticated, redirecting to /')
       navigate('/', { replace: true })
     }
   }, [isAuthenticated, navigate])
@@ -33,21 +30,11 @@ export function LoginPage() {
     setIsLoading(true)
 
     try {
-      console.log('[LoginPage] Submitting login with:', { email })
       const response = await authService.login({ email, password })
-      console.log('[LoginPage] Login response:', response)
       const { token, user } = response
-      console.log('[LoginPage] Token:', token)
-      console.log('[LoginPage] User:', user)
 
       setAuth(token, user)
 
-      // Verify auth was set
-      const storedToken = localStorage.getItem('auth_token')
-      const storedUser = localStorage.getItem('user')
-      console.log('[LoginPage] After setAuth - localStorage:', { storedToken, storedUser })
-
-      // Check if Zustand store was updated
       const currentAuthState = useAuthStore.getState()
       console.log('[LoginPage] Zustand store state after setAuth:', {
         isAuthenticated: currentAuthState.isAuthenticated,
@@ -60,12 +47,8 @@ export function LoginPage() {
         description: `Logged in as ${user.email}`,
       })
 
-      console.log('[LoginPage] About to navigate to /')
-      console.log('[LoginPage] Final check - isAuthenticated in store:', useAuthStore.getState().isAuthenticated)
-
       navigate('/')
     } catch (error: unknown) {
-      console.error('[LoginPage] Login error:', error)
       toast({
         title: 'Login failed',
         description: getErrorMessage(error, 'Invalid email or password'),

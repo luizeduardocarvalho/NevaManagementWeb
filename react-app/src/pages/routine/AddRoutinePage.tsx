@@ -12,10 +12,11 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Spinner } from '@/components/shared/Spinner'
 import { BackArrow } from '@/components/shared/BackArrow'
+import { RecurrenceBuilder } from '@/components/routine/RecurrenceBuilder'
 import { Plus, Trash2, GripVertical, X } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { CreateRoutineRequest } from '@/types/routine.types'
+import type { CreateRoutineRequest, RecurrenceRule } from '@/types/routine.types'
 
 interface MaterialItem {
   id: string
@@ -44,7 +45,7 @@ export function AddRoutinePage() {
   const createRoutine = useCreateRoutine()
   const { data: products } = useProducts()
   const { data: equipment } = useEquipment()
-  const { data: researchers } = useResearchers()
+  const { data: researchers, isLoading: researchersLoading } = useResearchers()
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -56,6 +57,11 @@ export function AddRoutinePage() {
   const [scheduleType, setScheduleType] = useState<'template' | 'one_time' | 'recurring'>('template')
   const [deadline, setDeadline] = useState('')
   const [assignedUserIds, setAssignedUserIds] = useState<number[]>([])
+  const [recurrence, setRecurrence] = useState<RecurrenceRule>({
+    frequency: 'daily',
+    interval: 1,
+    startDate: new Date().toISOString().split('T')[0] + 'T00:00:00Z',
+  })
 
   const addMaterial = () => {
     setMaterials([...materials, { id: Date.now().toString(), productId: 0, quantity: 1 }])
@@ -105,6 +111,11 @@ export function AddRoutinePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    // Convert datetime-local format to RFC3339 (ISO 8601)
+    // datetime-local gives us: "2025-11-28T22:10"
+    // Backend expects: "2025-11-28T22:10:00Z"
+    const rfc3339Deadline = deadline ? `${deadline}:00Z` : undefined
+
     const data: CreateRoutineRequest = {
       name,
       description,
@@ -129,8 +140,8 @@ export function AddRoutinePage() {
           notes: s.notes || undefined,
         })),
       scheduleType,
-      deadline: scheduleType === 'one_time' && deadline ? deadline : undefined,
-      recurrence: undefined, // TODO: Add recurrence UI
+      deadline: scheduleType === 'one_time' ? rfc3339Deadline : undefined,
+      recurrence: scheduleType === 'recurring' ? recurrence : undefined,
       assignedTo: assignedUserIds,
     }
 
@@ -223,11 +234,7 @@ export function AddRoutinePage() {
             )}
 
             {scheduleType === 'recurring' && (
-              <div className="p-4 border rounded-lg bg-muted/50">
-                <p className="text-sm text-muted-foreground">
-                  Recurring schedule configuration coming soon. For now, use template or one-time schedules.
-                </p>
-              </div>
+              <RecurrenceBuilder recurrence={recurrence} onChange={setRecurrence} />
             )}
 
             {/* User Assignment */}
@@ -242,20 +249,40 @@ export function AddRoutinePage() {
                         setAssignedUserIds([...assignedUserIds, userId])
                       }
                     }}
+                    disabled={researchersLoading}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder={t('fields.assignToPlaceholder')} />
+                      <SelectValue placeholder={
+                        researchersLoading
+                          ? 'Loading researchers...'
+                          : researchers && researchers.length === 0
+                            ? 'No researchers available'
+                            : t('fields.assignToPlaceholder')
+                      } />
                     </SelectTrigger>
                     <SelectContent>
-                      {researchers?.filter(r => !assignedUserIds.includes(r.id)).map((researcher) => {
-                        const displayName = `${researcher.first_name || ''} ${researcher.last_name || ''}`.trim() ||
-                                           `Researcher #${researcher.id}`
-                        return (
-                          <SelectItem key={researcher.id} value={researcher.id.toString()}>
-                            {displayName}
-                          </SelectItem>
-                        )
-                      })}
+                      {researchersLoading ? (
+                        <div className="p-2 text-center text-sm text-muted-foreground">
+                          <Spinner size="sm" className="mx-auto" />
+                        </div>
+                      ) : researchers && researchers.length > 0 ? (
+                        researchers
+                          .filter(r => r && r.id && !assignedUserIds.includes(r.id))
+                          .map((researcher) => {
+                            const displayName = `${researcher.first_name || ''} ${researcher.last_name || ''}`.trim() ||
+                                               researcher.email ||
+                                               `Researcher #${researcher.id}`
+                            return (
+                              <SelectItem key={researcher.id} value={researcher.id.toString()}>
+                                {displayName}
+                              </SelectItem>
+                            )
+                          })
+                      ) : (
+                        <div className="p-2 text-center text-sm text-muted-foreground">
+                          No researchers available in this laboratory
+                        </div>
+                      )}
                     </SelectContent>
                   </Select>
 
@@ -264,12 +291,15 @@ export function AddRoutinePage() {
                     <div className="flex flex-wrap gap-2 mt-2">
                       {assignedUserIds.map((userId) => {
                         const user = researchers?.find(r => r.id === userId)
+                        const displayName = user
+                          ? `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.email || 'Unknown'
+                          : `User #${userId}`
                         return (
                           <div
                             key={userId}
                             className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-primary/10 text-sm"
                           >
-                            <span>{user?.name}</span>
+                            <span>{displayName}</span>
                             <button
                               type="button"
                               onClick={() => setAssignedUserIds(assignedUserIds.filter(id => id !== userId))}
@@ -312,7 +342,7 @@ export function AddRoutinePage() {
                       <SelectValue placeholder={t('fields.selectProduct')} />
                     </SelectTrigger>
                     <SelectContent>
-                      {products?.map((product) => (
+                      {products?.filter(product => product && product.id).map((product) => (
                         <SelectItem key={product.id} value={product.id.toString()}>
                           {product.name} ({product.quantity} {product.unit})
                         </SelectItem>
@@ -372,7 +402,7 @@ export function AddRoutinePage() {
                       <SelectValue placeholder={t('fields.selectEquipment')} />
                     </SelectTrigger>
                     <SelectContent>
-                      {equipment?.map((equip) => (
+                      {equipment?.filter(equip => equip && equip.id).map((equip) => (
                         <SelectItem key={equip.id} value={equip.id.toString()}>
                           {equip.name}
                         </SelectItem>

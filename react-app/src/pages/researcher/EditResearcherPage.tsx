@@ -44,7 +44,7 @@ export function EditResearcherPage() {
 
       <div>
         <h1 className="text-3xl font-bold">{t('editResearcher')}</h1>
-        <p className="text-muted-foreground mt-2">{researcher.first_name} {researcher.last_name}</p>
+        <p className="text-muted-foreground mt-2">{researcher.name}</p>
       </div>
 
       <Card>
@@ -55,7 +55,7 @@ export function EditResearcherPage() {
         <CardContent>
           <ResearcherForm
             initialData={{
-              name: `${researcher.first_name} ${researcher.last_name}`,
+              name: researcher.name,
               email: researcher.email,
               phone: researcher.phone,
               specialization: researcher.specialization,

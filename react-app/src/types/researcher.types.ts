@@ -1,6 +1,6 @@
 export interface Researcher {
   id: number
-  clerk_user_id: string
+  clerk_user_id?: string
   email: string
   first_name: string
   last_name: string
@@ -15,8 +15,12 @@ export interface Researcher {
 
 export interface SimpleResearcher {
   id: number
+  email: string
   first_name: string
   last_name: string
+  role: string
+  status: string
+  laboratory_id: number
 }
 
 export interface CreateResearcherRequest {
