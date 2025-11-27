@@ -1,0 +1,32 @@
+{
+  "title": "Pesquisadores",
+  "subtitle": "Gerenciar pesquisadores do laboratório",
+  "addResearcher": "Adicionar Pesquisador",
+  "addResearcherSubtitle": "Registrar novo pesquisador",
+  "addResearcherDescription": "Preencha as informações abaixo para adicionar um novo pesquisador ao laboratório",
+  "editResearcher": "Editar Pesquisador",
+  "editResearcherDescription": "Atualizar informações do pesquisador abaixo",
+  "updateResearcher": "Atualizar Pesquisador",
+  "deleteResearcher": "Excluir pesquisador",
+  "delete": "Excluir",
+  "researcherDetails": "Detalhes do Pesquisador",
+  "researcherInfo": "Informações do Pesquisador",
+  "searchPlaceholder": "Buscar pesquisadores por nome, email ou especialização...",
+  "noResearchers": "Nenhum pesquisador ainda",
+  "noResearchersSearch": "Nenhum pesquisador encontrado para sua busca",
+  "memberSince": "Membro desde {{date}}",
+  "deleteConfirmTitle": "Excluir Pesquisador",
+  "deleteConfirmMessage": "Tem certeza que deseja excluir este pesquisador? Esta ação não pode ser desfeita.",
+  "fields": {
+    "name": "Nome",
+    "namePlaceholder": "ex: Dr. Sarah Chen",
+    "email": "Email",
+    "emailPlaceholder": "sarah.chen@labflux.com",
+    "phone": "Telefone",
+    "phonePlaceholder": "+55 (11) 98765-4321",
+    "specialization": "Especialização",
+    "specializationPlaceholder": "ex: Biologia Molecular",
+    "department": "Departamento",
+    "departmentPlaceholder": "ex: Genética"
+  }
+}

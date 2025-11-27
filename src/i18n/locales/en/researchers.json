@@ -1,0 +1,32 @@
+{
+  "title": "Researchers",
+  "subtitle": "Manage laboratory researchers",
+  "addResearcher": "Add Researcher",
+  "addResearcherSubtitle": "Register new researcher",
+  "addResearcherDescription": "Fill in the information below to add a new researcher to the laboratory",
+  "editResearcher": "Edit Researcher",
+  "editResearcherDescription": "Update researcher information below",
+  "updateResearcher": "Update Researcher",
+  "deleteResearcher": "Delete researcher",
+  "delete": "Delete",
+  "researcherDetails": "Researcher Details",
+  "researcherInfo": "Researcher Information",
+  "searchPlaceholder": "Search researchers by name, email, or specialization...",
+  "noResearchers": "No researchers yet",
+  "noResearchersSearch": "No researchers found matching your search",
+  "memberSince": "Member since {{date}}",
+  "deleteConfirmTitle": "Delete Researcher",
+  "deleteConfirmMessage": "Are you sure you want to delete this researcher? This action cannot be undone.",
+  "fields": {
+    "name": "Name",
+    "namePlaceholder": "e.g., Dr. Sarah Chen",
+    "email": "Email",
+    "emailPlaceholder": "sarah.chen@labflux.com",
+    "phone": "Phone",
+    "phonePlaceholder": "+1 (555) 123-4567",
+    "specialization": "Specialization",
+    "specializationPlaceholder": "e.g., Molecular Biology",
+    "department": "Department",
+    "departmentPlaceholder": "e.g., Genetics"
+  }
+}

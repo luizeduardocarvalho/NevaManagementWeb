@@ -1,0 +1,30 @@
+{
+  "title": "Dashboard",
+  "subtitle": "Overview of your laboratory inventory",
+  "stats": {
+    "lowStock": "Low Stock Products",
+    "lowStockDesc": "Products below usage threshold",
+    "expiringSoon": "Expiring Soon",
+    "expiringSoonDesc": "Expires within 30 days",
+    "expired": "Expired Products",
+    "expiredDesc": "Requires immediate attention"
+  },
+  "lowStockAlerts": {
+    "title": "Low Stock Alerts",
+    "description": "Products that need to be restocked based on recent usage",
+    "empty": "All products are adequately stocked",
+    "viewMore": "View {{count}} more low stock products",
+    "used": "Used: {{quantity}} {{unit}} (3 months)"
+  },
+  "expiringProducts": {
+    "title": "Expiring Soon",
+    "description": "Products expiring within the next 30 days",
+    "expires": "Expires: {{date}}",
+    "daysLeft": "{{days}} days left"
+  },
+  "expiredProducts": {
+    "title": "Expired Products",
+    "description": "These products have expired and should be disposed of",
+    "expired": "Expired: {{date}}"
+  }
+}

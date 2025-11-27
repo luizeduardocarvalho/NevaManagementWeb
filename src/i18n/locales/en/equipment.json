@@ -1,0 +1,58 @@
+{
+  "title": "Equipment",
+  "subtitle": "Manage laboratory equipment and schedule usage",
+  "addEquipment": "Add Equipment",
+  "editEquipment": "Edit Equipment",
+  "equipmentDetails": "Equipment Details",
+  "equipmentInfo": "Equipment Information",
+  "searchPlaceholder": "Search equipment by name...",
+  "noEquipment": "No equipment yet",
+  "noEquipmentSearch": "No equipment found matching your search",
+  "fields": {
+    "equipmentName": "Equipment Name",
+    "namePlaceholder": "e.g., PCR Thermocycler",
+    "propertyNumberPlaceholder": "e.g., EQ-2023-001",
+    "descriptionPlaceholder": "Detailed description of the equipment..."
+  },
+  "actions": {
+    "scheduleUsage": "Schedule Usage",
+    "viewHistory": "View History",
+    "saveEquipment": "Save Equipment",
+    "updateEquipment": "Update Equipment"
+  },
+  "calendar": {
+    "title": "Usage Calendar",
+    "description": "Scheduled equipment usage for {{month}}",
+    "noScheduled": "No scheduled usage for this month"
+  },
+  "usage": {
+    "scheduleTitle": "Schedule Equipment Usage",
+    "usageDetails": "Usage Details",
+    "usageDescription": "Schedule when you'll be using this equipment",
+    "researcher": "Researcher",
+    "selectResearcher": "Select researcher",
+    "descriptionOptional": "Description (Optional)",
+    "descriptionPlaceholder": "What will you be doing with this equipment?",
+    "startDateTime": "Start Date & Time",
+    "endDateTime": "End Date & Time",
+    "scheduling": "Scheduling...",
+    "schedule": "Schedule Usage",
+    "conflictDetected": "Scheduling Conflict Detected",
+    "conflictDescription": "This equipment is already booked during the selected time period. Please review the conflicting bookings below:",
+    "conflictNote": "You can still proceed with this booking, but please coordinate with the conflicting users."
+  },
+  "history": {
+    "title": "Usage History",
+    "pastRecords": "Past Usage Records",
+    "description": "Complete history of equipment usage",
+    "noHistory": "No usage history recorded yet"
+  },
+  "messages": {
+    "createSuccess": "Equipment created successfully",
+    "updateSuccess": "Equipment updated successfully",
+    "scheduleSuccess": "Equipment usage scheduled successfully",
+    "createError": "Failed to create equipment",
+    "updateError": "Failed to update equipment",
+    "scheduleError": "Failed to schedule equipment"
+  }
+}
