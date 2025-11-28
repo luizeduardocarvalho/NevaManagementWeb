@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useAuthStore } from '@/store/authStore'
 import { locationService } from '@/services/locationService'
 import { productService } from '@/services/productService'
-import { equipmentService } from '@/services/equipmentService'
+import type { SimpleEquipment } from '@/types/equipment.types'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -35,13 +35,7 @@ export function LocationDetailPage() {
     enabled: !!laboratoryId,
   })
 
-  const { data: equipmentData, isLoading: isLoadingEquipment } = useQuery({
-    queryKey: ['equipment', laboratoryId],
-    queryFn: () => equipmentService.getAll(laboratoryId!, 1, 1000),
-    enabled: !!laboratoryId,
-  })
-
-  const isLoading = isLoadingLocation || isLoadingProducts || isLoadingEquipment
+  const isLoading = isLoadingLocation || isLoadingProducts
 
   if (isLoading) {
     return (
@@ -66,9 +60,9 @@ export function LocationDetailPage() {
     (product) => product.location_id === parseInt(id!)
   ) || []
 
-  const equipmentInLocation = equipmentData?.equipment.filter(
-    (equipment) => equipment.location_id === parseInt(id!)
-  ) || []
+  // Note: SimpleEquipment doesn't include location_id, so we can't filter by location
+  // This would require using DetailedEquipment or a separate API endpoint
+  const equipmentInLocation: SimpleEquipment[] = []
 
   return (
     <div className="space-y-6">

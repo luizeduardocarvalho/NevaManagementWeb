@@ -8,7 +8,6 @@ import { format, differenceInMinutes } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 
 export function ExecutionDetailPage() {
-  const { t } = useTranslation('routines')
   const { t: tCommon } = useTranslation('common')
   const { id } = useParams<{ id: string }>()
   const executionId = parseInt(id!)

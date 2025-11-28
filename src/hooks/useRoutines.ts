@@ -9,7 +9,7 @@ export function useRoutines(scheduleType?: string) {
 
   return useQuery({
     queryKey: ['routines', laboratoryId, scheduleType],
-    queryFn: () => routineService.getAll(laboratoryId!, scheduleType),
+    queryFn: () => routineService.getAll(scheduleType),
     enabled: !!laboratoryId,
   })
 }
@@ -19,17 +19,16 @@ export function useRoutineById(id: number) {
 
   return useQuery({
     queryKey: ['routines', id, laboratoryId],
-    queryFn: () => routineService.getById(id, laboratoryId!),
+    queryFn: () => routineService.getById(id),
     enabled: !!laboratoryId && !!id,
   })
 }
 
 export function useCreateRoutine() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
-    mutationFn: (data: CreateRoutineRequest) => routineService.create(data, laboratoryId!),
+    mutationFn: (data: CreateRoutineRequest) => routineService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['routines'] })
       toast.success('Routine created successfully')
@@ -42,11 +41,10 @@ export function useCreateRoutine() {
 
 export function useEditRoutine() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
     mutationFn: ({ id, data }: { id: number; data: CreateRoutineRequest }) =>
-      routineService.edit(id, data, laboratoryId!),
+      routineService.edit(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['routines'] })
       toast.success('Routine updated successfully')
@@ -59,10 +57,9 @@ export function useEditRoutine() {
 
 export function useDeleteRoutine() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
-    mutationFn: (id: number) => routineService.delete(id, laboratoryId!),
+    mutationFn: (id: number) => routineService.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['routines'] })
       toast.success('Routine deleted successfully')
@@ -78,19 +75,18 @@ export function useCheckAvailability(routineId: number) {
 
   return useQuery({
     queryKey: ['routines', 'availability', routineId, laboratoryId],
-    queryFn: () => routineService.checkAvailability(routineId, laboratoryId!),
+    queryFn: () => routineService.checkAvailability(routineId),
     enabled: !!laboratoryId && !!routineId,
   })
 }
 
 export function useStartExecution() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
   const userId = useAuthStore((state) => state.user?.id)
 
   return useMutation({
     mutationFn: (routineId: number) =>
-      routineService.startExecution(routineId, userId!, laboratoryId!),
+      routineService.startExecution(routineId, userId!),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['routine-executions'] })
       toast.success('Routine execution started')
@@ -103,11 +99,10 @@ export function useStartExecution() {
 
 export function useUpdateStepCompletion() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
     mutationFn: (data: UpdateStepCompletionRequest) =>
-      routineService.updateStepCompletion(data, laboratoryId!),
+      routineService.updateStepCompletion(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['routine-executions'] })
     },
@@ -119,7 +114,6 @@ export function useUpdateStepCompletion() {
 
 export function useCompleteExecution() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
     mutationFn: ({
@@ -130,7 +124,7 @@ export function useCompleteExecution() {
       executionId: number
       notes?: string
       materials?: Array<{ productId: number; actualQuantity: number }>
-    }) => routineService.completeExecution(executionId, laboratoryId!, notes, materials),
+    }) => routineService.completeExecution(executionId, notes, materials),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['routine-executions'] })
       queryClient.invalidateQueries({ queryKey: ['products'] }) // Refresh products since inventory was deducted
@@ -144,10 +138,9 @@ export function useCompleteExecution() {
 
 export function useCancelExecution() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
-    mutationFn: (executionId: number) => routineService.cancelExecution(executionId, laboratoryId!),
+    mutationFn: (executionId: number) => routineService.cancelExecution(executionId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['routine-executions'] })
       toast.success('Routine execution cancelled')
@@ -163,7 +156,7 @@ export function useExecutionById(executionId: number) {
 
   return useQuery({
     queryKey: ['routine-execution', executionId, laboratoryId],
-    queryFn: () => routineService.getExecutionById(executionId, laboratoryId!),
+    queryFn: () => routineService.getExecutionById(executionId),
     enabled: !!laboratoryId && !!executionId,
   })
 }
@@ -179,7 +172,7 @@ export function useExecutionHistory(filters?: {
 
   return useQuery({
     queryKey: ['routine-executions', laboratoryId, filters],
-    queryFn: () => routineService.getExecutionHistory(laboratoryId!, filters),
+    queryFn: () => routineService.getExecutionHistory(filters),
     enabled: !!laboratoryId,
   })
 }
@@ -189,7 +182,7 @@ export function useUpcomingRoutines(days: number = 7) {
 
   return useQuery({
     queryKey: ['upcoming-routines', laboratoryId, days],
-    queryFn: () => routineService.getUpcomingRoutines(laboratoryId!, days),
+    queryFn: () => routineService.getUpcomingRoutines(days),
     enabled: !!laboratoryId,
   })
 }
@@ -199,7 +192,7 @@ export function useRoutineStatistics() {
 
   return useQuery({
     queryKey: ['routine-statistics', laboratoryId],
-    queryFn: () => routineService.getStatistics(laboratoryId!),
+    queryFn: () => routineService.getStatistics(),
     enabled: !!laboratoryId,
   })
 }

@@ -161,7 +161,7 @@ export async function mockGetReplicaById(id: number): Promise<DetailedReplica | 
     parentReplicaName: parentReplica?.name,
     subcultureMedium: sample?.subcultureMedium || 'Unknown',
     subcultureIntervalDays: sample?.subcultureIntervalDays || 0,
-    researcherName: researcher?.name || 'Unknown',
+    researcherName: researcher ? `${researcher.first_name} ${researcher.last_name}` : 'Unknown',
   })
 }
 
@@ -196,7 +196,7 @@ export async function mockGetReplicasByTransferDate(
       sampleName: sample?.name || 'Unknown',
       nextTransferDate: replica.nextTransferDate,
       locationName: location?.name || 'Unknown',
-      researcherName: researcher?.name || 'Unknown',
+      researcherName: researcher ? `${researcher.first_name} ${researcher.last_name}` : 'Unknown',
       daysUntilTransfer,
     }
   })

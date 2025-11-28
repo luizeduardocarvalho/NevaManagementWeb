@@ -120,7 +120,7 @@ export async function mockGetSampleById(id: number): Promise<DetailedSample | nu
 
   return delay({
     ...sample,
-    researcherName: researcher?.name || 'Unknown',
+    researcherName: researcher ? `${researcher.first_name} ${researcher.last_name}` : 'Unknown',
     locationName: location?.name || 'Unknown',
     replicaCount,
   })

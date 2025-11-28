@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next'
 import { useState, useEffect } from 'react'
 
 export function ActiveExecutionsPage() {
-  const { t } = useTranslation('routines')
   const { t: tCommon } = useTranslation('common')
 
   // Fetch only in-progress executions

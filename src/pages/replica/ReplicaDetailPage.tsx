@@ -1,4 +1,4 @@
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useReplicaById, useDuplicateReplica } from '@/hooks/useReplicas'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/shared/Spinner'
 import { BackArrow } from '@/components/shared/BackArrow'
-import { Beaker, MapPin, User, Calendar, Edit, Copy, FlaskConical, AlertCircle } from 'lucide-react'
+import { Beaker, MapPin, User, Edit, Copy, FlaskConical, AlertCircle } from 'lucide-react'
 import { format, differenceInDays } from 'date-fns'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +16,6 @@ export function ReplicaDetailPage() {
   const { t: tCommon } = useTranslation('common')
   const { id } = useParams<{ id: string }>()
   const replicaId = parseInt(id!)
-  const navigate = useNavigate()
 
   const { data: replica, isLoading, error } = useReplicaById(replicaId)
   const duplicateReplica = useDuplicateReplica()

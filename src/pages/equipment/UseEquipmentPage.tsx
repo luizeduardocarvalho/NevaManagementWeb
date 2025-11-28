@@ -118,7 +118,7 @@ export function UseEquipmentPage() {
                 <SelectContent>
                   {researchers && researchers.length > 0 ? (
                     researchers.map((researcher) => {
-                      const displayName = researcher.name || `Researcher #${researcher.id}`
+                      const displayName = `${researcher.first_name} ${researcher.last_name}` || `Researcher #${researcher.id}`
                       return (
                         <SelectItem key={researcher.id} value={String(researcher.id)}>
                           {displayName}
@@ -198,7 +198,7 @@ export function UseEquipmentPage() {
                     >
                       <div className="flex-1">
                         <p className="font-medium text-sm text-gray-900">
-                          {usage.researcher.name}
+                          {usage.researcher.first_name} {usage.researcher.last_name}
                         </p>
                         {usage.description && (
                           <p className="text-xs text-gray-600 mt-0.5">{usage.description}</p>

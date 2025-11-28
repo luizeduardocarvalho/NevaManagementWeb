@@ -15,16 +15,15 @@ import type {
 } from '@/types/replica.types'
 
 export const replicaService = {
-  getBySampleId: async (sampleId: number, laboratoryId: number): Promise<SimpleReplica[]> => {
+  getBySampleId: async (sampleId: number): Promise<SimpleReplica[]> => {
     return mockGetReplicasBySampleId(sampleId)
   },
 
-  getById: async (id: number, laboratoryId: number): Promise<DetailedReplica | null> => {
+  getById: async (id: number): Promise<DetailedReplica | null> => {
     return mockGetReplicaById(id)
   },
 
   getByTransferDate: async (
-    laboratoryId: number,
     page: number
   ): Promise<{
     replicas: ReplicaWithTransferInfo[]
@@ -34,15 +33,15 @@ export const replicaService = {
     return mockGetReplicasByTransferDate(page)
   },
 
-  create: async (data: CreateReplicaRequest, laboratoryId: number): Promise<void> => {
+  create: async (data: CreateReplicaRequest): Promise<void> => {
     await mockAddReplica(data)
   },
 
-  duplicate: async (id: number, newName: string, laboratoryId: number): Promise<void> => {
+  duplicate: async (id: number, newName: string): Promise<void> => {
     await mockDuplicateReplica(id, newName)
   },
 
-  edit: async (data: EditReplicaRequest, laboratoryId: number): Promise<void> => {
+  edit: async (data: EditReplicaRequest): Promise<void> => {
     await mockEditReplica(data.id, {
       name: data.name,
       locationId: data.locationId,

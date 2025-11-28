@@ -212,7 +212,7 @@ export function SampleForm({ initialData, onSubmit, isSubmitting, submitLabel }:
           <SelectContent>
             {researchers && researchers.length > 0 ? (
               researchers.map((researcher) => {
-                const displayName = researcher.name || `Researcher #${researcher.id}`
+                const displayName = `${researcher.first_name} ${researcher.last_name}` || `Researcher #${researcher.id}`
                 return (
                   <SelectItem key={researcher.id} value={String(researcher.id)}>
                     {displayName}

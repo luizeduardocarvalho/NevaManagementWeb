@@ -50,7 +50,7 @@ const defaultDisplay: DisplayPreferences = {
 
 export const usePreferencesStore = create<PreferencesState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       theme: 'system',
       notifications: defaultNotifications,
       display: defaultDisplay,

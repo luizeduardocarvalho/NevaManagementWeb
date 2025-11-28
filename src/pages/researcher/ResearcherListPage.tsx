@@ -20,7 +20,7 @@ export function ResearcherListPage() {
 
     return researchers.filter(
       (researcher) => {
-        const fullName = researcher.name.toLowerCase()
+        const fullName = `${researcher.first_name} ${researcher.last_name}`.toLowerCase()
         const searchLower = searchTerm.toLowerCase()
 
         return (
@@ -99,7 +99,7 @@ export function ResearcherListPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-lg truncate">
-                      {researcher.name}
+                      {researcher.first_name} {researcher.last_name}
                     </h3>
                     {researcher.specialization && (
                       <p className="text-sm text-muted-foreground truncate">

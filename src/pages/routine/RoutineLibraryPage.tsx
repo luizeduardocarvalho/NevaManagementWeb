@@ -10,7 +10,6 @@ import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export function RoutineLibraryPage() {
-  const { t } = useTranslation('routines')
   const { t: tCommon } = useTranslation('common')
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState('')

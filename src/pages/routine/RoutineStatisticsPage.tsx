@@ -6,7 +6,6 @@ import { BarChart3, Clock, CheckCircle, TrendingUp, Activity } from 'lucide-reac
 import { useTranslation } from 'react-i18next'
 
 export function RoutineStatisticsPage() {
-  const { t } = useTranslation('routines')
   const { t: tCommon } = useTranslation('common')
   const { data: stats, isLoading, error } = useRoutineStatistics()
 
@@ -105,7 +104,7 @@ export function RoutineStatisticsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {stats.routinesByScheduleType.map((item) => {
+              {stats.routinesByScheduleType.map((item: { scheduleType: string; count: number }) => {
                 const total = stats.totalRoutines
                 const percentage = total > 0 ? (item.count / total) * 100 : 0
 
@@ -138,7 +137,7 @@ export function RoutineStatisticsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {stats.executionsByStatus.map((item) => {
+              {stats.executionsByStatus.map((item: { status: string; count: number }) => {
                 const total = stats.totalExecutions
                 const percentage = total > 0 ? (item.count / total) * 100 : 0
                 const colorClass =
@@ -188,7 +187,7 @@ export function RoutineStatisticsPage() {
             </p>
           ) : (
             <div className="space-y-4">
-              {stats.topRoutines.map((routine, index) => {
+              {stats.topRoutines.map((routine: { routineId: number; routineName: string; count: number }, index: number) => {
                 const maxCount = stats.topRoutines[0]?.count || 1
                 const percentage = (routine.count / maxCount) * 100
 

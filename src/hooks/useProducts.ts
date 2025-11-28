@@ -145,7 +145,7 @@ export function useUseProduct() {
   return useMutation({
     mutationFn: ({ productId, quantity, unit, notes }: { productId: number; quantity: number; unit: string; notes?: string }) =>
       productService.useProduct(productId, { quantity, unit, notes }),
-    onSuccess: (updatedProduct, { productId }) => {
+    onSuccess: (_, { productId }) => {
       queryClient.invalidateQueries({ queryKey: ['product', 'detailed', productId] })
       queryClient.invalidateQueries({ queryKey: ['product', productId] })
       queryClient.invalidateQueries({ queryKey: ['products'] })

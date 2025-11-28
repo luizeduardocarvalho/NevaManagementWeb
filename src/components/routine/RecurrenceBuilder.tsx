@@ -2,9 +2,9 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Calendar } from 'lucide-react'
-import { format, addDays, addWeeks, addMonths, startOfDay } from 'date-fns'
+import { format, addDays, addMonths, startOfDay } from 'date-fns'
 import type { RecurrenceRule } from '@/types/routine.types'
 
 interface RecurrenceBuilderProps {

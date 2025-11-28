@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
 import { Spinner } from '@/components/shared/Spinner'
 import { BackArrow } from '@/components/shared/BackArrow'
 import { AlertCircle, CheckCircle, XCircle, Beaker, Wrench, Play, CheckCheck, X } from 'lucide-react'
@@ -422,7 +423,7 @@ export function ExecuteRoutinePage() {
                             min="0"
                             step="0.01"
                             value={actualQty}
-                            onChange={(e) =>
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                               setActualMaterials({
                                 ...actualMaterials,
                                 [material.productId]: parseFloat(e.target.value) || 0,

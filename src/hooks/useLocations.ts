@@ -8,7 +8,7 @@ export function useLocations() {
 
   return useQuery({
     queryKey: ['locations', laboratoryId],
-    queryFn: (): Promise<Location[]> => locationService.getAll(laboratoryId!),
+    queryFn: (): Promise<Location[]> => locationService.getAll(),
     enabled: !!laboratoryId,
   })
 }

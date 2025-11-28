@@ -13,7 +13,7 @@ let refreshPromise: Promise<string> | null = null
 api.interceptors.request.use(
   async (config) => {
     console.log('[API Request]', config.method?.toUpperCase(), config.url)
-    console.log('[API Request] Full URL:', config.baseURL + config.url)
+    console.log('[API Request] Full URL:', `${config.baseURL || ''}${config.url || ''}`)
 
     // Skip token refresh for auth endpoints
     const isAuthEndpoint = config.url?.includes('/auth/signin') ||

@@ -104,7 +104,7 @@ export function UsageHistoryPage() {
                   </div>
                   <div className="flex-1 space-y-1">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-semibold">{usage.researcher.name}</h4>
+                      <h4 className="font-semibold">{usage.researcher.first_name} {usage.researcher.last_name}</h4>
                       <span className="text-sm text-muted-foreground">
                         {format(new Date(usage.startDate), 'MMM dd, yyyy')}
                       </span>

@@ -6,8 +6,11 @@ const delay = <T>(value: T, timeout = 350): Promise<T> =>
 export const mockResearchers: Researcher[] = [
   {
     id: 1,
-    name: 'Dr. Sarah Chen',
+    first_name: 'Sarah',
+    last_name: 'Chen',
     email: 'sarah.chen@labflux.com',
+    role: 'technician',
+    status: 'active',
     phone: '+1 (555) 123-4567',
     specialization: 'Molecular Biology',
     department: 'Genetics',
@@ -16,8 +19,11 @@ export const mockResearchers: Researcher[] = [
   },
   {
     id: 2,
-    name: 'Dr. Michael Rodriguez',
+    first_name: 'Michael',
+    last_name: 'Rodriguez',
     email: 'michael.rodriguez@labflux.com',
+    role: 'technician',
+    status: 'active',
     phone: '+1 (555) 234-5678',
     specialization: 'Microbiology',
     department: 'Bacteriology',
@@ -26,8 +32,11 @@ export const mockResearchers: Researcher[] = [
   },
   {
     id: 3,
-    name: 'Dr. Emily Watson',
+    first_name: 'Emily',
+    last_name: 'Watson',
     email: 'emily.watson@labflux.com',
+    role: 'student',
+    status: 'active',
     phone: '+1 (555) 345-6789',
     specialization: 'Plant Biology',
     department: 'Botany',
@@ -36,8 +45,11 @@ export const mockResearchers: Researcher[] = [
   },
   {
     id: 4,
-    name: 'Dr. James Park',
+    first_name: 'James',
+    last_name: 'Park',
     email: 'james.park@labflux.com',
+    role: 'student',
+    status: 'active',
     phone: '+1 (555) 456-7890',
     specialization: 'Biochemistry',
     department: 'Chemistry',
@@ -46,8 +58,11 @@ export const mockResearchers: Researcher[] = [
   },
   {
     id: 5,
-    name: 'Dr. Lisa Anderson',
+    first_name: 'Lisa',
+    last_name: 'Anderson',
     email: 'lisa.anderson@labflux.com',
+    role: 'coordinator',
+    status: 'active',
     phone: '+1 (555) 567-8901',
     specialization: 'Cell Biology',
     department: 'Cellular Research',
@@ -60,7 +75,12 @@ export async function mockGetResearchers(): Promise<SimpleResearcher[]> {
   return delay(
     mockResearchers.map((r) => ({
       id: r.id,
-      name: r.name,
+      email: r.email,
+      first_name: r.first_name,
+      last_name: r.last_name,
+      role: r.role,
+      status: r.status,
+      laboratory_id: r.laboratory_id,
     }))
   )
 }

@@ -45,7 +45,7 @@ export function ResearcherDetailPage() {
             <User className="h-8 w-8 text-primary" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold">{researcher.name}</h1>
+            <h1 className="text-3xl font-bold">{researcher.first_name} {researcher.last_name}</h1>
             {researcher.specialization && (
               <p className="text-muted-foreground mt-1">{researcher.specialization}</p>
             )}

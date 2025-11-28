@@ -9,7 +9,7 @@ export function useReplicasBySampleId(sampleId: number) {
 
   return useQuery({
     queryKey: ['replicas', 'sample', sampleId, laboratoryId],
-    queryFn: () => replicaService.getBySampleId(sampleId, laboratoryId!),
+    queryFn: () => replicaService.getBySampleId(sampleId),
     enabled: !!laboratoryId && !!sampleId,
   })
 }
@@ -19,7 +19,7 @@ export function useReplicaById(id: number) {
 
   return useQuery({
     queryKey: ['replicas', id, laboratoryId],
-    queryFn: () => replicaService.getById(id, laboratoryId!),
+    queryFn: () => replicaService.getById(id),
     enabled: !!laboratoryId && !!id,
   })
 }
@@ -29,7 +29,7 @@ export function useReplicasByTransferDate() {
 
   return useInfiniteQuery({
     queryKey: ['replicas', 'transfers', laboratoryId],
-    queryFn: ({ pageParam = 1 }) => replicaService.getByTransferDate(laboratoryId!, pageParam),
+    queryFn: ({ pageParam = 1 }) => replicaService.getByTransferDate(pageParam),
     getNextPageParam: (lastPage) => lastPage.nextPage,
     initialPageParam: 1,
     enabled: !!laboratoryId,
@@ -38,10 +38,9 @@ export function useReplicasByTransferDate() {
 
 export function useCreateReplica() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
-    mutationFn: (data: CreateReplicaRequest) => replicaService.create(data, laboratoryId!),
+    mutationFn: (data: CreateReplicaRequest) => replicaService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['replicas'] })
       queryClient.invalidateQueries({ queryKey: ['samples'] })
@@ -55,11 +54,10 @@ export function useCreateReplica() {
 
 export function useDuplicateReplica() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
     mutationFn: ({ id, newName }: { id: number; newName: string }) =>
-      replicaService.duplicate(id, newName, laboratoryId!),
+      replicaService.duplicate(id, newName),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['replicas'] })
       queryClient.invalidateQueries({ queryKey: ['samples'] })
@@ -73,10 +71,9 @@ export function useDuplicateReplica() {
 
 export function useEditReplica() {
   const queryClient = useQueryClient()
-  const laboratoryId = useAuthStore((state) => state.laboratoryId)
 
   return useMutation({
-    mutationFn: (data: EditReplicaRequest) => replicaService.edit(data, laboratoryId!),
+    mutationFn: (data: EditReplicaRequest) => replicaService.edit(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['replicas'] })
       toast.success('Replica updated successfully')

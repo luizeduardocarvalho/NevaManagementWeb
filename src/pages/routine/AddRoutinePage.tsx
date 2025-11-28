@@ -14,7 +14,7 @@ import { Spinner } from '@/components/shared/Spinner'
 import { BackArrow } from '@/components/shared/BackArrow'
 import { RecurrenceBuilder } from '@/components/routine/RecurrenceBuilder'
 import { Plus, Trash2, GripVertical, X } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { CreateRoutineRequest, RecurrenceRule } from '@/types/routine.types'
 

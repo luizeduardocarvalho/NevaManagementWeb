@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Spinner } from '@/components/shared/Spinner'
-import { Plus, Search, Trash2, Play, Clock, Beaker, Wrench, Calendar } from 'lucide-react'
+import { Plus, Search, Trash2, Play, Clock, Beaker, Calendar } from 'lucide-react'
 import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 

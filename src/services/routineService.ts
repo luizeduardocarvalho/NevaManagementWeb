@@ -11,7 +11,7 @@ import type {
 
 export const routineService = {
   // Routine CRUD
-  getAll: async (laboratoryId: number, scheduleType?: string): Promise<Routine[]> => {
+  getAll: async (scheduleType?: string): Promise<Routine[]> => {
     try {
       const params: Record<string, any> = {}
       if (scheduleType) params.scheduleType = scheduleType
@@ -26,7 +26,7 @@ export const routineService = {
     }
   },
 
-  getById: async (id: number, laboratoryId: number): Promise<Routine | null> => {
+  getById: async (id: number): Promise<Routine | null> => {
     try {
       const response = await api.get(`/routines/${id}`)
       return response.data
@@ -38,23 +38,22 @@ export const routineService = {
     }
   },
 
-  create: async (data: CreateRoutineRequest, laboratoryId: number): Promise<Routine> => {
+  create: async (data: CreateRoutineRequest): Promise<Routine> => {
     const response = await api.post('/routines', data)
     return response.data
   },
 
-  edit: async (id: number, data: CreateRoutineRequest, laboratoryId: number): Promise<void> => {
+  edit: async (id: number, data: CreateRoutineRequest): Promise<void> => {
     await api.put(`/routines/${id}`, data)
   },
 
-  delete: async (id: number, laboratoryId: number): Promise<void> => {
+  delete: async (id: number): Promise<void> => {
     await api.delete(`/routines/${id}`)
   },
 
   // Execution
   checkAvailability: async (
-    routineId: number,
-    laboratoryId: number
+    routineId: number
   ): Promise<AvailabilityCheck> => {
     const response = await api.get(`/routines/${routineId}/availability`)
 
@@ -103,8 +102,7 @@ export const routineService = {
 
   startExecution: async (
     routineId: number,
-    userId: number,
-    laboratoryId: number
+    userId: number
   ): Promise<RoutineExecution> => {
     const response = await api.post(`/routines/${routineId}/executions`, {
       executedBy: userId,
@@ -113,8 +111,7 @@ export const routineService = {
   },
 
   updateStepCompletion: async (
-    data: UpdateStepCompletionRequest,
-    laboratoryId: number
+    data: UpdateStepCompletionRequest
   ): Promise<void> => {
     const { executionId, stepId, completed, notes } = data
     await api.patch(`/routines/executions/${executionId}/steps/${stepId}`, {
@@ -125,7 +122,6 @@ export const routineService = {
 
   completeExecution: async (
     executionId: number,
-    laboratoryId: number,
     notes?: string,
     materials?: Array<{ productId: number; actualQuantity: number }>
   ): Promise<void> => {
@@ -135,11 +131,11 @@ export const routineService = {
     })
   },
 
-  cancelExecution: async (executionId: number, laboratoryId: number): Promise<void> => {
+  cancelExecution: async (executionId: number): Promise<void> => {
     await api.post(`/routines/executions/${executionId}/cancel`)
   },
 
-  getExecutionById: async (executionId: number, laboratoryId: number): Promise<RoutineExecution | null> => {
+  getExecutionById: async (executionId: number): Promise<RoutineExecution | null> => {
     try {
       const response = await api.get(`/routines/executions/${executionId}`)
       return response.data
@@ -153,7 +149,6 @@ export const routineService = {
 
   // History
   getExecutionHistory: async (
-    laboratoryId: number,
     filters?: {
       routineId?: number
       status?: string
@@ -181,7 +176,7 @@ export const routineService = {
   },
 
   // Statistics
-  getStatistics: async (laboratoryId: number): Promise<any> => {
+  getStatistics: async (): Promise<any> => {
     try {
       const response = await api.get('/routines/statistics')
       return response.data
@@ -195,7 +190,6 @@ export const routineService = {
 
   // Upcoming routines
   getUpcomingRoutines: async (
-    laboratoryId: number,
     days?: number
   ): Promise<ScheduledRoutine[]> => {
     try {
@@ -219,7 +213,7 @@ export const routineService = {
         assignedToNames: routine.assignedToNames || [],
         status: routine.status || 'pending',
         executionId: routine.executionId,
-        laboratory_id: laboratoryId,
+        laboratory_id: routine.laboratory_id,
       }))
 
       return routines
